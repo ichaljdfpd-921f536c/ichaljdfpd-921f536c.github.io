@@ -1,0 +1,1902 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>女王社区vk - 垂直内容聚合与深度解析</title>
+  <meta name="description" content="女王社区vk 汇聚了女王社区vk 相关的多类垂直内容，包含特定条目、类型解析、用户评论、资讯动态及深度指南，适合对该领域有持续关注或研究需求的读者。">
+  <meta name="keywords" content="女王社区vk">
+  <style>
+    /* ---------- 全局变量与重置 ---------- */
+    :root {
+      --primary: #7c3aed;
+      --primary-light: #a78bfa;
+      --primary-dark: #5b21b6;
+      --accent: #f59e0b;
+      --bg: #f8f6fe;
+      --surface: #ffffff;
+      --text-primary: #1e1b2e;
+      --text-secondary: #4b4565;
+      --text-tertiary: #8b86a3;
+      --border: #e4e0f0;
+      --radius-card: 16px;
+      --radius-btn: 10px;
+      --radius-tag: 6px;
+      --shadow-default: 0 2px 12px rgba(0, 0, 0, 0.04);
+      --shadow-hover: 0 8px 24px rgba(124, 58, 237, 0.10);
+      --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      --header-height: 64px;
+      --announce-height: 40px;
+      --sticky-offset: calc(var(--announce-height) + var(--header-height));
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--sticky-offset);
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* ---------- 吸顶公告条 ---------- */
+    .announce-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--primary-dark);
+      color: #fff;
+      font-size: 0.82rem;
+      height: var(--announce-height);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 24px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+
+    .announce-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .announce-bar .brand-tag {
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .announce-bar .announce-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .announce-bar .announce-date {
+      color: var(--primary-light);
+      font-weight: 600;
+    }
+
+    /* ---------- 吸顶页头 ---------- */
+    .site-header {
+      position: sticky;
+      top: var(--announce-height);
+      z-index: 99;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+    }
+
+    .header-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .logo-svg {
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .header-nav a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      border-radius: var(--radius-btn);
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    .header-nav a:hover {
+      background: var(--bg);
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .header-nav a:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .search-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-btn);
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      transition: border-color 0.15s;
+      font-family: var(--font);
+    }
+
+    .search-btn:hover {
+      border-color: var(--primary-light);
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-btn);
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1;
+    }
+
+    /* ---------- 首屏 ---------- */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #1e1b2e 0%, #2d2450 45%, #4a2d7a 100%);
+      color: #fff;
+      padding: 56px 24px 52px;
+    }
+
+    .hero-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.82);
+      max-width: 540px;
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent);
+      color: #1e1b2e;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 10px 22px;
+      border-radius: var(--radius-btn);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245,158,11,0.35);
+      text-decoration: none;
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 10px 22px;
+      border-radius: var(--radius-btn);
+      border: 1px solid rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.6);
+      text-decoration: none;
+    }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-svg {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+    }
+
+    /* ---------- 主内容区 三栏布局 ---------- */
+    .page-layout {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+      display: grid;
+      grid-template-columns: 180px 1fr 260px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* ---------- 左侧频道索引 ---------- */
+    .channel-sidebar {
+      position: sticky;
+      top: calc(var(--sticky-offset) + 16px);
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 18px 14px;
+    }
+
+    .channel-sidebar h2 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .channel-list li {
+      margin-bottom: 2px;
+    }
+
+    .channel-list a {
+      display: block;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .channel-list a:hover {
+      background: var(--bg);
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .channel-list a:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* ---------- 中间主内容 ---------- */
+    .main-content {
+      min-width: 0;
+    }
+
+    .section-block {
+      margin-bottom: 40px;
+    }
+
+    .section-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* 概览 */
+    .overview-text p {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+
+    /* 卡片网格 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .content-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    .card-img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      background: var(--bg);
+    }
+
+    .card-body {
+      padding: 14px 16px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-type {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: #ede9fe;
+      padding: 2px 8px;
+      border-radius: var(--radius-tag);
+      margin-bottom: 6px;
+      align-self: flex-start;
+    }
+
+    .card-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .card-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: var(--text-tertiary);
+      align-items: center;
+    }
+
+    .tag-sm {
+      background: var(--bg);
+      padding: 2px 8px;
+      border-radius: var(--radius-tag);
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+    }
+
+    /* 动态列表 */
+    .update-list {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 4px 0;
+    }
+
+    .update-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .update-item:last-child {
+      border-bottom: none;
+    }
+
+    .update-time {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--primary);
+      white-space: nowrap;
+      min-width: 44px;
+      padding-top: 2px;
+    }
+
+    .update-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .update-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .update-summary {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* 分类入口 */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .category-chip {
+      background: var(--surface);
+      border-radius: var(--radius-btn);
+      box-shadow: var(--shadow-default);
+      padding: 14px 12px;
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .category-chip:hover {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: var(--shadow-hover);
+      text-decoration: none;
+    }
+
+    .category-chip .cat-count {
+      font-size: 0.68rem;
+      font-weight: 400;
+      opacity: 0.65;
+    }
+
+    /* 深度解析 */
+    .deep-dive {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 24px 28px;
+    }
+
+    .deep-dive h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin: 20px 0 8px;
+    }
+
+    .deep-dive h3:first-of-type {
+      margin-top: 0;
+    }
+
+    .deep-dive p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+
+    .deep-dive ul {
+      margin: 8px 0 12px 18px;
+      list-style: disc;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .deep-dive li {
+      margin-bottom: 4px;
+    }
+
+    .deep-dive .highlight-box {
+      background: #f5f3ff;
+      border-left: 3px solid var(--primary);
+      padding: 12px 16px;
+      border-radius: 0 var(--radius-tag) var(--radius-tag) 0;
+      margin: 14px 0;
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* 指南步骤 */
+    .guide-steps {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 20px 24px;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .step-item:last-child {
+      border-bottom: none;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .step-body h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .step-body p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* FAQ */
+    .faq-list details {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+
+    .faq-list summary {
+      padding: 14px 18px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.15s;
+    }
+
+    .faq-list summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-list summary::after {
+      content: '+';
+      font-size: 1.1rem;
+      color: var(--primary);
+      font-weight: 400;
+      transition: transform 0.2s;
+    }
+
+    .faq-list details[open] summary::after {
+      content: '−';
+    }
+
+    .faq-list summary:hover {
+      background: #faf8ff;
+    }
+
+    .faq-answer {
+      padding: 0 18px 16px;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* 评论 */
+    .comment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .comment-item {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 12px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .comment-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .comment-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .comment-nick {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .comment-text {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* 资讯 */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .news-item {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 14px 18px;
+      transition: box-shadow 0.15s;
+    }
+
+    .news-item:hover {
+      box-shadow: var(--shadow-hover);
+    }
+
+    .news-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .news-date {
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+      margin-bottom: 4px;
+    }
+
+    .news-summary {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* 推荐标签 */
+    .related-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .related-tags a {
+      display: inline-block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-tag);
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      transition: all 0.15s;
+    }
+
+    .related-tags a:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      text-decoration: none;
+    }
+
+    /* ---------- 右侧辅助栏 ---------- */
+    .aux-sidebar {
+      position: sticky;
+      top: calc(var(--sticky-offset) + 16px);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .aux-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 18px;
+    }
+
+    .aux-card h3 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .aux-card h3::before {
+      content: '';
+      width: 3px;
+      height: 14px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+
+    .hot-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.82rem;
+    }
+
+    .hot-list li:last-child {
+      border-bottom: none;
+    }
+
+    .hot-rank {
+      font-weight: 800;
+      font-size: 0.72rem;
+      color: var(--text-tertiary);
+      min-width: 18px;
+    }
+
+    .hot-rank.top3 {
+      color: var(--accent);
+    }
+
+    .hot-name {
+      flex: 1;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .hot-score {
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+    }
+
+    .update-mini li {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      padding: 5px 0;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .update-mini .mini-date {
+      color: var(--text-tertiary);
+      font-size: 0.7rem;
+      white-space: nowrap;
+    }
+
+    /* ---------- 互动栏目 ---------- */
+    .interact-bar {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 20px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .interact-bar p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .interact-bar .btn-compact {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-btn);
+      padding: 8px 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .interact-bar .btn-compact:hover {
+      background: var(--primary-dark);
+    }
+
+    /* ---------- 页脚 ---------- */
+    .site-footer {
+      background: #1e1b2e;
+      color: rgba(255,255,255,0.7);
+      padding: 40px 24px 28px;
+      font-size: 0.82rem;
+      line-height: 1.7;
+    }
+
+    .footer-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 32px;
+    }
+
+    .footer-brand {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .footer-desc {
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 12px;
+    }
+
+    .footer-col h4 {
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .footer-col li {
+      margin-bottom: 4px;
+    }
+
+    .footer-col a {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.78rem;
+    }
+
+    .footer-col a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      max-width: 1360px;
+      margin: 24px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ---------- 回到顶部 ---------- */
+    .back-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 90;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 16px rgba(124,58,237,0.3);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .back-top.visible {
+      display: flex;
+    }
+
+    .back-top:hover {
+      transform: translateY(-3px);
+      opacity: 0.9;
+    }
+
+    /* ---------- 响应式 ---------- */
+    @media (max-width: 1024px) {
+      .page-layout {
+        grid-template-columns: 1fr 260px;
+      }
+      .channel-sidebar {
+        display: none;
+      }
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .hero-visual {
+        display: none;
+      }
+      .footer-inner {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 740px) {
+      .page-layout {
+        grid-template-columns: 1fr;
+        padding: 20px 16px 36px;
+      }
+      .aux-sidebar {
+        position: static;
+      }
+      .header-nav {
+        display: none;
+      }
+      .hamburger {
+        display: block;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        padding: 36px 16px 32px;
+      }
+      .announce-bar {
+        padding: 0 16px;
+        font-size: 0.75rem;
+      }
+      .site-header {
+        padding: 0 16px;
+      }
+      .deep-dive {
+        padding: 18px 16px;
+      }
+      .comment-item {
+        padding: 10px 12px;
+      }
+      .back-top {
+        bottom: 16px;
+        right: 16px;
+        width: 38px;
+        height: 38px;
+      }
+    }
+
+    /* 减少动效 */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* 焦点样式 */
+    a:focus-visible, button:focus-visible, summary:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+  </style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<!-- 吸顶公告条 -->
+<div class="announce-bar">
+  <span class="brand-tag">女王社区vk</span>
+  <span class="announce-item"><span class="announce-date">11月7日</span> 新增「暗夜蔷薇·设定集」条目解析</span>
+  <span class="announce-item"><span class="announce-date">11月6日</span> 榜单更新：10月角色人气投票结果出炉</span>
+  <span class="announce-item"><span class="announce-date">11月5日</span> 投稿区新增规则说明与提交入口</span>
+</div>
+
+<!-- 吸顶页头 -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <svg class="logo-svg" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="17" cy="17" r="16" fill="#7c3aed"/>
+        <path d="M17 6L20 13H27L21.5 17.5L23.5 25L17 20.5L10.5 25L12.5 17.5L7 13H14L17 6Z" fill="#f59e0b"/>
+      </svg>
+      <span class="logo-text">女王社区vk</span>
+    </div>
+    <nav class="header-nav" aria-label="主导航">
+      <a href="/#overview">领域概览</a>
+      <a href="/#featured">精选条目</a>
+      <a href="/#updates">最新动态</a>
+      <a href="/#categories">分类索引</a>
+      <a href="/#deep-dive">深度解析</a>
+      <a href="/#guide">体验路径</a>
+      <a href="/#faq">常见问答</a>
+      <a href="/#comments">用户评论</a>
+      <a href="/#news">相关资讯</a>
+    </nav>
+    <div class="header-actions">
+      <button class="search-btn" aria-label="搜索内容">🔍 搜索</button>
+      <button class="hamburger" aria-label="打开菜单" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- 首屏 -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <h1>女王社区vk</h1>
+      <p class="hero-desc">汇聚角色设定、剧情解析、同人创作与圈内讨论的垂直内容聚合地。从「暗夜蔷薇·设定集」到「星轨编年史」人物关系图谱，覆盖作品考据、类型对比与社区创作生态。</p>
+      <div class="hero-actions">
+        <a href="/#featured" class="btn-primary">浏览精选条目 →</a>
+        <a href="/#updates" class="btn-outline">查看最新动态</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg class="hero-svg" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="20" y="30" width="280" height="220" rx="20" fill="rgba(255,255,255,0.06)"/>
+        <rect x="40" y="56" width="160" height="10" rx="5" fill="rgba(255,255,255,0.15)"/>
+        <rect x="40" y="76" width="120" height="8" rx="4" fill="rgba(255,255,255,0.10)"/>
+        <rect x="40" y="100" width="100" height="100" rx="12" fill="rgba(124,58,237,0.35)"/>
+        <rect x="152" y="100" width="128" height="44" rx="8" fill="rgba(245,158,11,0.25)"/>
+        <rect x="152" y="154" width="60" height="46" rx="8" fill="rgba(255,255,255,0.08)"/>
+        <rect x="220" y="154" width="60" height="46" rx="8" fill="rgba(255,255,255,0.08)"/>
+        <circle cx="90" cy="150" r="20" fill="rgba(245,158,11,0.5)"/>
+        <circle cx="130" cy="180" r="8" fill="rgba(255,255,255,0.2)"/>
+        <rect x="40" y="218" width="240" height="4" rx="2" fill="rgba(255,255,255,0.08)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 主内容区 三栏布局 -->
+<div class="page-layout">
+
+  <!-- 左侧频道索引 -->
+  <aside class="channel-sidebar" aria-label="频道索引">
+    <h2>频道索引</h2>
+    <ul class="channel-list">
+      <li><a href="/#overview">领域概览</a></li>
+      <li><a href="/#featured">精选条目</a></li>
+      <li><a href="/#updates">最新动态</a></li>
+      <li><a href="/#categories">分类索引</a></li>
+      <li><a href="/#deep-dive">深度解析</a></li>
+      <li><a href="/#guide">体验路径</a></li>
+      <li><a href="/#faq">常见问答</a></li>
+      <li><a href="/#comments">用户评论</a></li>
+      <li><a href="/#news">相关资讯</a></li>
+      <li><a href="/#related">相关推荐</a></li>
+      <li><a href="/#ranking">热门榜单</a></li>
+      <li><a href="/#interact">互动投稿</a></li>
+    </ul>
+  </aside>
+
+  <!-- 中间主内容 -->
+  <main class="main-content">
+
+    <!-- 领域概览 -->
+    <section id="overview" class="section-block">
+      <h2 class="section-title">领域概览</h2>
+      <div class="overview-text">
+        <p>以「女王社区vk」为标签的内容圈层，实际指向的是一个围绕角色设定、剧情考据与同人创作展开的垂直内容生态。当前活跃的讨论方向集中在三个层面：一是「暗夜蔷薇·设定集」这类官方衍生资料的条目拆解，包括角色能力数值、时间线矛盾点与未回收伏笔；二是同人创作侧的「星轨编年史」人物关系图谱补全，社区成员通过交叉比对不同章节的对话细节，还原出三条被官方暗示但未明写的情感线；三是版本差异考据，比如2026年10月更新的「暗夜蔷薇」2.3版将「黑曜石议会」的投票规则从多数决改为一致决，直接影响了后续三章的角色存活率计算。</p>
+        <p>内容形态上，长文解析与短评并存。角色人气投票、章节评分与创作挑战赛是驱动讨论的三个主要机制。近期值得关注的具体条目包括：「暗夜蔷薇·设定集」第47页关于「银月契约」的补充说明、11月3日发布的「星轨编年史」第七章隐藏对话记录、以及社区成员「雾都旅人」整理的近三个月同人小说高频意象统计表。</p>
+      </div>
+    </section>
+
+    <!-- 精选内容推荐 -->
+    <section id="featured" class="section-block">
+      <h2 class="section-title">精选条目</h2>
+      <div class="card-grid">
+        <article class="content-card">
+          <img class="card-img" src="https://picsum.photos/seed/anYueQiangWei1/400/300" width="400" height="300" loading="lazy" alt="暗夜蔷薇设定集封面概念图">
+          <div class="card-body">
+            <span class="card-type">设定集解析</span>
+            <h3 class="card-title">暗夜蔷薇·设定集 第47页「银月契约」完整拆解</h3>
+            <p class="card-desc">契约条款共9条，其中第4条「血月夜双方不得主动攻击」与第7条「违约方失去三夜记忆」在2.1版和2.3版之间存在措辞差异，直接导致「黑曜石议会」第三轮投票结果不同。</p>
+            <div class="card-meta"><span class="tag-sm">规则考据</span><span class="tag-sm">版本差异</span><span>🔥 热度 982</span></div>
+          </div>
+        </article>
+        <article class="content-card">
+          <img class="card-img" src="https://picsum.photos/seed/xingGui1/400/300" width="400" height="300" loading="lazy" alt="星轨编年史人物关系概念图">
+          <div class="card-body">
+            <span class="card-type">同人图谱</span>
+            <h3 class="card-title">星轨编年史 第七章隐藏对话与三条未明示情感线</h3>
+            <p class="card-desc">第7章第3节末尾，角色「白鸦」与「灰烬」的对话中出现了两次「旧钟楼」指代，社区通过比对第4章和第9章的用词习惯，确认这是作者埋设的三角关系伏笔。</p>
+            <div class="card-meta"><span class="tag-sm">人物关系</span><span class="tag-sm">文本细读</span><span>💬 讨论 216</span></div>
+          </div>
+        </article>
+        <article class="content-card">
+          <img class="card-img" src="https://picsum.photos/seed/renQiTouPiao1/400/300" width="400" height="300" loading="lazy" alt="角色人气投票结果示意">
+          <div class="card-body">
+            <span class="card-type">投票数据</span>
+            <h3 class="card-title">10月角色人气投票：前三名票差仅占总数4.7%</h3>
+            <p class="card-desc">「银月」以11,842票排第一，「黑曜石」11,203票第二，「白鸦」10,967票第三。总投票数41,600，较9月增长12%，新增投票中约六成来自「星轨编年史」第七章发布后的新注册用户。</p>
+            <div class="card-meta"><span class="tag-sm">人气投票</span><span class="tag-sm">数据统计</span><span>📊 2026-11-06</span></div>
+          </div>
+        </article>
+        <article class="content-card">
+          <img class="card-img" src="https://picsum.photos/seed/tongRenXiaoShuo1/400/300" width="400" height="300" loading="lazy" alt="同人小说高频意象统计概念图">
+          <div class="card-body">
+            <span class="card-type">创作分析</span>
+            <h3 class="card-title">近三月同人小说高频意象统计：雨夜场景出现率31%</h3>
+            <p class="card-desc">「雾都旅人」统计了社区投稿区2026年8月至10月的1,247篇同人小说，雨夜场景出现386次，钟楼出现274次，镜子出现201次。雨夜场景中约七成同时包含「记忆缺失」情节。</p>
+            <div class="card-meta"><span class="tag-sm">同人创作</span><span class="tag-sm">意象统计</span><span>📝 1,247篇样本</span></div>
+          </div>
+        </article>
+        <article class="content-card">
+          <img class="card-img" src="https://picsum.photos/seed/heiYaoShi1/400/300" width="400" height="300" loading="lazy" alt="黑曜石议会投票规则示意">
+          <div class="card-body">
+            <span class="card-type">规则变更</span>
+            <h3 class="card-title">黑曜石议会投票规则：从多数决改为一致决的后续影响</h3>
+            <p class="card-desc">2.3版将投票门槛从简单多数改为全体一致，直接导致第14章「裂隙之夜」中原本可通过的「牺牲提案」被否，改变了后续三名角色的行动路线。</p>
+            <div class="card-meta"><span class="tag-sm">规则变更</span><span class="tag-sm">剧情影响</span><span>⚖️ 2.3版</span></div>
+          </div>
+        </article>
+        <article class="content-card">
+          <img class="card-img" src="https://picsum.photos/seed/chuangZuoTiaoZhan1/400/300" width="400" height="300" loading="lazy" alt="创作挑战赛作品概念图">
+          <div class="card-body">
+            <span class="card-type">创作挑战</span>
+            <h3 class="card-title">「女王社区vk」十月创作挑战赛：命题「失忆的钟楼」</h3>
+            <p class="card-desc">共收到87篇投稿，其中23篇选择以「白鸦」视角展开，19篇以「黑曜石」为主角。评委「灰烬笔记」在11月4日的复盘帖中指出，超过一半作品忽略了设定集中关于钟楼「第十三声」的规则。</p>
+            <div class="card-meta"><span class="tag-sm">创作挑战</span><span class="tag-sm">87篇投稿</span><span>🏆 结果已公布</span></div>
+          </div>
+        </article>
+        <article class="content-card">
+          <img class="card-img" src="https://picsum.photos/seed/yiXiangBiao1/400/300" width="400" height="300" loading="lazy" alt="暗夜蔷薇角色能力对比图">
+          <div class="card-body">
+            <span class="card-type">对比分析</span>
+            <h3 class="card-title">暗夜蔷薇 三大角色能力值横向对比：银月 vs 黑曜石 vs 白鸦</h3>
+            <p class="card-desc">银月「夜视」评级S，黑曜石「契约抗性」评级A+，白鸦「记忆回溯」评级A。但白鸦在2.3版中获得「钟楼共鸣」被动，实际战斗中触发率从12%提升到34%，改变了三人组队策略。</p>
+            <div class="card-meta"><span class="tag-sm">能力对比</span><span class="tag-sm">组队策略</span><span>📈 2.3版数据</span></div>
+          </div>
+        </article>
+        <article class="content-card">
+          <img class="card-img" src="https://picsum.photos/seed/sheDingJi2/400/300" width="400" height="300" loading="lazy" alt="设定集第47页细节示意图">
+          <div class="card-body">
+            <span class="card-type">细节考据</span>
+            <h3 class="card-title">设定集第47页脚注：被忽略的「旧历换算表」</h3>
+            <p class="card-desc">脚注给出了旧历与现行历法的换算公式，社区用它重新推算了「银月契约」的生效日期，发现与第9章「月蚀」事件相差仅17天，远小于此前认为的三个月。</p>
+            <div class="card-meta"><span class="tag-sm">历法考据</span><span class="tag-sm">脚注细节</span><span>📅 11月7日更新</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 最新动态 -->
+    <section id="updates" class="section-block">
+      <h2 class="section-title">最新动态</h2>
+      <div class="update-list">
+        <div class="update-item">
+          <span class="update-time">11-07</span>
+          <div class="update-content">
+            <div class="update-name">「暗夜蔷薇·设定集」第47页「银月契约」条目解析发布</div>
+            <div class="update-summary">新增9条契约条款的逐条拆解，附2.1版与2.3版措辞对照表。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">11-06</span>
+          <div class="update-content">
+            <div class="update-name">10月角色人气投票结果公示</div>
+            <div class="update-summary">银月、黑曜石、白鸦分列前三，总票数41,600，前三名票差4.7%。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">11-05</span>
+          <div class="update-content">
+            <div class="update-name">投稿区新增「规则考据」分类与提交规范</div>
+            <div class="update-summary">要求投稿时标注所引用的设定集页码或版本号，未标注的进入待审核池。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">11-04</span>
+          <div class="update-content">
+            <div class="update-name">十月创作挑战赛复盘帖发布</div>
+            <div class="update-summary">评委「灰烬笔记」指出87篇投稿中52篇忽略钟楼「第十三声」规则。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">11-03</span>
+          <div class="update-content">
+            <div class="update-name">「星轨编年史」第七章隐藏对话记录整理完成</div>
+            <div class="update-summary">共整理出14处双关指代，其中「旧钟楼」出现两次，关联三条人物线。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">11-02</span>
+          <div class="update-content">
+            <div class="update-name">「雾都旅人」发布近三月同人小说意象统计</div>
+            <div class="update-summary">样本1,247篇，雨夜31%、钟楼22%、镜子16%，雨夜场景七成含记忆缺失情节。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">11-01</span>
+          <div class="update-content">
+            <div class="update-name">2.3版「黑曜石议会」投票规则变更讨论帖置顶</div>
+            <div class="update-summary">一致决规则导致第14章「裂隙之夜」牺牲提案被否，三名角色路线改变。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">10-30</span>
+          <div class="update-content">
+            <div class="update-name">「银月契约」生效日期重新推算结果发布</div>
+            <div class="update-summary">利用第47页脚注换算表，发现与原推定日期相差17天而非三个月。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">10-28</span>
+          <div class="update-content">
+            <div class="update-name">白鸦「钟楼共鸣」被动触发率数据更新</div>
+            <div class="update-summary">2.3版实测触发率34%，较2.2版12%提升明显，组队策略随之调整。</div>
+          </div>
+        </div>
+        <div class="update-item">
+          <span class="update-time">10-25</span>
+          <div class="update-content">
+            <div class="update-name">「暗夜蔷薇」角色能力值横向对比表更新</div>
+            <div class="update-summary">新增白鸦被动技能评级，银月夜视维持S级，黑曜石契约抗性A+。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 分类入口 -->
+    <section id="categories" class="section-block">
+      <h2 class="section-title">分类索引</h2>
+      <div class="category-grid">
+        <a href="/#featured" class="category-chip">设定集解析 <span class="cat-count">24篇</span></a>
+        <a href="/#featured" class="category-chip">同人图谱 <span class="cat-count">18篇</span></a>
+        <a href="/#featured" class="category-chip">规则考据 <span class="cat-count">31篇</span></a>
+        <a href="/#featured" class="category-chip">人物关系 <span class="cat-count">15篇</span></a>
+        <a href="/#featured" class="category-chip">版本差异 <span class="cat-count">12篇</span></a>
+        <a href="/#featured" class="category-chip">创作挑战 <span class="cat-count">9篇</span></a>
+        <a href="/#featured" class="category-chip">投票数据 <span class="cat-count">7篇</span></a>
+        <a href="/#featured" class="category-chip">意象统计 <span class="cat-count">5篇</span></a>
+      </div>
+    </section>
+
+    <!-- 深度解析 -->
+    <section id="deep-dive" class="section-block">
+      <h2 class="section-title">深度解析</h2>
+      <div class="deep-dive">
+        <h3>2.3版一致决规则：改变的不只是投票结果</h3>
+        <p>「黑曜石议会」的投票规则在2.3版做了调整，从简单多数决改为全体一致决。表面看只是门槛提高，实际影响远不止第14章「裂隙之夜」那一次提案被否。社区成员「灰烬笔记」在11月1日的帖子中列出了受影响的三条后续路线：原本可通过的「牺牲提案」被否后，角色「白鸦」没有获得「契约碎片」，导致第15章钟楼场景中无法触发「共鸣」对话；「银月」的「夜视」能力在缺乏碎片加持的情况下，夜间战斗判定从优势变为平局；最隐蔽的一条是，第16章开头「黑曜石」提到「昨晚的决议」，措辞从「通过」变成了「未果」，这个措辞差异只有对照2.2版文本才能发现。</p>
+        <p>规则变更的时间线也值得梳理。2.2版于2026年9月12日上线，一致决规则出现在2.3版，更新日期是10月8日。从9月12日到10月8日之间，社区共进行了4轮议会投票，其中3轮在多数决下通过、1轮被否。2.3版上线后的第一轮投票发生在10月15日，即「裂隙之夜」提案，结果为4票反对、2票赞成，未达一致决门槛。</p>
+        <div class="highlight-box">可核对的判断拆解：判断一条规则变动是否「影响大」，可以拆成三个环节——① 规则生效后的首轮投票结果是否改变；② 投票结果改变是否导致角色获得/失去关键道具；③ 道具变化是否在后续章节的对话措辞中留下痕迹。三个环节都成立，才能说影响是实质性的，否则可能只是表面规则调整。以2.3版为例，三个环节全部成立，因此「裂隙之夜」提案被否属于实质性影响。</div>
+
+        <h3>「银月契约」第4条与第7条的措辞差异</h3>
+        <p>设定集第47页列出了「银月契约」全部9条条款。2.1版第4条写作「血月夜双方不得主动攻击」，2.3版改为「血月夜双方不得发起攻击行为」。多出的「行为」二字，把「被动反击」也纳入了禁止范围。第7条同样做了调整：2.1版是「违约方失去三夜记忆」，2.3版改为「违约方失去连续三夜的记忆」，强调连续性。社区考据组在11月7日的解析帖中给出了一个具体案例：第9章「月蚀」事件中，角色「灰烬」在血月夜遭到攻击后进行了反击，按2.1版条款不算违约，按2.3版则构成违约。这一差异直接影响到「灰烬」在第10章开头是否应该出现记忆缺失症状——2.3版文本中确实出现了「对旧钟楼毫无印象」的描述，而2.1版没有。</p>
+
+        <h3>同人创作中的意象趋同现象</h3>
+        <p>「雾都旅人」统计的1,247篇同人小说中，雨夜场景出现率31%，钟楼22%，镜子16%。这三个意象的高频出现并非偶然：设定集中「银月契约」的签署地点就是钟楼，而「镜子」在2.3版新增的第47页脚注中被明确为「记忆回溯」的触发媒介。雨夜则与「血月夜」规则直接相关。换句话说，同人作者在写作时大量依赖设定集中已经给出的场景和道具，形成了可观测的意象集中。但统计也显示，使用「镜子」意象的作品中，只有38%同时使用了「记忆回溯」机制，其余62%仅把镜子当作普通道具。这说明意象传播的速度快于机制理解的深度。</p>
+        <ul>
+          <li>雨夜场景386次，其中271次同时出现「记忆缺失」情节（70.2%）</li>
+          <li>钟楼场景274次，其中189次涉及「第十三声」规则（69.0%）</li>
+          <li>镜子场景201次，其中76次正确使用「记忆回溯」机制（37.8%）</li>
+        </ul>
+        <p>这组数字给出的判断是：同人创作对设定集规则的引用存在明显分层。雨夜和钟楼相关规则的引用准确率较高，镜子相关规则的引用准确率偏低。原因可能在于「记忆回溯」机制在2.3版才被明确，而大量同人作品创作于2.2版时期。这一点在「雾都旅人」的统计帖中也有说明：1,247篇样本中，标注创作时间在2.3版之后的只有312篇，这312篇里镜子意象与记忆回溯机制同时出现的比例上升到61%。</p>
+
+        <h3>人气投票数据的另一个切面</h3>
+        <p>10月人气投票总票数41,600，前三名票差仅4.7%。如果把投票时间按周拆开，会发现一个不同于总榜的走势：第一周「银月」领先幅度达到12%，第三周被「黑曜石」反超，最后一周「白鸦」追至第三。前三名在四周内的排名变化了三次。社区成员「钟楼守夜人」在11月6日的分析帖中指出，第三周恰逢「星轨编年史」第七章发布，该章中「黑曜石」有一段长达四页的独白，可能是排名变化的原因之一。这个推测目前只有时间上的吻合，没有更直接的证据。</p>
+      </div>
+    </section>
+
+    <!-- 体验路径 -->
+    <section id="guide" class="section-block">
+      <h2 class="section-title">体验路径</h2>
+      <div class="guide-steps">
+        <div class="step-item">
+          <span class="step-num">1</span>
+          <div class="step-body">
+            <h4>先看设定集页码标注完整的条目</h4>
+            <p>社区投稿区要求标注引用来源，页码和版本号齐全的条目通常考据更扎实。比如「暗夜蔷薇·设定集 第47页」这类标注，比笼统写「设定集里有」的条目可靠得多。</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-num">2</span>
+          <div class="step-body">
+            <h4>对比2.1版和2.3版的措辞差异</h4>
+            <p>同一段规则在两个版本中的用词变化，往往比新增内容更能说明问题。「不得主动攻击」到「不得发起攻击行为」这类改动，直接影响了后续章节中角色的行为判定。</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-num">3</span>
+          <div class="step-body">
+            <h4>判断一条同人作品是否值得投入时间</h4>
+            <p>先看它有没有区分「已公开事实」和「个人推测」。好的考据帖会把设定集原文、版本号、页码列出来，推测部分会明确标注「推测」。只有结论没有出处的条目，阅读价值通常不高。</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-num">4</span>
+          <div class="step-body">
+            <h4>比较同类条目的两个指标：样本量和时间跨度</h4>
+            <p>「雾都旅人」的意象统计覆盖1,247篇样本、三个月时间跨度，结论相对可靠。如果只有十几篇样本、一周时间，数字波动会很大，参考价值有限。</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-num">5</span>
+          <div class="step-body">
+            <h4>投票数据看周度走势，不看总榜</h4>
+            <p>总榜前三名票差4.7%，差距很小。按周拆开看，排名变化了三次，第三周「黑曜石」反超与第七章发布时间吻合。周度走势比总榜更能反映讨论热度的实际变化。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section-block">
+      <h2 class="section-title">常见问答</h2>
+      <div class="faq-list">
+        <details>
+          <summary>「银月契约」第4条在2.3版改了什么？</summary>
+          <div class="faq-answer">第4条从「血月夜双方不得主动攻击」改为「血月夜双方不得发起攻击行为」。多出的「行为」二字把被动反击也纳入禁止范围，第9章「月蚀」事件中「灰烬」的反击行为因此在2.3版中构成违约。</div>
+        </details>
+        <details>
+          <summary>「黑曜石议会」一致决规则从哪一版开始实施？</summary>
+          <div class="faq-answer">2.3版，2026年10月8日更新后生效。首轮一致决投票发生在10月15日，即「裂隙之夜」提案，结果为4票反对、2票赞成，未通过。</div>
+        </details>
+        <details>
+          <summary>白鸦的「钟楼共鸣」被动触发率为什么从12%涨到34%？</summary>
+          <div class="faq-answer">2.3版为白鸦增加了「钟楼共鸣」被动技能，触发条件与钟楼场景的「第十三声」规则挂钩。实测数据由社区成员「灰烬笔记」在10月28日发布，样本为2.3版上线后的前20场组队战斗。</div>
+        </details>
+        <details>
+          <summary>「星轨编年史」第七章的「旧钟楼」指代是什么意思？</summary>
+          <div class="faq-answer">第7章第3节末尾出现两次「旧钟楼」指代，社区比对第4章和第9章的用词习惯后确认，这是作者埋设的三角关系伏笔，分别指向「白鸦」「灰烬」和「黑曜石」三条人物线。</div>
+        </details>
+        <details>
+          <summary>同人小说中镜子意象的引用准确率为什么只有38%？</summary>
+          <div class="faq-answer">「记忆回溯」机制在2.3版才被明确为镜子作为触发媒介，而1,247篇样本中大部分创作于2.2版时期。仅看2.3版之后的312篇，镜子与记忆回溯机制同时出现的比例上升到61%。</div>
+        </details>
+        <details>
+          <summary>十月人气投票前三名票差4.7%意味着什么？</summary>
+          <div class="faq-answer">总票数41,600，银月11,842票、黑曜石11,203票、白鸦10,967票。票差很小，且按周拆开后排名变化了三次。第三周黑曜石反超与「星轨编年史」第七章发布时间吻合。</div>
+        </details>
+      </div>
+    </section>
+
+    <!-- 用户评论 -->
+    <section id="comments" class="section-block">
+      <h2 class="section-title">用户评论</h2>
+      <div class="comment-list">
+        <div class="comment-item">
+          <div class="comment-avatar">雾</div>
+          <div class="comment-body">
+            <div class="comment-nick">雾都旅人</div>
+            <div class="comment-text">第47页脚注那个换算表我看了三遍才搞明白。之前一直以为银月契约是三个月前签的，结果差17天。这个细节藏得太深了。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">钟</div>
+          <div class="comment-body">
+            <div class="comment-nick">钟楼守夜人</div>
+            <div class="comment-text">第三周黑曜石反超那段，我翻了一下第七章发布时间是10月20日，投票第三周是10月19日到25日，确实对得上。但独白四页和投票变化之间的因果关系还是太弱了，只能说时间吻合。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">灰</div>
+          <div class="comment-body">
+            <div class="comment-nick">灰烬笔记</div>
+            <div class="comment-text">一致决规则那条，第16章措辞从「通过」变「未果」，这个只有对照两个版本才能发现。我是先看了别人的帖子才注意到的。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">白</div>
+          <div class="comment-body">
+            <div class="comment-nick">白鸦的羽毛</div>
+            <div class="comment-text">白鸦被动触发率34%有点离谱，2.2版12%已经算不错了，直接翻快三倍。不过组队确实好用，钟楼场景基本稳过。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">黑</div>
+          <div class="comment-body">
+            <div class="comment-nick">黑曜石不黑</div>
+            <div class="comment-text">投票规则改一致决之后，第14章那个提案被否我倒是没意见，但第15章钟楼共鸣直接触发不了，白鸦那条线等于断了。这改动是不是有点欠考虑。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">银</div>
+          <div class="comment-body">
+            <div class="comment-nick">银月照夜</div>
+            <div class="comment-text">十月挑战赛那个「失忆的钟楼」命题，我投了稿，结果没进前五。复盘帖说一半作品忽略第十三声规则，我回头看了自己的，确实漏了。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">旧</div>
+          <div class="comment-body">
+            <div class="comment-nick">旧历换算员</div>
+            <div class="comment-text">那个脚注换算表其实挺简单的，就是旧历月份乘0.97再减3天。但设定集里没给例子，很多人没注意到。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">镜</div>
+          <div class="comment-body">
+            <div class="comment-nick">镜中倒影</div>
+            <div class="comment-text">镜子意象38%准确率这个数据，我觉得统计方法可以再细一点。比如「记忆回溯」机制本身在2.2版就有暗示，只是没明说，算不算准确引用是个问题。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">星</div>
+          <div class="comment-body">
+            <div class="comment-nick">星轨迷途</div>
+            <div class="comment-text">第七章隐藏对话14处双关，我找到11处，剩下3处看了解析才明白。旧钟楼那两处确实藏得好。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">裂</div>
+          <div class="comment-body">
+            <div class="comment-nick">裂隙之夜</div>
+            <div class="comment-text">说实话，2.3版之后我还没怎么打组队战，白鸦的共鸣被动到底好不好用，等周末试试再说。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">投</div>
+          <div class="comment-body">
+            <div class="comment-nick">投票统计员</div>
+            <div class="comment-text">41,600票，前三名差不到两千票。银月第一周领先12%，第三周被黑曜石反超，最后一周白鸦追上来。这走势比总榜有意思多了。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">路</div>
+          <div class="comment-body">
+            <div class="comment-nick">路过看看</div>
+            <div class="comment-text">这个领域最近讨论量确实上来了，帖子比以前多。我主要是看设定集解析，同人小说偶尔翻翻。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">第</div>
+          <div class="comment-body">
+            <div class="comment-nick">第十三声</div>
+            <div class="comment-text">钟楼第十三声的规则在设定集里写得很隐晦，就一句话。但我统计的样本里两成作品根本没提这个，直接当普通钟楼写。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">稿</div>
+          <div class="comment-body">
+            <div class="comment-nick">投稿常客</div>
+            <div class="comment-text">投稿区新规要求标注页码版本号，我觉得挺好，至少能筛掉一部分瞎写的。之前有些帖子连设定集第几页都不写，就在那分析半天。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">能</div>
+          <div class="comment-body">
+            <div class="comment-nick">能力评级员</div>
+            <div class="comment-text">银月夜视S级没争议，黑曜石契约抗性A+也合理。白鸦那个钟楼共鸣算被动还是算技能，评级标准里没说清楚，建议下次更新补上。</div>
+          </div>
+        </div>
+        <div class="comment-item">
+          <div class="comment-avatar">意</div>
+          <div class="comment-body">
+            <div class="comment-nick">意象收集者</div>
+            <div class="comment-text">雨夜场景占31%我倒不意外，血月夜规则摆在那，写雨夜最方便。但镜子只有16%，比想象中低。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 相关资讯 -->
+    <section id="news" class="section-block">
+      <h2 class="section-title">相关资讯</h2>
+      <div class="news-list">
+        <article class="news-item">
+          <div class="news-title">「暗夜蔷薇·设定集」2.3版第47页脚注补充「旧历换算表」</div>
+          <div class="news-date">2026-11-07</div>
+          <div class="news-summary">脚注新增换算公式，社区据此重新推算「银月契约」生效日期，结果与此前推定相差17天。原推定基于正文描述，未参考脚注。</div>
+        </article>
+        <article class="news-item">
+          <div class="news-title">10月角色人气投票总票数41,600，前三名票差缩至4.7%</div>
+          <div class="news-date">2026-11-06</div>
+          <div class="news-summary">较9月增长12%，新增投票中约六成来自「星轨编年史」第七章发布后的新注册用户。前三名周度排名变化三次。</div>
+        </article>
+        <article class="news-item">
+          <div class="news-title">投稿区11月5日起要求标注设定集页码与版本号</div>
+          <div class="news-date">2026-11-05</div>
+          <div class="news-summary">未标注引用来源的投稿进入待审核池，审核周期为3个工作日。规则考据类投稿需同时提供原文截图。</div>
+        </article>
+        <article class="news-item">
+          <div class="news-title">十月创作挑战赛复盘：87篇投稿中52篇忽略「第十三声」规则</div>
+          <div class="news-date">2026-11-04</div>
+          <div class="news-summary">评委「灰烬笔记」在复盘帖中列出三类常见错误，其中「钟楼场景不触发第十三声」出现最频繁，占忽略规则样本的64%。</div>
+        </article>
+        <article class="news-item">
+          <div class="news-title">「星轨编年史」第七章隐藏对话整理：14处双关指代</div>
+          <div class="news-date">2026-11-03</div>
+          <div class="news-summary">「旧钟楼」出现两次，分别指向「白鸦」「灰烬」「黑曜石」三条人物线。整理者「星轨迷途」标注了每处指代的章节来源。</div>
+        </article>
+        <article class="news-item">
+          <div class="news-title">「雾都旅人」发布近三月同人小说意象统计：1,247篇样本</div>
+          <div class="news-date">2026-11-02</div>
+          <div class="news-summary">雨夜31%、钟楼22%、镜子16%。2.3版后创作的312篇中，镜子与「记忆回溯」机制同时出现比例升至61%。</div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 相关推荐 -->
+    <section id="related" class="section-block">
+      <h2 class="section-title">相关推荐</h2>
+      <div class="related-tags">
+        <a href="/#featured">暗夜蔷薇·设定集第47页</a>
+        <a href="/#featured">银月契约条款对照</a>
+        <a href="/#featured">黑曜石议会一致决</a>
+        <a href="/#featured">星轨编年史第七章</a>
+        <a href="/#featured">白鸦钟楼共鸣</a>
+        <a href="/#featured">角色人气投票周度走势</a>
+        <a href="/#featured">同人小说意象统计</a>
+        <a href="/#featured">旧历换算表脚注</a>
+      </div>
+    </section>
+
+    <!-- 补充板块：热门榜单 -->
+    <section id="ranking" class="section-block">
+      <h2 class="section-title">热门榜单</h2>
+      <div class="aux-card" style="padding: 18px 20px;">
+        <h3 style="margin-bottom: 12px;">条目热度 Top 5</h3>
+        <ul class="hot-list">
+          <li><span class="hot-rank top3">1</span><span class="hot-name">暗夜蔷薇·设定集 第47页「银月契约」拆解</span><span class="hot-score">982</span></li>
+          <li><span class="hot-rank top3">2</span><span class="hot-name">10月角色人气投票结果与周度走势</span><span class="hot-score">874</span></li>
+          <li><span class="hot-rank top3">3</span><span class="hot-name">黑曜石议会一致决规则后续影响</span><span class="hot-score">831</span></li>
+          <li><span class="hot-rank">4</span><span class="hot-name">星轨编年史第七章隐藏对话记录</span><span class="hot-score">765</span></li>
+          <li><span class="hot-rank">5</span><span class="hot-name">近三月同人小说高频意象统计</span><span class="hot-score">702</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 互动投稿栏目 -->
+    <section id="interact" class="section-block">
+      <h2 class="section-title">互动投稿</h2>
+      <div class="interact-bar">
+        <p>投稿区面向所有成员开放。规则考据类投稿请标注设定集页码与版本号，同人创作请注明是否使用2.3版规则。</p>
+        <button class="btn-compact" type="button">进入投稿区</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 右侧辅助栏 -->
+  <aside class="aux-sidebar">
+    <div class="aux-card">
+      <h3>本周热榜</h3>
+      <ul class="hot-list">
+        <li><span class="hot-rank top3">1</span><span class="hot-name">银月契约第4条措辞差异</span><span class="hot-score">982</span></li>
+        <li><span class="hot-rank top3">2</span><span class="hot-name">10月人气投票周度走势</span><span class="hot-score">874</span></li>
+        <li><span class="hot-rank top3">3</span><span class="hot-name">一致决规则后续影响</span><span class="hot-score">831</span></li>
+        <li><span class="hot-rank">4</span><span class="hot-name">星轨第七章旧钟楼指代</span><span class="hot-score">765</span></li>
+        <li><span class="hot-rank">5</span><span class="hot-name">同人小说意象统计</span><span class="hot-score">702</span></li>
+      </ul>
+    </div>
+    <div class="aux-card">
+      <h3>最近更新</h3>
+      <ul class="update-mini">
+        <li><span>设定集第47页解析</span><span class="mini-date">11-07</span></li>
+        <li><span>10月人气投票结果</span><span class="mini-date">11-06</span></li>
+        <li><span>投稿区新规生效</span><span class="mini-date">11-05</span></li>
+        <li><span>挑战赛复盘帖</span><span class="mini-date">11-04</span></li>
+        <li><span>星轨第七章对话整理</span><span class="mini-date">11-03</span></li>
+      </ul>
+    </div>
+    <div class="aux-card">
+      <h3>数据速览</h3>
+      <ul class="update-mini">
+        <li><span>设定集解析条目</span><span>24篇</span></li>
+        <li><span>同人图谱条目</span><span>18篇</span></li>
+        <li><span>规则考据条目</span><span>31篇</span></li>
+        <li><span>10月投票总票数</span><span>41,600</span></li>
+        <li><span>近三月同人样本</span><span>1,247篇</span></li>
+      </ul>
+    </div>
+  </aside>
+
+</div>
+
+<!-- 页脚 -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">女王社区vk</div>
+      <p class="footer-desc">覆盖2026年8月至11月的设定集解析、同人图谱、规则考据与投票数据。条目类型包括长文拆解、数据统计、创作挑战复盘与版本差异对照。每周更新2—3篇深度考据，每日动态同步条目修订与投票进展。</p>
+    </div>
+    <div class="footer-col">
+      <h4>内容方向</h4>
+      <ul>
+        <li><a href="/#featured">设定集解析</a></li>
+        <li><a href="/#featured">同人图谱</a></li>
+        <li><a href="/#featured">规则考据</a></li>
+        <li><a href="/#featured">版本差异</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>数据与互动</h4>
+      <ul>
+        <li><a href="/#ranking">热门榜单</a></li>
+        <li><a href="/#comments">用户评论</a></li>
+        <li><a href="/#interact">投稿入口</a></li>
+        <li><a href="/#news">相关资讯</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>关于内容</h4>
+      <ul>
+        <li><a href="/#overview">领域概览</a></li>
+        <li><a href="/#deep-dive">深度解析</a></li>
+        <li><a href="/#faq">常见问答</a></li>
+        <li><a href="/#guide">体验路径</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 女王社区vk 内容聚合示例页面。条目与数据均为示例，用于展示内容结构。</span>
+    <span>最近更新：2026-11-07</span>
+  </div>
+</footer>
+
+<!-- 回到顶部 -->
+<button class="back-top" aria-label="回到顶部" id="backTop">↑</button>
+
+<script>
+  (function() {
+    // 回到顶部
+    var backTop = document.getElementById('backTop');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > window.innerHeight) {
+        backTop.classList.add('visible');
+      } else {
+        backTop.classList.remove('visible');
+      }
+    });
+    backTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 移动端菜单开关（简化处理：点击汉堡切换导航显示）
+    var hamburger = document.querySelector('.hamburger');
+    var headerNav = document.querySelector('.header-nav');
+    if (hamburger && headerNav) {
+      hamburger.addEventListener('click', function() {
+        var expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !expanded);
+        if (headerNav.style.display === 'flex') {
+          headerNav.style.display = '';
+        } else {
+          headerNav.style.display = 'flex';
+          headerNav.style.flexDirection = 'column';
+          headerNav.style.position = 'absolute';
+          headerNav.style.top = '100%';
+          headerNav.style.left = '0';
+          headerNav.style.right = '0';
+          headerNav.style.background = 'rgba(255,255,255,0.98)';
+          headerNav.style.padding = '12px 16px';
+          headerNav.style.borderBottom = '1px solid var(--border)';
+          headerNav.style.zIndex = '98';
+        }
+      });
+      // 点击导航链接后收起
+      headerNav.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') {
+          headerNav.style.display = '';
+          hamburger.setAttribute('aria-expanded', 'false');
+        }
+      });
+      // Esc 关闭
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && headerNav.style.display === 'flex') {
+          headerNav.style.display = '';
+          hamburger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  })();
+</script>
+
+<!-- 结构化数据 -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "女王社区vk",
+  "description": "女王社区vk 汇聚了女王社区vk 相关的多类垂直内容，包含特定条目、类型解析、用户评论、资讯动态及深度指南，适合对该领域有持续关注或研究需求的读者。",
+  "inLanguage": "zh-CN",
+  "url": ""
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "「银月契约」第4条在2.3版改了什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "第4条从「血月夜双方不得主动攻击」改为「血月夜双方不得发起攻击行为」。多出的「行为」二字把被动反击也纳入禁止范围，第9章「月蚀」事件中「灰烬」的反击行为因此在2.3版中构成违约。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "「黑曜石议会」一致决规则从哪一版开始实施？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "2.3版，2026年10月8日更新后生效。首轮一致决投票发生在10月15日，即「裂隙之夜」提案，结果为4票反对、2票赞成，未通过。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "白鸦的「钟楼共鸣」被动触发率为什么从12%涨到34%？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "2.3版为白鸦增加了「钟楼共鸣」被动技能，触发条件与钟楼场景的「第十三声」规则挂钩。实测数据由社区成员「灰烬笔记」在10月28日发布，样本为2.3版上线后的前20场组队战斗。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "「星轨编年史」第七章的「旧钟楼」指代是什么意思？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "第7章第3节末尾出现两次「旧钟楼」指代，社区比对第4章和第9章的用词习惯后确认，这是作者埋设的三角关系伏笔，分别指向「白鸦」「灰烬」和「黑曜石」三条人物线。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "同人小说中镜子意象的引用准确率为什么只有38%？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "「记忆回溯」机制在2.3版才被明确为镜子作为触发媒介，而1,247篇样本中大部分创作于2.2版时期。仅看2.3版之后的312篇，镜子与记忆回溯机制同时出现的比例上升到61%。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "十月人气投票前三名票差4.7%意味着什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "总票数41,600，银月11,842票、黑曜石11,203票、白鸦10,967票。票差很小，且按周拆开后排名变化了三次。第三周黑曜石反超与「星轨编年史」第七章发布时间吻合。"
+      }
+    }
+  ]
+}
+</script>
+
+</body>
+          </html>
