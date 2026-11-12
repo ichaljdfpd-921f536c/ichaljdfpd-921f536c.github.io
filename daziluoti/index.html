@@ -1,0 +1,1674 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>大字裸体挠痒vk - 挠痒TK内容聚合与社区精选</title>
+<meta name="description" content="大字裸体挠痒vk 汇聚挠痒TK、VK社区、挠痒视频与图文条目，涵盖挠痒挑战、TK互动、VK投稿与话题讨论，适合关注挠痒玩法与社区动态的访客浏览。">
+<meta name="keywords" content="大字裸体挠痒vk">
+<style>
+:root{
+  --brand:#b33a5e;
+  --brand-soft:#f7e6ec;
+  --brand-deep:#7a2340;
+  --bg:#fbf7f5;
+  --panel:#ffffff;
+  --ink:#2b2226;
+  --ink-2:#5c4f54;
+  --ink-3:#8c7f84;
+  --line:#eadde1;
+  --radius-card:16px;
+  --radius-btn:10px;
+  --radius-tag:6px;
+  --radius-banner:12px;
+  --shadow:0 2px 8px rgba(90,40,55,.06);
+  --shadow-hover:0 8px 20px rgba(90,40,55,.12);
+  --header-h:64px;
+  --notice-h:40px;
+  --max:1320px;
+  --font:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.7;
+  font-size:15px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--brand)}
+h1,h2,h3,h4{margin:0;line-height:1.35;font-weight:700}
+p{margin:0 0 .8em}
+ul{margin:.4em 0;padding-left:1.2em}
+button{font-family:inherit;cursor:pointer}
+img{display:block;max-width:100%}
+
+/* 吸顶公告条 + 页头 */
+.sticky-wrap{
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.notice-bar{
+  background:var(--brand-deep);
+  color:#fbeef2;
+  font-size:13px;
+  height:var(--notice-h);
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+}
+.notice-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  width:100%;
+  white-space:nowrap;
+  overflow:hidden;
+}
+.notice-brand{
+  font-weight:700;
+  letter-spacing:.5px;
+  background:rgba(255,255,255,.14);
+  padding:2px 10px;
+  border-radius:20px;
+  flex-shrink:0;
+}
+.notice-items{
+  display:flex;
+  gap:28px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.notice-items::-webkit-scrollbar{display:none}
+.notice-items span{display:inline-flex;align-items:center;gap:6px}
+.notice-items b{color:#ffd7e3;font-weight:600}
+
+.site-header{
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  height:var(--header-h);
+}
+.header-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  gap:24px;
+  height:100%;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
+}
+.logo svg{width:34px;height:34px;flex-shrink:0}
+.logo-text{
+  font-size:17px;
+  font-weight:800;
+  color:var(--brand-deep);
+  letter-spacing:.4px;
+  white-space:nowrap;
+}
+.main-nav{
+  display:flex;
+  gap:4px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  flex:1;
+}
+.main-nav::-webkit-scrollbar{display:none}
+.main-nav a{
+  padding:6px 12px;
+  border-radius:8px;
+  font-size:14px;
+  color:var(--ink-2);
+  white-space:nowrap;
+  transition:background .15s,color .15s;
+}
+.main-nav a:hover,.main-nav a:focus-visible{
+  background:var(--brand-soft);
+  color:var(--brand-deep);
+  outline:none;
+}
+.header-actions{display:flex;gap:10px;align-items:center;flex-shrink:0}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:7px 16px;
+  border-radius:var(--radius-btn);
+  font-size:14px;
+  border:1px solid transparent;
+  transition:background .15s,box-shadow .15s,transform .1s;
+  white-space:nowrap;
+}
+.btn-primary{
+  background:var(--brand);
+  color:#fff;
+}
+.btn-primary:hover{background:var(--brand-deep);color:#fff;box-shadow:var(--shadow-hover)}
+.btn-ghost{
+  background:transparent;
+  border-color:var(--line);
+  color:var(--ink-2);
+}
+.btn-ghost:hover{background:var(--brand-soft);border-color:var(--brand);color:var(--brand-deep)}
+.hamburger{
+  display:none;
+  background:none;
+  border:1px solid var(--line);
+  border-radius:8px;
+  width:38px;height:38px;
+  align-items:center;
+  justify-content:center;
+  padding:0;
+}
+.hamburger span{
+  display:block;width:18px;height:2px;background:var(--ink-2);
+  margin:3px 0;
+}
+
+/* 首屏 */
+.hero{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(135deg,#fff5f8 0%,#fdeef2 40%,#f7e6ec 100%);
+  border-bottom:1px solid var(--line);
+}
+.hero-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:56px 20px 48px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:40px;
+  align-items:center;
+  position:relative;
+  z-index:2;
+}
+.hero-tag{
+  display:inline-block;
+  background:var(--brand);
+  color:#fff;
+  font-size:12px;
+  font-weight:600;
+  padding:3px 12px;
+  border-radius:20px;
+  letter-spacing:.5px;
+  margin-bottom:14px;
+}
+.hero h1{
+  font-size:clamp(26px,3.4vw,42px);
+  color:var(--brand-deep);
+  letter-spacing:1px;
+  margin-bottom:14px;
+  font-weight:800;
+}
+.hero-desc{
+  font-size:16px;
+  color:var(--ink-2);
+  max-width:540px;
+  margin-bottom:24px;
+  line-height:1.8;
+}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-visual{
+  position:relative;
+  aspect-ratio:5/4;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.hero-visual svg{width:100%;height:100%}
+.hero-bg-shape{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  overflow:hidden;
+  pointer-events:none;
+}
+.hero-bg-shape::before{
+  content:"";
+  position:absolute;
+  width:420px;height:420px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(179,58,94,.10),transparent 70%);
+  top:-120px;right:-80px;
+}
+.hero-bg-shape::after{
+  content:"";
+  position:absolute;
+  width:300px;height:300px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(179,58,94,.07),transparent 70%);
+  bottom:-100px;left:-60px;
+}
+
+/* 主内容三栏 */
+.main-wrap{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:32px 20px 56px;
+  display:grid;
+  grid-template-columns:180px minmax(0,1fr) 250px;
+  gap:28px;
+  align-items:start;
+}
+/* 左侧频道索引 */
+.channel-index{
+  position:sticky;
+  top:calc(var(--notice-h) + var(--header-h) + 16px);
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-card);
+  padding:16px 12px;
+  box-shadow:var(--shadow);
+}
+.channel-index h2{
+  font-size:14px;
+  color:var(--ink-3);
+  letter-spacing:1px;
+  padding:0 8px 10px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:8px;
+  font-weight:600;
+}
+.channel-index ul{list-style:none;padding:0;margin:0}
+.channel-index li a{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border-radius:8px;
+  font-size:14px;
+  color:var(--ink-2);
+  transition:background .15s,color .15s;
+}
+.channel-index li a:hover,.channel-index li a:focus-visible{
+  background:var(--brand-soft);
+  color:var(--brand-deep);
+  outline:none;
+}
+.channel-index li a.active{
+  background:var(--brand-soft);
+  color:var(--brand-deep);
+  font-weight:600;
+}
+.channel-index .ch-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--brand);
+  flex-shrink:0;
+}
+/* 中间主栏 */
+.main-col{min-width:0}
+.section{
+  margin-bottom:36px;
+  scroll-margin-top:calc(var(--notice-h) + var(--header-h) + 16px);
+}
+.section-head{
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+  margin-bottom:16px;
+  flex-wrap:wrap;
+}
+.section-head h2{
+  font-size:21px;
+  color:var(--ink);
+  letter-spacing:.5px;
+}
+.section-head .sub{
+  font-size:13px;
+  color:var(--ink-3);
+}
+/* 概览 */
+.overview{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-card);
+  padding:22px 24px;
+  box-shadow:var(--shadow);
+  font-size:15px;
+  color:var(--ink-2);
+  line-height:1.85;
+}
+.overview p:last-child{margin-bottom:0}
+/* 卡片网格 */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:18px;
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-card);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  transition:transform .15s,box-shadow .15s;
+  display:flex;
+  flex-direction:column;
+}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover)}
+.card-img{
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  background:#f0e6e9;
+}
+.card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{
+  display:inline-block;
+  background:var(--brand-soft);
+  color:var(--brand-deep);
+  font-size:11px;
+  padding:2px 8px;
+  border-radius:var(--radius-tag);
+  font-weight:600;
+  letter-spacing:.3px;
+}
+.tag-ghost{
+  background:#f3eef0;
+  color:var(--ink-3);
+  font-weight:500;
+}
+.card-title{
+  font-size:15px;
+  font-weight:700;
+  color:var(--ink);
+  line-height:1.45;
+}
+.card-desc{
+  font-size:13px;
+  color:var(--ink-2);
+  line-height:1.65;
+  flex:1;
+}
+.card-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:12px;
+  color:var(--ink-3);
+  border-top:1px solid var(--line);
+  padding-top:8px;
+  margin-top:4px;
+}
+.hot{color:var(--brand);font-weight:700}
+/* 紧凑列表 */
+.compact-list{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-card);
+  padding:6px 20px;
+  box-shadow:var(--shadow);
+}
+.compact-list li{
+  list-style:none;
+  display:flex;
+  gap:14px;
+  padding:12px 0;
+  border-bottom:1px dashed var(--line);
+  align-items:flex-start;
+}
+.compact-list li:last-child{border-bottom:none}
+.compact-list .li-date{
+  font-size:12px;
+  color:var(--ink-3);
+  flex-shrink:0;
+  width:56px;
+  padding-top:2px;
+  font-variant-numeric:tabular-nums;
+}
+.compact-list .li-main{flex:1;min-width:0}
+.compact-list .li-title{
+  font-size:14px;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:2px;
+}
+.compact-list .li-sum{
+  font-size:13px;
+  color:var(--ink-2);
+  line-height:1.6;
+}
+/* 分类入口 */
+.cat-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:12px;
+}
+.cat-item{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-card);
+  padding:16px 14px;
+  text-align:center;
+  font-size:14px;
+  font-weight:600;
+  color:var(--ink-2);
+  box-shadow:var(--shadow);
+  transition:background .15s,border-color .15s,color .15s,transform .1s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+.cat-item:hover{
+  background:var(--brand-soft);
+  border-color:var(--brand);
+  color:var(--brand-deep);
+  transform:translateY(-2px);
+}
+/* 深度解析 */
+.deep-dive{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-card);
+  padding:26px 30px;
+  box-shadow:var(--shadow);
+  font-size:15px;
+  color:var(--ink-2);
+  line-height:1.85;
+}
+.deep-dive h3{
+  font-size:17px;
+  color:var(--ink);
+  margin:22px 0 10px;
+  padding-left:12px;
+  border-left:4px solid var(--brand);
+  line-height:1.4;
+}
+.deep-dive h3:first-of-type{margin-top:4px}
+.deep-dive p{margin-bottom:.9em}
+.deep-dive ul{margin:.6em 0 .9em;padding-left:1.4em}
+.deep-dive li{margin-bottom:.3em}
+.deep-dive strong{color:var(--brand-deep)}
+.deep-dive .note{
+  background:#fdf3f6;
+  border-radius:var(--radius-tag);
+  padding:10px 14px;
+  font-size:14px;
+  margin:14px 0;
+  color:var(--brand-deep);
+  border-left:3px solid var(--brand);
+}
+/* 指南 */
+.guide{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-card);
+  padding:22px 24px;
+  box-shadow:var(--shadow);
+}
+.steps{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:16px;
+  counter-reset:step;
+}
+.step{
+  position:relative;
+  padding:14px 14px 14px 48px;
+  background:#fdf9fa;
+  border-radius:var(--radius-tag);
+  border:1px solid var(--line);
+  font-size:14px;
+  color:var(--ink-2);
+  line-height:1.7;
+}
+.step::before{
+  counter-increment:step;
+  content:counter(step);
+  position:absolute;
+  left:14px;top:14px;
+  width:24px;height:24px;
+  border-radius:50%;
+  background:var(--brand);
+  color:#fff;
+  font-size:13px;
+  font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:10px}
+details.faq{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-card);
+  padding:0;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+details.faq summary{
+  padding:15px 20px;
+  font-size:15px;
+  font-weight:600;
+  color:var(--ink);
+  cursor:pointer;
+  list-style:none;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{
+  content:"+";
+  font-size:20px;
+  color:var(--brand);
+  font-weight:400;
+  flex-shrink:0;
+  transition:transform .2s;
+}
+details.faq[open] summary::after{
+  content:"−";
+  transform:rotate(0deg);
+}
+details.faq .faq-answer{
+  padding:0 20px 16px;
+  font-size:14px;
+  color:var(--ink-2);
+  line-height:1.8;
+}
+/* 评论 */
+.comment-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:12px;
+}
+.comment{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-card);
+  padding:14px 16px;
+  box-shadow:var(--shadow);
+  font-size:13.5px;
+  color:var(--ink-2);
+  line-height:1.7;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.comment-head{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.avatar{
+  width:28px;height:28px;
+  border-radius:50%;
+  background:var(--brand-soft);
+  color:var(--brand-deep);
+  font-size:12px;
+  font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.nick{font-weight:600;color:var(--ink);font-size:13px}
+.comment-time{font-size:11px;color:var(--ink-3);margin-left:auto}
+.comment-text{flex:1}
+.comment-like{
+  font-size:12px;
+  color:var(--ink-3);
+  display:flex;
+  align-items:center;
+  gap:4px;
+  margin-top:2px;
+}
+/* 资讯 */
+.news-list{display:flex;flex-direction:column;gap:12px}
+.news-item{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-card);
+  padding:16px 20px;
+  box-shadow:var(--shadow);
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+}
+.news-date{
+  flex-shrink:0;
+  font-size:12px;
+  color:var(--brand);
+  font-weight:700;
+  background:var(--brand-soft);
+  padding:3px 10px;
+  border-radius:20px;
+  font-variant-numeric:tabular-nums;
+  margin-top:2px;
+}
+.news-body{flex:1;min-width:0}
+.news-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.news-sum{font-size:13.5px;color:var(--ink-2);line-height:1.7}
+/* 相关推荐标签 */
+.tag-index{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.tag-index a{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:30px;
+  padding:6px 16px;
+  font-size:13px;
+  color:var(--ink-2);
+  box-shadow:var(--shadow);
+  transition:background .15s,border-color .15s,color .15s;
+}
+.tag-index a:hover,.tag-index a:focus-visible{
+  background:var(--brand-soft);
+  border-color:var(--brand);
+  color:var(--brand-deep);
+  outline:none;
+}
+/* 榜单 */
+.rank-list{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-card);
+  padding:6px 20px;
+  box-shadow:var(--shadow);
+}
+.rank-list li{
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:11px 0;
+  border-bottom:1px dashed var(--line);
+  font-size:14px;
+}
+.rank-list li:last-child{border-bottom:none}
+.rank-num{
+  width:22px;height:22px;
+  border-radius:6px;
+  background:#f3eef0;
+  color:var(--ink-3);
+  font-size:12px;
+  font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.rank-list li:nth-child(1) .rank-num{background:var(--brand);color:#fff}
+.rank-list li:nth-child(2) .rank-num{background:#e8a0b8;color:#fff}
+.rank-list li:nth-child(3) .rank-num{background:#f0c4d2;color:var(--brand-deep)}
+.rank-name{flex:1;font-weight:600;color:var(--ink)}
+.rank-score{font-size:12px;color:var(--brand);font-weight:700}
+/* 右侧辅助栏 */
+.side-col{
+  position:sticky;
+  top:calc(var(--notice-h) + var(--header-h) + 16px);
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+.side-card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius-card);
+  padding:16px 16px 14px;
+  box-shadow:var(--shadow);
+}
+.side-card h3{
+  font-size:14px;
+  color:var(--ink);
+  margin-bottom:10px;
+  padding-bottom:8px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.side-card h3::before{
+  content:"";
+  width:4px;height:14px;
+  border-radius:2px;
+  background:var(--brand);
+}
+.side-list{list-style:none;padding:0;margin:0;font-size:13px}
+.side-list li{
+  padding:7px 0;
+  border-bottom:1px dashed var(--line);
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  color:var(--ink-2);
+}
+.side-list li:last-child{border-bottom:none}
+.side-list .s-date{font-size:11px;color:var(--ink-3);flex-shrink:0}
+.side-tag{
+  display:inline-block;
+  background:var(--brand-soft);
+  color:var(--brand-deep);
+  font-size:11px;
+  padding:1px 6px;
+  border-radius:4px;
+  margin-right:4px;
+}
+.side-note{
+  font-size:12px;
+  color:var(--ink-3);
+  line-height:1.7;
+  margin-top:6px;
+}
+/* 页尾 */
+.site-footer{
+  background:#2b2226;
+  color:#c9bcc1;
+  margin-top:8px;
+  padding:40px 20px 24px;
+}
+.footer-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1.5fr 1fr 1fr 1fr;
+  gap:32px;
+}
+.footer-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+.footer-brand svg{width:30px;height:30px}
+.footer-brand-text{font-size:16px;font-weight:800;color:#fff;letter-spacing:.5px}
+.footer-desc{font-size:13px;line-height:1.8;max-width:300px;margin-bottom:14px}
+.footer-col h4{font-size:14px;color:#fff;margin-bottom:12px;font-weight:600}
+.footer-col ul{list-style:none;padding:0;margin:0}
+.footer-col li{margin-bottom:8px}
+.footer-col a{font-size:13px;color:#c9bcc1;transition:color .15s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{
+  max-width:var(--max);
+  margin:28px auto 0;
+  padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.1);
+  font-size:12px;
+  color:#8c7f84;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 24px;
+  justify-content:space-between;
+}
+/* 回到顶部 */
+.to-top{
+  position:fixed;
+  right:20px;bottom:24px;
+  width:42px;height:42px;
+  border-radius:50%;
+  background:var(--brand);
+  color:#fff;
+  border:none;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  box-shadow:var(--shadow-hover);
+  z-index:90;
+  transition:background .15s,transform .15s;
+}
+.to-top:hover{background:var(--brand-deep);transform:translateY(-2px)}
+.to-top.show{display:flex}
+/* 遮罩 */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(43,34,38,.45);
+  z-index:95;
+  display:none;
+}
+.overlay.show{display:block}
+/* 响应式 */
+@media (max-width:1100px){
+  .main-wrap{grid-template-columns:1fr 260px;gap:24px}
+  .channel-index{display:none}
+}
+@media (max-width:900px){
+  .main-wrap{grid-template-columns:1fr;gap:28px}
+  .side-col{position:static;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .hero-inner{grid-template-columns:1fr;gap:24px;padding:40px 20px 32px}
+  .hero-visual{max-width:400px;margin:0 auto}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .main-nav{display:none}
+  .hamburger{display:flex}
+  .header-actions .btn-ghost{display:none}
+  /* 移动端菜单 */
+  .main-nav.mobile-open{
+    display:flex;
+    position:absolute;
+    top:calc(var(--header-h) + var(--notice-h));
+    left:0;right:0;
+    background:var(--panel);
+    flex-direction:column;
+    padding:12px 20px;
+    border-bottom:1px solid var(--line);
+    box-shadow:var(--shadow-hover);
+    z-index:99;
+    gap:2px;
+  }
+  .main-nav.mobile-open a{padding:10px 12px;font-size:15px}
+}
+@media (max-width:740px){
+  .main-wrap{padding:20px 14px 40px}
+  .side-col{grid-template-columns:1fr}
+  .hero-inner{padding:32px 14px 28px}
+  .hero h1{font-size:24px}
+  .hero-desc{font-size:14.5px}
+  .card-grid{grid-template-columns:1fr}
+  .comment-list{grid-template-columns:1fr}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-inner{grid-template-columns:1fr}
+  .news-item{flex-direction:column;gap:8px}
+  .compact-list{padding:4px 14px}
+  .deep-dive{padding:18px 16px}
+  .overview{padding:16px 16px}
+  .guide{padding:16px}
+  .steps{grid-template-columns:1fr}
+  .notice-items{gap:16px}
+  .header-inner{gap:12px;padding:0 14px}
+  .logo-text{font-size:15px}
+  .to-top{right:12px;bottom:16px;width:38px;height:38px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+</style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<!-- 吸顶公告条 + 页头 -->
+<div class="sticky-wrap">
+  <div class="notice-bar" role="region" aria-label="站点公告">
+    <div class="notice-inner">
+      <span class="notice-brand">大字裸体挠痒vk</span>
+      <div class="notice-items">
+        <span><b>11月8日</b> 新增「TK绳缚挠痒挑战」完整版</span>
+        <span><b>11月7日</b> VK社区投票：最怕痒部位TOP10</span>
+        <span><b>11月6日</b> 上传作品 47 件 · 审核通过 39 件</span>
+      </div>
+    </div>
+  </div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#" class="logo" aria-label="大字裸体挠痒vk 首页">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" stroke="#b33a5e" stroke-width="2.2"/>
+          <path d="M13 16c0-2 1.5-3.5 3.5-3.5S20 14 20 16v8c0 2-1.5 3.5-3.5 3.5S13 26 13 24v-8Z" fill="#f7e6ec" stroke="#b33a5e" stroke-width="1.4"/>
+          <path d="M20 16c0-2 1.5-3.5 3.5-3.5S27 14 27 16v8c0 2-1.5 3.5-3.5 3.5S20 26 20 24v-8Z" fill="#b33a5e" opacity=".55"/>
+          <circle cx="16.5" cy="14.5" r="1.2" fill="#7a2340"/>
+          <circle cx="23.5" cy="14.5" r="1.2" fill="#7a2340"/>
+        </svg>
+        <span class="logo-text">大字裸体挠痒vk</span>
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="主题导航">
+        <a href="#channel-tk">TK挠痒</a>
+        <a href="#channel-vk">VK社区</a>
+        <a href="#channel-video">挠痒视频</a>
+        <a href="#channel-challenge">挠痒挑战</a>
+        <a href="#channel-interact">互动玩法</a>
+        <a href="#channel-guide">新手指南</a>
+        <a href="#channel-news">资讯动态</a>
+        <a href="#channel-submit">投稿上传</a>
+      </nav>
+      <div class="header-actions">
+        <a href="#channel-submit" class="btn btn-ghost">投稿</a>
+        <a href="#channel-challenge" class="btn btn-primary">参与挑战</a>
+        <button class="hamburger" id="hamburger" aria-label="打开菜单" aria-expanded="false" aria-controls="mainNav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<!-- 首屏 -->
+<section class="hero">
+  <div class="hero-bg-shape" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <span class="hero-tag">挠痒 · TK · VK 内容聚合</span>
+      <h1>大字裸体挠痒vk</h1>
+      <p class="hero-desc">
+        汇集TK挠痒挑战、VK社区投稿、挠痒视频与图文条目，覆盖脚心、腋下、腰侧、脖颈等怕痒部位的实测记录，以及绳缚、羽毛、电动刷等工具玩法。内容按热度与更新排序，适合寻找具体挠痒条目和社区讨论的访客。
+      </p>
+      <div class="hero-actions">
+        <a href="#channel-challenge" class="btn btn-primary">浏览挠痒挑战</a>
+        <a href="#channel-video" class="btn btn-ghost">查看视频条目</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hg1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#f7e6ec"/>
+            <stop offset="1" stop-color="#fdeef2"/>
+          </linearGradient>
+          <linearGradient id="hg2" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stop-color="#b33a5e" stop-opacity=".5"/>
+            <stop offset="1" stop-color="#7a2340" stop-opacity=".8"/>
+          </linearGradient>
+        </defs>
+        <rect x="20" y="30" width="360" height="260" rx="20" fill="url(#hg1)" stroke="#eadde1" stroke-width="1.5"/>
+        <!-- 抽象人体轮廓 -->
+        <ellipse cx="200" cy="155" rx="90" ry="105" fill="none" stroke="#b33a5e" stroke-width="2" stroke-dasharray="6 5" opacity=".45"/>
+        <circle cx="200" cy="88" r="26" fill="none" stroke="#b33a5e" stroke-width="2" opacity=".6"/>
+        <path d="M200 114v78" stroke="#b33a5e" stroke-width="2" opacity=".5"/>
+        <path d="M160 140c20-18 60-18 80 0" stroke="#b33a5e" stroke-width="2" fill="none" opacity=".4"/>
+        <path d="M155 200c15 22 75 22 90 0" stroke="#b33a5e" stroke-width="2" fill="none" opacity=".4"/>
+        <!-- 羽毛/工具 -->
+        <path d="M280 100c12-16 30-18 38-8s-4 26-18 30-22-10-20-22Z" fill="url(#hg2)" opacity=".7"/>
+        <path d="M285 102l-20 40" stroke="#7a2340" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M120 210c-8 10-10 24-2 30s22 0 26-10-10-22-24-20Z" fill="#f7e6ec" stroke="#b33a5e" stroke-width="1.5" opacity=".8"/>
+        <!-- 波动线 -->
+        <path d="M80 260c20-8 40 8 60 0s40 8 60 0 40 8 60 0 40 8 60 0" stroke="#b33a5e" stroke-width="1.5" fill="none" opacity=".35"/>
+        <path d="M80 274c20-8 40 8 60 0s40 8 60 0 40 8 60 0 40 8 60 0" stroke="#b33a5e" stroke-width="1.2" fill="none" opacity=".2"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 主内容三栏 -->
+<div class="main-wrap">
+
+  <!-- 左侧频道索引 -->
+  <aside class="channel-index" aria-label="频道索引">
+    <h2>频道索引</h2>
+    <ul>
+      <li><a href="#channel-tk" class="active"><span class="ch-dot"></span>TK挠痒</a></li>
+      <li><a href="#channel-vk"><span class="ch-dot"></span>VK社区</a></li>
+      <li><a href="#channel-video"><span class="ch-dot"></span>挠痒视频</a></li>
+      <li><a href="#channel-challenge"><span class="ch-dot"></span>挠痒挑战</a></li>
+      <li><a href="#channel-interact"><span class="ch-dot"></span>互动玩法</a></li>
+      <li><a href="#channel-guide"><span class="ch-dot"></span>新手指南</a></li>
+      <li><a href="#channel-news"><span class="ch-dot"></span>资讯动态</a></li>
+      <li><a href="#channel-submit"><span class="ch-dot"></span>投稿上传</a></li>
+    </ul>
+  </aside>
+
+  <!-- 中间主栏 -->
+  <main class="main-col">
+
+    <!-- 1. 主题领域概览 -->
+    <section class="section" id="channel-tk">
+      <div class="section-head">
+        <h2>TK挠痒内容领域概览</h2>
+        <span class="sub">2026年11月8日整理</span>
+      </div>
+      <div class="overview">
+        <p>挠痒内容在TK和VK社区里已经分化出几条清晰的支线：<strong>实测类</strong>以脚心、腋下、腰侧、脖颈、膝盖窝五个部位为固定测试点，用羽毛、电动刷、指甲、绳缚固定等方式记录反应；<strong>挑战类</strong>偏向时间对抗，比如“脚心挠痒坚持60秒不缩腿”；<strong>剧情类</strong>则加入角色扮演和场景设定，常见的有“诊所检查”“宿舍惩罚”等模板。</p>
+        <p>2026年10月下旬到11月初，VK社区讨论度最高的是<strong>“最怕痒部位投票”</strong>，参与投票的873人中，脚心以42%排第一，腋下28%第二，腰侧17%第三。同期上传的挠痒视频里，使用电动牙刷改装的工具占比明显上升，10月上传的217条视频中有61条标注了“电动刷”。</p>
+        <p>图文条目的更新节奏更快，平均每天新增12—18条，其中约四成是个人实测记录，三成是工具测评，剩余为挑战打卡和互动投票。脚心挠痒的条目重复率最高，但具体工具组合差异很大——羽毛加婴儿油、电动刷加固定绑带、指甲加手套，每种组合的反馈时长和强度评分都不一样。</p>
+      </div>
+    </section>
+
+    <!-- 2. 精选内容推荐 -->
+    <section class="section" id="channel-video">
+      <div class="section-head">
+        <h2>精选挠痒视频与图文条目</h2>
+        <span class="sub">按近7日热度排序</span>
+      </div>
+      <div class="card-grid">
+        <article class="card">
+          <img class="card-img" src="https://picsum.photos/seed/tkvk01/400/300" width="400" height="300" loading="lazy" alt="脚心挠痒电动刷实测视频封面">
+          <div class="card-body">
+            <div class="card-tags"><span class="tag">实测</span><span class="tag tag-ghost">脚心</span><span class="tag tag-ghost">电动刷</span></div>
+            <h3 class="card-title">脚心电动刷60秒实测：第3档就撑不住了</h3>
+            <p class="card-desc">UP主“阿痒不痒”用改装电动牙刷在脚心测试三档强度，第一档坚持42秒，第三档11秒缩腿。视频保留了完整计时和工具细节。</p>
+            <div class="card-meta"><span class="hot">热度 9.4</span><span>11月6日更新</span></div>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card-img" src="https://picsum.photos/seed/tkvk02/400/300" width="400" height="300" loading="lazy" alt="绳缚固定挠痒挑战现场记录">
+          <div class="card-body">
+            <div class="card-tags"><span class="tag">挑战</span><span class="tag tag-ghost">绳缚</span><span class="tag tag-ghost">腋下</span></div>
+            <h3 class="card-title">绳缚固定腋下挠痒：5分钟挑战完整记录</h3>
+            <p class="card-desc">挑战者被固定双臂后接受羽毛和指甲交替刺激，第2分17秒首次求饶，最终坚持4分08秒。评论区对“是否算完整挑战”有分歧。</p>
+            <div class="card-meta"><span class="hot">热度 8.9</span><span>11月5日更新</span></div>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card-img" src="https://picsum.photos/seed/tkvk03/400/300" width="400" height="300" loading="lazy" alt="VK社区最怕痒部位投票结果页面">
+          <div class="card-body">
+            <div class="card-tags"><span class="tag">投票</span><span class="tag tag-ghost">VK社区</span><span class="tag tag-ghost">部位</span></div>
+            <h3 class="card-title">VK社区873人投票：脚心42%排最怕痒部位第一</h3>
+            <p class="card-desc">为期5天的投票在11月7日截止，脚心拿到366票，腋下244票，腰侧148票。膝盖窝和脖颈合计115票，评论区补充了“耳后”选项的呼声。</p>
+            <div class="card-meta"><span class="hot">热度 8.7</span><span>11月7日发布</span></div>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card-img" src="https://picsum.photos/seed/tkvk04/400/300" width="400" height="300" loading="lazy" alt="羽毛与指甲交替挠痒工具对比测评">
+          <div class="card-body">
+            <div class="card-tags"><span class="tag">工具测评</span><span class="tag tag-ghost">羽毛</span><span class="tag tag-ghost">指甲</span></div>
+            <h3 class="card-title">羽毛 vs 指甲：同一个人脚心挠痒的强度对比</h3>
+            <p class="card-desc">测评者用同一侧脚心分别接受羽毛轻扫和指甲刮划，羽毛组平均忍耐78秒，指甲组降至34秒。指甲留长2毫米后差距进一步拉大。</p>
+            <div class="card-meta"><span class="hot">热度 8.2</span><span>11月4日更新</span></div>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card-img" src="https://picsum.photos/seed/tkvk05/400/300" width="400" height="300" loading="lazy" alt="宿舍场景挠痒剧情视频截图">
+          <div class="card-body">
+            <div class="card-tags"><span class="tag">剧情</span><span class="tag tag-ghost">宿舍</span><span class="tag tag-ghost">腰侧</span></div>
+            <h3 class="card-title">宿舍惩罚剧情：腰侧挠痒3分钟不笑出声算过关</h3>
+            <p class="card-desc">三分钟剧情短片，设定为室友打赌输了接受腰侧挠痒惩罚。表演痕迹明显，但工具使用和计时规则交代得比多数剧情类条目清楚。</p>
+            <div class="card-meta"><span class="hot">热度 7.8</span><span>11月3日更新</span></div>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card-img" src="https://picsum.photos/seed/tkvk06/400/300" width="400" height="300" loading="lazy" alt="电动牙刷改装挠痒工具制作步骤">
+          <div class="card-body">
+            <div class="card-tags"><span class="tag">DIY</span><span class="tag tag-ghost">工具</span><span class="tag tag-ghost">电动刷</span></div>
+            <h3 class="card-title">电动牙刷改挠痒刷：材料清单和3个注意点</h3>
+            <p class="card-desc">图文教程列了硅胶刷头、绑带和调速模块的购买渠道，重点提醒刷毛硬度选软毛、绑带别压到关节。评论区有人反馈“调速模块容易烧”。</p>
+            <div class="card-meta"><span class="hot">热度 7.5</span><span>11月2日更新</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 3. 最新更新 -->
+    <section class="section" id="channel-news">
+      <div class="section-head">
+        <h2>最新更新与社区动态</h2>
+        <span class="sub">截至11月8日</span>
+      </div>
+      <ul class="compact-list">
+        <li>
+          <span class="li-date">11月8日</span>
+          <div class="li-main">
+            <div class="li-title">「TK绳缚挠痒挑战」完整版上传</div>
+            <div class="li-sum">时长14分32秒，涵盖脚心、腋下、腰侧三个部位，绳缚方式从手腕固定改为脚踝固定，挑战者中途两次叫停。</div>
+          </div>
+        </li>
+        <li>
+          <span class="li-date">11月7日</span>
+          <div class="li-main">
+            <div class="li-title">VK社区“最怕痒部位”投票结果公布</div>
+            <div class="li-sum">873人参与，脚心42%、腋下28%、腰侧17%，膝盖窝9%、脖颈4%。组织者追加了“耳后”选项的下期预告。</div>
+          </div>
+        </li>
+        <li>
+          <span class="li-date">11月6日</span>
+          <div class="li-main">
+            <div class="li-title">电动刷挠痒视频单日新增9条</div>
+            <div class="li-sum">其中6条使用同一款硅胶刷头，3条标注了“首次尝试”。工具同质化明显，评论区开始讨论“刷头形状对怕痒度的影响”。</div>
+          </div>
+        </li>
+        <li>
+          <span class="li-date">11月5日</span>
+          <div class="li-main">
+            <div class="li-title">脚心挠痒“不缩腿60秒”挑战打卡人数破200</div>
+            <div class="li-sum">发起者“痒感研究所”统计，完成挑战的83人中，平均反应时间47秒，最快缩腿出现在第9秒。</div>
+          </div>
+        </li>
+        <li>
+          <span class="li-date">11月4日</span>
+          <div class="li-main">
+            <div class="li-title">羽毛工具测评帖引发材质讨论</div>
+            <div class="li-sum">原帖对比了鹅毛、鸡毛和化纤羽毛，评论区补充了鸵鸟毛和孔雀羽的体验，有人指出“羽毛根部比尖端更刺激”。</div>
+          </div>
+        </li>
+        <li>
+          <span class="li-date">11月3日</span>
+          <div class="li-main">
+            <div class="li-title">TK挠痒分区新增“工具分类”标签</div>
+            <div class="li-sum">目前分为羽毛、电动刷、指甲、绳缚、混合五类，运营方表示后续会根据投稿自动打标，减少手动筛选成本。</div>
+          </div>
+        </li>
+        <li>
+          <span class="li-date">11月2日</span>
+          <div class="li-main">
+            <div class="li-title">剧情类挠痒视频审核时长调整</div>
+            <div class="li-sum">VK社区公告称剧情类内容因需要核对场景设定，平均审核时间从6小时延长到14小时，实测类和挑战类不受影响。</div>
+          </div>
+        </li>
+        <li>
+          <span class="li-date">11月1日</span>
+          <div class="li-main">
+            <div class="li-title">10月挠痒视频月度统计发布</div>
+            <div class="li-sum">全月上传217条，脚心题材占51%，电动刷工具占28%，平均时长4分12秒，比9月缩短38秒。</div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 4. 分类入口 -->
+    <section class="section" id="channel-interact">
+      <div class="section-head">
+        <h2>按玩法与部位查找</h2>
+        <span class="sub">8个分类入口</span>
+      </div>
+      <div class="cat-grid">
+        <a href="#channel-video" class="cat-item">脚心挠痒</a>
+        <a href="#channel-video" class="cat-item">腋下挠痒</a>
+        <a href="#channel-video" class="cat-item">腰侧挠痒</a>
+        <a href="#channel-video" class="cat-item">脖颈挠痒</a>
+        <a href="#channel-challenge" class="cat-item">绳缚挑战</a>
+        <a href="#channel-video" class="cat-item">电动刷工具</a>
+        <a href="#channel-interact" class="cat-item">羽毛测评</a>
+        <a href="#channel-interact" class="cat-item">互动投票</a>
+      </div>
+    </section>
+
+    <!-- 5. 深度解析正文 -->
+    <section class="section" id="channel-guide">
+      <div class="section-head">
+        <h2>挠痒强度与工具选择的判断依据</h2>
+        <span class="sub">深度解析</span>
+      </div>
+      <div class="deep-dive">
+        <h3>脚心为什么成为挠痒内容的第一试验场</h3>
+        <p>脚心在VK社区投票里拿到42%的票，领先第二名腋下14个百分点。这个数字背后有个容易被忽略的原因：脚心的怕痒反馈<strong>可视性最强</strong>。缩腿动作在镜头里一目了然，腋下和腰侧更多依赖躯干扭动，观众需要看更久才能判断反应强度。10月上传的217条视频里，脚心题材占51%，其中86%的镜头直接对准脚部，拍摄成本比全身机位低得多。</p>
+        <p>另一个因素是工具适配度。脚心面积小、位置固定，电动刷和羽毛都能精准落点；腋下需要抬臂固定，绳缚方案更复杂。11月6日上传的9条电动刷视频中，8条选择了脚心，只有1条尝试腰侧，作者在简介里写“固定不住，刷头老跑”。</p>
+        <h3>电动刷的强度差异来自哪几个环节</h3>
+        <p>同样是电动刷，不同条目的忍耐时长从11秒到78秒不等，差距不在“怕痒程度”，而在三个可拆解的环节：刷毛硬度、震动频率、接触面积。</p>
+        <ul>
+          <li><strong>刷毛硬度</strong>：软毛刷平均忍耐54秒，中硬毛刷降到29秒。11月4日的测评里，同一测评者用软毛刷坚持78秒，换中硬毛刷后34秒缩腿。</li>
+          <li><strong>震动频率</strong>：三档调速的电动刷，第一档平均42秒，第三档11秒。但频率超过一定阈值后，部分体验者反馈“麻了反而不痒”，11月2日一条视频里挑战者在第3档坚持了62秒，作者归因为“脚心出汗后刷头打滑”。</li>
+          <li><strong>接触面积</strong>：单点刷头比宽面刷头刺激更集中，但宽面刷头覆盖脚心加脚趾根部时，整体反应更剧烈。目前没有统一标准，各条目自报数据时很少标注刷头尺寸。</li>
+        </ul>
+        <div class="note">需要区分的信息层级：刷毛硬度与忍耐时长的关系有多次实测记录支撑，属于已公开事实；震动频率超过阈值后“不痒”目前只有零星几条视频提及，尚未形成稳定结论，更接近个人体验转述。</div>
+        <h3>羽毛测评里被重复引用但缺乏核验的说法</h3>
+        <p>“羽毛根部比尖端更刺激”这个说法在11月4日的测评帖评论区出现，随后被至少3条视频简介引用。翻查原始帖，发帖人只写了“根部扫脚心反应更大”，没有给出对比计时，也没有说明羽毛种类。跟帖里有人用鹅毛根部测试，结果与帖主相反。</p>
+        <p>相比之下，化纤羽毛与天然羽毛的差异有更清晰的记录：10月28日一条对比视频里，同一人在相同位置分别接受鹅毛和化纤羽毛刺激，天然羽毛组平均忍耐66秒，化纤组41秒，作者推测与羽毛边缘的细腻程度有关。这条视频标注了羽毛来源和测试顺序，可核对的信息更完整。</p>
+        <h3>绳缚挑战的规则差异与可比性</h3>
+        <p>绳缚类条目目前没有统一规则，仅11月上传的挑战视频里就出现了四种固定方式：只绑手腕、绑手腕加脚踝、全身固定、仅固定腰部。固定点越多，挑战者能做出的躲避动作越少，忍耐时长自然拉长。11月5日的“腋下5分钟挑战”绑了手腕和脚踝，最终4分08秒结束；11月8日的“脚心绳缚版”只固定腰部，挑战者靠缩腿和扭动坚持了6分12秒，但评论区有人指出“这样不算有效挑战”。</p>
+        <p>规则不统一导致跨条目比较意义有限。想判断一个绳缚挑战的难度，至少要看固定点数量、是否蒙眼、工具更换频率三项。多数条目只交代了固定方式，后面两项经常缺失。</p>
+      </div>
+    </section>
+
+    <!-- 6. 体验指南 -->
+    <section class="section" id="channel-challenge">
+      <div class="section-head">
+        <h2>挠痒内容的消费路径与判断方法</h2>
+        <span class="sub">新手指南</span>
+      </div>
+      <div class="guide">
+        <div class="steps">
+          <div class="step"><strong>先看实测类，建立强度基准。</strong>脚心电动刷的忍耐时长普遍在11—78秒之间，先找一条标注了工具型号和档位的视频，记住这个区间，再看其他条目时就有参照。</div>
+          <div class="step"><strong>区分“表演”和“实测”。</strong>剧情类条目的工具使用往往不交代细节，反应幅度偏大。实测类通常会露出计时器、工具特写和完整过程。评论区有人追问工具型号的，可信度相对高。</div>
+          <div class="step"><strong>比较同部位、同工具的条目。</strong>跨部位比较意义不大，脚心和腋下的刺激方式本身不同。同是脚心加电动刷，再看刷头软硬和震动档位是否一致。</div>
+          <div class="step"><strong>留意固定方式对结果的影响。</strong>绳缚挑战的固定点数量直接拉长忍耐时长，没有固定或只固定腰部的挑战，和绑手腕脚踝的挑战不能放在一起比。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. FAQ -->
+    <section class="section" id="faq">
+      <div class="section-head">
+        <h2>挠痒内容常见问答</h2>
+        <span class="sub">6个高频问题</span>
+      </div>
+      <div class="faq-list">
+        <details class="faq">
+          <summary>脚心挠痒用什么工具最刺激？</summary>
+          <div class="faq-answer">现有实测记录里，中硬毛电动刷的忍耐时长最短，11月4日测评中同一人用中硬毛刷34秒缩腿，软毛刷是78秒。指甲刮划的强度接近中硬毛刷，羽毛最温和。刺激程度还取决于接触面积和是否固定，工具本身只是一部分。</div>
+        </details>
+        <details class="faq">
+          <summary>绳缚挠痒挑战的规则是怎么定的？</summary>
+          <div class="faq-answer">目前没有统一规则。11月上传的挑战视频出现了四种固定方式：只绑手腕、绑手腕加脚踝、全身固定、仅固定腰部。发起者各自设定时限，常见的有3分钟、5分钟和“不缩腿60秒”。固定点越多，挑战者能做的躲避动作越少，忍耐时间通常越长。</div>
+        </details>
+        <details class="faq">
+          <summary>VK社区最怕痒部位投票结果可信吗？</summary>
+          <div class="faq-answer">投票本身是873人参与、为期5天，脚心拿到366票排第一。样本集中在VK社区活跃用户，不能代表全部人群。投票选项里没有“耳后”和“膝盖内侧”，评论区有人提出这两个部位，组织者说下期会补充。</div>
+        </details>
+        <details class="faq">
+          <summary>电动牙刷改装的挠痒刷安全吗？</summary>
+          <div class="faq-answer">11月2日的DIY教程列出了三个注意点：选软毛硅胶刷头、绑带避开关节、调速模块固定牢。评论区有反馈说调速模块容易过热烧毁，建议不要长时间连续使用。另外刷头用前消毒，多人共用需更换刷头。</div>
+        </details>
+        <details class="faq">
+          <summary>为什么脚心挠痒的视频比腋下多？</summary>
+          <div class="faq-answer">10月上传的217条挠痒视频里，脚心题材占51%，腋下、腰侧、脖颈合计不到三成。拍摄角度和工具固定是两个主要原因：脚心镜头可以直接对准，电动刷和羽毛容易落点；腋下需要抬臂固定，绳缚方案更复杂，部分作者在简介里写“固定不住”。</div>
+        </details>
+        <details class="faq">
+          <summary>挠痒视频里的反应是真实的还是表演的？</summary>
+          <div class="faq-answer">实测类条目通常会展示计时器、工具特写和完整过程，反应幅度相对收敛；剧情类条目交代工具细节较少，反应偏大。区分方法之一看评论区：有人追问工具型号或档位且作者回复的，实测成分更高。11月5日的腋下挑战因为中途两次叫停，被部分评论认为“比较真实”。</div>
+        </details>
+      </div>
+    </section>
+
+    <!-- 8. 用户评论 -->
+    <section class="section" id="comments">
+      <div class="section-head">
+        <h2>社区用户评论</h2>
+        <span class="sub">16条近期留言</span>
+      </div>
+      <div class="comment-list">
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">阿</span><span class="nick">阿痒不痒</span><span class="comment-time">11月8日</span></div>
+          <div class="comment-text">电动刷第三档11秒缩腿那个，我自己试了同款，撑到14秒，差不太多。</div>
+          <div class="comment-like">赞 12</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">脚</span><span class="nick">脚心怕痒第一名</span><span class="comment-time">11月8日</span></div>
+          <div class="comment-text">投票结果脚心42%我一点也不意外，腋下那次我坚持了快两分钟，脚心十秒就没了。</div>
+          <div class="comment-like">赞 9</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">绳</span><span class="nick">绳缚爱好者老陈</span><span class="comment-time">11月7日</span></div>
+          <div class="comment-text">只绑腰部的那个挑战，6分12秒，评论区吵起来了。固定方式不写清楚，跨条目没法比。</div>
+          <div class="comment-like">赞 7</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">羽</span><span class="nick">羽毛收藏家</span><span class="comment-time">11月7日</span></div>
+          <div class="comment-text">鹅毛和化纤差25秒那个数据我信，化纤边缘太齐了，扫过去感觉不一样。</div>
+          <div class="comment-like">赞 5</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">路</span><span class="nick">路过看看</span><span class="comment-time">11月6日</span></div>
+          <div class="comment-text">我就想知道耳后什么时候加进投票选项。</div>
+          <div class="comment-like">赞 3</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">电</span><span class="nick">电动刷DIY新手</span><span class="comment-time">11月6日</span></div>
+          <div class="comment-text">照着11月2日那个教程做了，调速模块真的烧了，第二次才成功。刷头别买太硬的。</div>
+          <div class="comment-like">赞 8</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">宿</span><span class="nick">宿舍剧情党</span><span class="comment-time">11月5日</span></div>
+          <div class="comment-text">腰侧3分钟不笑出声那个剧情，表演有点过，但计时规则写得比大多数剧情类清楚，勉强能看。</div>
+          <div class="comment-like">赞 4</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">忍</span><span class="nick">忍耐计时员</span><span class="comment-time">11月5日</span></div>
+          <div class="comment-text">脚心不缩腿60秒打卡，我第9秒就缩了，最快缩腿那个数据有我一份。</div>
+          <div class="comment-like">赞 6</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">工</span><span class="nick">工具控小王</span><span class="comment-time">11月4日</span></div>
+          <div class="comment-text">“羽毛根部更刺激”那个说法，我试了三次，尖端和根部差别不大，可能跟角度有关。</div>
+          <div class="comment-like">赞 2</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">V</span><span class="nick">VK潜水员</span><span class="comment-time">11月4日</span></div>
+          <div class="comment-text">873人投票样本不算大，但脚心第一这个结论我身边没人反对。</div>
+          <div class="comment-like">赞 3</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">阿</span><span class="nick">阿嚏</span><span class="comment-time">11月3日</span></div>
+          <div class="comment-text">昨天试了膝盖窝，比腰侧还难受，怎么没人投。</div>
+          <div class="comment-like">赞 1</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">审</span><span class="nick">审核等三天</span><span class="comment-time">11月3日</span></div>
+          <div class="comment-text">剧情类审核14小时，实测类6小时，差别有点大。上次传了个剧情向的，等了一整天。</div>
+          <div class="comment-like">赞 2</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">电</span><span class="nick">电动牙刷改造狂</span><span class="comment-time">11月2日</span></div>
+          <div class="comment-text">硅胶刷头是软，但用几次就变形了，有没有更耐用的替代。</div>
+          <div class="comment-like">赞 4</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">看</span><span class="nick">看热闹不嫌事大</span><span class="comment-time">11月2日</span></div>
+          <div class="comment-text">绳缚5分钟挑战那个，第2分17秒求饶，后面又撑了近两分钟，剪辑痕迹重不重？</div>
+          <div class="comment-like">赞 5</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">新</span><span class="nick">新手小李</span><span class="comment-time">11月1日</span></div>
+          <div class="comment-text">刚来，脚心电动刷从哪档开始试比较合适，直接第三档会不会太猛。</div>
+          <div class="comment-like">赞 2</div>
+        </div>
+        <div class="comment">
+          <div class="comment-head"><span class="avatar">统</span><span class="nick">统计癖</span><span class="comment-time">11月1日</span></div>
+          <div class="comment-text">10月217条视频，脚心51%，电动刷28%，平均4分12秒，这个统计口径能不能公开一下。</div>
+          <div class="comment-like">赞 1</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. 相关资讯 -->
+    <section class="section" id="news-feed">
+      <div class="section-head">
+        <h2>挠痒领域相关资讯</h2>
+        <span class="sub">6条近期动态</span>
+      </div>
+      <div class="news-list">
+        <div class="news-item">
+          <span class="news-date">11月8日</span>
+          <div class="news-body">
+            <div class="news-title">TK绳缚挠痒挑战完整版上传14分32秒</div>
+            <div class="news-sum">挑战者固定方式从手腕改为脚踝，中途两次叫停，第三次重新开始后坚持到结束。视频简介标注了工具为鹅毛和电动刷交替。</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <span class="news-date">11月7日</span>
+          <div class="news-body">
+            <div class="news-title">VK社区最怕痒部位投票收官：脚心366票</div>
+            <div class="news-sum">5天投票873人参与，脚心42%、腋下28%、腰侧17%。组织者宣布下一期投票将加入“耳后”和“膝盖内侧”两个选项。</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <span class="news-date">11月6日</span>
+          <div class="news-body">
+            <div class="news-title">电动刷挠痒视频单日9条，6条同款刷头</div>
+            <div class="news-sum">同款硅胶刷头集中出现，评论区开始讨论刷头形状和刷毛密度，有人建议运营方增设“刷头型号”筛选标签。</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <span class="news-date">11月5日</span>
+          <div class="news-body">
+            <div class="news-title">脚心不缩腿60秒挑战完成人数83</div>
+            <div class="news-sum">发起方“痒感研究所”统计，完成者平均反应时间47秒，最快缩腿在第9秒。完整打卡名单已公布在社区置顶帖。</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <span class="news-date">11月4日</span>
+          <div class="news-body">
+            <div class="news-title">羽毛材质对比帖引发鸵鸟毛、孔雀羽讨论</div>
+            <div class="news-sum">原帖对比鹅毛、鸡毛、化纤羽毛，跟帖补充了鸵鸟毛和孔雀羽。帖主在11月4日更新称“样本太少，暂不下结论”。</div>
+          </div>
+        </div>
+        <div class="news-item">
+          <span class="news-date">11月2日</span>
+          <div class="news-body">
+            <div class="news-title">剧情类挠痒视频审核时长延长至14小时</div>
+            <div class="news-sum">VK社区公告称因需核对场景设定和角色关系，剧情类内容审核时间从6小时延长到14小时，实测类和挑战类维持原时长。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. 相关推荐 -->
+    <section class="section" id="related">
+      <div class="section-head">
+        <h2>相关推荐方向</h2>
+        <span class="sub">按内容方向与条目索引</span>
+      </div>
+      <div class="tag-index">
+        <a href="#channel-video">脚心电动刷实测</a>
+        <a href="#channel-challenge">绳缚挠痒挑战规则</a>
+        <a href="#channel-video">腋下羽毛测评</a>
+        <a href="#channel-interact">VK最怕痒部位投票</a>
+        <a href="#channel-guide">挠痒工具强度对比</a>
+        <a href="#channel-video">腰侧挠痒剧情条目</a>
+        <a href="#channel-interact">挠痒视频月度统计</a>
+        <a href="#channel-challenge">脚心不缩腿60秒打卡</a>
+      </div>
+    </section>
+
+    <!-- 11. 补充板块：热门榜单 -->
+    <section class="section" id="rank">
+      <div class="section-head">
+        <h2>近7日挠痒条目热度榜</h2>
+        <span class="sub">综合播放、评论与收藏</span>
+      </div>
+      <ul class="rank-list">
+        <li><span class="rank-num">1</span><span class="rank-name">脚心电动刷60秒实测：第3档就撑不住了</span><span class="rank-score">9.4</span></li>
+        <li><span class="rank-num">2</span><span class="rank-name">绳缚固定腋下挠痒：5分钟挑战完整记录</span><span class="rank-score">8.9</span></li>
+        <li><span class="rank-num">3</span><span class="rank-name">VK社区873人投票：脚心42%排最怕痒部位第一</span><span class="rank-score">8.7</span></li>
+        <li><span class="rank-num">4</span><span class="rank-name">羽毛 vs 指甲：同一个人脚心挠痒的强度对比</span><span class="rank-score">8.2</span></li>
+        <li><span class="rank-num">5</span><span class="rank-name">宿舍惩罚剧情：腰侧挠痒3分钟不笑出声算过关</span><span class="rank-score">7.8</span></li>
+        <li><span class="rank-num">6</span><span class="rank-name">电动牙刷改挠痒刷：材料清单和3个注意点</span><span class="rank-score">7.5</span></li>
+      </ul>
+    </section>
+
+    <!-- 12. 投稿上传 -->
+    <section class="section" id="channel-submit">
+      <div class="section-head">
+        <h2>投稿与作品上传</h2>
+        <span class="sub">社区互动入口</span>
+      </div>
+      <div class="overview">
+        <p><strong>投稿类型</strong>：实测记录、工具测评、挑战打卡、剧情短片、互动投票。实测和挑战类审核约6小时，剧情类约14小时。上传时请标注工具类型和测试部位，便于分类归档。</p>
+        <p><strong>本周投稿概况</strong>：11月1日至11月8日共收到上传47件，审核通过39件，其中脚心题材21件、腋下7件、腰侧5件、其他6件。待审核8件中，剧情类占5件。</p>
+        <p><strong>互动玩法</strong>：VK社区每周发起一次“最怕痒部位”投票，每月底汇总月度工具使用统计。参与投票和上传均可获得社区积分，积分用于兑换工具测评优先展示位。</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 右侧辅助栏 -->
+  <aside class="side-col" aria-label="辅助信息">
+    <div class="side-card">
+      <h3>近期更新条目</h3>
+      <ul class="side-list">
+        <li><span>TK绳缚挠痒挑战完整版</span><span class="s-date">11-08</span></li>
+        <li><span>脚心电动刷60秒实测</span><span class="s-date">11-06</span></li>
+        <li><span>VK最怕痒部位投票结果</span><span class="s-date">11-07</span></li>
+        <li><span>羽毛 vs 指甲强度对比</span><span class="s-date">11-04</span></li>
+        <li><span>电动牙刷改装教程</span><span class="s-date">11-02</span></li>
+      </ul>
+    </div>
+    <div class="side-card">
+      <h3>热门标签</h3>
+      <div>
+        <span class="side-tag">脚心挠痒</span>
+        <span class="side-tag">电动刷</span>
+        <span class="side-tag">绳缚挑战</span>
+        <span class="side-tag">羽毛测评</span>
+        <span class="side-tag">腋下</span>
+        <span class="side-tag">腰侧</span>
+        <span class="side-tag">VK投票</span>
+        <span class="side-tag">强度对比</span>
+      </div>
+    </div>
+    <div class="side-card">
+      <h3>社区数据速览</h3>
+      <ul class="side-list">
+        <li><span>10月挠痒视频上传</span><span>217条</span></li>
+        <li><span>脚心题材占比</span><span>51%</span></li>
+        <li><span>电动刷工具使用</span><span>28%</span></li>
+        <li><span>最怕痒投票参与</span><span>873人</span></li>
+      </ul>
+      <p class="side-note">数据来自VK社区公开统计和条目自报，截止2026年11月8日。</p>
+    </div>
+  </aside>
+
+</div>
+
+<!-- 页尾 -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" stroke="#f7e6ec" stroke-width="2"/>
+          <path d="M13 16c0-2 1.5-3.5 3.5-3.5S20 14 20 16v8c0 2-1.5 3.5-3.5 3.5S13 26 13 24v-8Z" fill="#f7e6ec" opacity=".8"/>
+          <path d="M20 16c0-2 1.5-3.5 3.5-3.5S27 14 27 16v8c0 2-1.5 3.5-3.5 3.5S20 26 20 24v-8Z" fill="#b33a5e" opacity=".7"/>
+        </svg>
+        <span class="footer-brand-text">大字裸体挠痒vk</span>
+      </div>
+      <p class="footer-desc">
+        覆盖2026年10月至11月的挠痒条目与社区动态，以实测记录、挑战打卡、工具测评和投票讨论为主。每日更新视频与图文条目，每周汇总一次工具与部位统计。站内条目均为用户投稿与示例整理。
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>内容频道</h4>
+      <ul>
+        <li><a href="#channel-tk">TK挠痒</a></li>
+        <li><a href="#channel-vk">VK社区</a></li>
+        <li><a href="#channel-video">挠痒视频</a></li>
+        <li><a href="#channel-challenge">挠痒挑战</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>互动入口</h4>
+      <ul>
+        <li><a href="#channel-submit">投稿上传</a></li>
+        <li><a href="#channel-interact">互动投票</a></li>
+        <li><a href="#comments">用户评论</a></li>
+        <li><a href="#rank">热门榜单</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>帮助与说明</h4>
+      <ul>
+        <li><a href="#faq">常见问答</a></li>
+        <li><a href="#channel-guide">消费指南</a></li>
+        <li><a href="#news-feed">相关资讯</a></li>
+        <li><a href="#related">相关推荐</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 大字裸体挠痒vk 内容聚合示例。条目与数据为示例整理，不构成真实人物事件记录。</span>
+    <span>页面更新时间：2026年11月8日 · 对应正文「最新更新」板块</span>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="回到顶部">↑</button>
+
+<script>
+(function(){
+  // 移动端菜单
+  var hamburger = document.getElementById('hamburger');
+  var mainNav = document.getElementById('mainNav');
+  var overlay = document.getElementById('overlay');
+
+  function closeMenu(){
+    if(!mainNav) return;
+    mainNav.classList.remove('mobile-open');
+    if(hamburger) hamburger.setAttribute('aria-expanded','false');
+    if(overlay) overlay.classList.remove('show');
+  }
+  function toggleMenu(){
+    if(!mainNav) return;
+    var open = mainNav.classList.toggle('mobile-open');
+    if(hamburger) hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(overlay) overlay.classList.toggle('show', open);
+  }
+  if(hamburger){
+    hamburger.addEventListener('click', function(e){
+      e.stopPropagation();
+      toggleMenu();
+    });
+  }
+  if(overlay){
+    overlay.addEventListener('click', closeMenu);
+  }
+  if(mainNav){
+    mainNav.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        closeMenu();
+      });
+    });
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeMenu();
+  });
+
+  // 回到顶部
+  var toTop = document.getElementById('toTop');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > window.innerHeight){
+      toTop.classList.add('show');
+    } else {
+      toTop.classList.remove('show');
+    }
+  }, {passive:true});
+  if(toTop){
+    toTop.addEventListener('click', function(){
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  }
+
+  // 左侧频道高亮
+  var channelLinks = document.querySelectorAll('.channel-index a');
+  var sections = [];
+  channelLinks.forEach(function(link){
+    var id = link.getAttribute('href').replace('#','');
+    var sec = document.getElementById(id);
+    if(sec) sections.push({link: link, sec: sec});
+  });
+  if(sections.length){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          sections.forEach(function(s){
+            s.link.classList.toggle('active', s.sec === entry.target);
+          });
+        }
+      });
+    }, {rootMargin: '-20% 0px -60% 0px'});
+    sections.forEach(function(s){ observer.observe(s.sec); });
+  }
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "大字裸体挠痒vk",
+  "description": "大字裸体挠痒vk 汇聚挠痒TK、VK社区、挠痒视频与图文条目，涵盖挠痒挑战、TK互动、VK投稿与话题讨论。",
+  "inLanguage": "zh-CN"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "脚心挠痒用什么工具最刺激？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "现有实测记录里，中硬毛电动刷的忍耐时长最短，11月4日测评中同一人用中硬毛刷34秒缩腿，软毛刷是78秒。指甲刮划的强度接近中硬毛刷，羽毛最温和。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "绳缚挠痒挑战的规则是怎么定的？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "目前没有统一规则。11月上传的挑战视频出现了四种固定方式：只绑手腕、绑手腕加脚踝、全身固定、仅固定腰部。发起者各自设定时限，常见的有3分钟、5分钟和“不缩腿60秒”。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "VK社区最怕痒部位投票结果可信吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "投票本身是873人参与、为期5天，脚心拿到366票排第一。样本集中在VK社区活跃用户，不能代表全部人群。投票选项里没有“耳后”和“膝盖内侧”。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "电动牙刷改装的挠痒刷安全吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "11月2日的DIY教程列出了三个注意点：选软毛硅胶刷头、绑带避开关节、调速模块固定牢。评论区有反馈说调速模块容易过热烧毁，建议不要长时间连续使用。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么脚心挠痒的视频比腋下多？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "10月上传的217条挠痒视频里，脚心题材占51%，腋下、腰侧、脖颈合计不到三成。拍摄角度和工具固定是两个主要原因。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "挠痒视频里的反应是真实的还是表演的？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "实测类条目通常会展示计时器、工具特写和完整过程，反应幅度相对收敛；剧情类条目交代工具细节较少，反应偏大。区分方法之一看评论区：有人追问工具型号或档位且作者回复的，实测成分更高。"
+      }
+    }
+  ]
+}
+</script>
+
+</body>
+  </html>
