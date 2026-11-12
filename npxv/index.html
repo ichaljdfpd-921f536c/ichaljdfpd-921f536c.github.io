@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>npxvip最新每日比赛 - 赛程追踪与数据解析</title>
+  <meta name="description" content="npxvip最新每日比赛聚合站，提供2026年11月8日更新的赛程表、战队积分榜、英雄优先级、选手数据与赛事回放。适合追踪每日对抗、分析BP策略与复盘关键团战的玩家。">
+  <meta name="keywords" content="npxvip最新每日比赛">
+  <style>
+    /* 设计系统变量 */
+    :root {
+      --primary: #1f3a5f;
+      --primary-light: #2f5a8a;
+      --primary-dark: #0e1f33;
+      --accent: #c44536;
+      --accent-soft: #f1e9e7;
+      --bg: #f7f9fc;
+      --surface: #ffffff;
+      --text-primary: #1a2a3a;
+      --text-secondary: #4f5f6f;
+      --text-tertiary: #7b8a9a;
+      --divider: #e2e8f0;
+      --radius-card: 12px;
+      --radius-tag: 6px;
+      --radius-btn: 8px;
+      --shadow-default: 0 2px 8px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+      --shadow-hover: 0 8px 20px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+      --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      --spacing-base: 1rem;
+      --scroll-offset: 120px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding-top: 96px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 吸顶公告条 + 页头 */
+    .sticky-top {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--surface);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.92);
+    }
+
+    .announcement-bar {
+      background: var(--primary-dark);
+      color: #dde7f0;
+      font-size: 0.82rem;
+      padding: 0.4rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .announcement-bar .brand-tag {
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.3px;
+    }
+
+    .announcement-bar .ann-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      white-space: nowrap;
+    }
+
+    .ann-item .date {
+      color: #9bb7d4;
+      font-size: 0.75rem;
+    }
+
+    .ann-item .badge {
+      background: var(--accent);
+      color: #fff;
+      padding: 0.1rem 0.5rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    /* 页头 */
+    .header-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1.5rem;
+      max-width: 1440px;
+      margin: 0 auto;
+      gap: 1rem;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .logo-svg {
+      width: 34px;
+      height: 34px;
+      display: block;
+    }
+
+    .logo-text {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      flex-wrap: wrap;
+    }
+
+    .header-nav a {
+      text-decoration: none;
+      color: inherit;
+      padding: 0.3rem 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .header-nav a:hover, .header-nav a:focus-visible {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg);
+      border-radius: 30px;
+      padding: 0.25rem 0.25rem 0.25rem 0.9rem;
+      border: 1px solid var(--divider);
+      transition: border-color 0.15s;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--primary-light);
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      font-size: 0.85rem;
+      padding: 0.3rem 0;
+      width: 150px;
+      outline: none;
+      color: var(--text-primary);
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-tertiary);
+    }
+
+    .search-box button {
+      background: var(--primary);
+      border: none;
+      border-radius: 20px;
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 0.35rem 0.9rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .search-box button:hover {
+      background: var(--primary-light);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: 1px solid var(--divider);
+      border-radius: 8px;
+      padding: 0.4rem 0.7rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+    }
+
+    /* 主容器 */
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* 三栏布局 */
+    .layout-three-col {
+      display: grid;
+      grid-template-columns: 170px 1fr 250px;
+      gap: 1.8rem;
+      align-items: start;
+      margin-top: 1.8rem;
+    }
+
+    /* 左侧频道栏 */
+    .channel-sidebar {
+      position: sticky;
+      top: 110px;
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 1rem 0.6rem;
+    }
+
+    .channel-sidebar h3 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-tertiary);
+      margin: 0 0.6rem 0.7rem;
+      font-weight: 600;
+    }
+
+    .channel-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .channel-list a {
+      display: block;
+      padding: 0.45rem 0.6rem;
+      border-radius: 6px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .channel-list a:hover, .channel-list a:focus-visible {
+      background: var(--primary-light);
+      color: #fff;
+    }
+
+    .channel-list a.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* 中间主内容区 */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2.2rem;
+      min-width: 0;
+    }
+
+    /* 右侧辅助栏 */
+    .aux-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .aux-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 1rem;
+    }
+
+    .aux-card h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .hot-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .hot-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.85rem;
+      gap: 0.5rem;
+    }
+
+    .hot-list .item-name {
+      color: var(--text-primary);
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .hot-list .item-name:hover {
+      color: var(--primary);
+    }
+
+    .hot-list .item-meta {
+      color: var(--text-tertiary);
+      font-size: 0.7rem;
+      white-space: nowrap;
+    }
+
+    /* 首屏 */
+    .hero {
+      background: linear-gradient(135deg, #0e1f33 0%, #1f3a5f 60%, #2f5a8a 100%);
+      border-radius: 20px;
+      padding: 2.4rem 2rem;
+      color: #fff;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -40px;
+      bottom: -60px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(196,69,54,0.25) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-text {
+      max-width: 560px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-text h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .hero-text p {
+      font-size: 0.98rem;
+      color: #c8d9ea;
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.55rem 1.4rem;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: #b53a2d;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 0.55rem 1.4rem;
+      border-radius: var(--radius-btn);
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .hero-visual {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .hero-svg {
+      width: 120px;
+      height: 120px;
+    }
+
+    /* 板块通用 */
+    .section {
+      scroll-margin-top: var(--scroll-offset);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .section-header .more-link {
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+      text-decoration: none;
+    }
+
+    .section-header .more-link:hover {
+      color: var(--primary);
+    }
+
+    /* 卡片网格 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+      background: var(--divider);
+    }
+
+    .card-body {
+      padding: 0.8rem 0.9rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .tag {
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 0.1rem 0.5rem;
+      border-radius: var(--radius-tag);
+      font-size: 0.68rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .tag-neutral {
+      background: #edf2f7;
+      color: var(--text-secondary);
+    }
+
+    .card-desc {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+      margin-top: 0.2rem;
+    }
+
+    /* 紧凑列表 */
+    .compact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      overflow: hidden;
+    }
+
+    .compact-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--divider);
+      gap: 1rem;
+    }
+
+    .compact-item:last-child {
+      border-bottom: none;
+    }
+
+    .compact-item .left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      min-width: 0;
+    }
+
+    .compact-item .item-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .compact-item .item-title:hover {
+      color: var(--primary);
+    }
+
+    .compact-item .item-sub {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .compact-item .right {
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* 分类入口网格 */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+
+    .category-item {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 0.8rem 0.5rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: background 0.15s, box-shadow 0.15s;
+      border: 1px solid transparent;
+    }
+
+    .category-item:hover {
+      background: var(--primary-light);
+      color: #fff;
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* 深度解析 */
+    .deep-dive {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 1.5rem 1.8rem;
+    }
+
+    .deep-dive h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 1.2rem 0 0.5rem;
+    }
+
+    .deep-dive h3:first-of-type {
+      margin-top: 0;
+    }
+
+    .deep-dive p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 0.8rem;
+    }
+
+    .deep-dive ul {
+      margin: 0.5rem 0 1rem 1.2rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .deep-dive li {
+      margin-bottom: 0.3rem;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.8rem 0 1rem;
+      font-size: 0.85rem;
+    }
+
+    .comparison-table th {
+      text-align: left;
+      background: #edf2f7;
+      padding: 0.5rem 0.7rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .comparison-table td {
+      padding: 0.5rem 0.7rem;
+      border-bottom: 1px solid var(--divider);
+      color: var(--text-secondary);
+    }
+
+    /* FAQ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .faq-item {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      overflow: hidden;
+    }
+
+    .faq-item summary {
+      padding: 0.8rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-primary);
+      transition: background 0.15s;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::after {
+      content: '+';
+      font-size: 1.1rem;
+      color: var(--text-tertiary);
+      font-weight: 400;
+      transition: transform 0.15s;
+    }
+
+    .faq-item[open] summary::after {
+      content: '−';
+    }
+
+    .faq-item summary:hover {
+      background: #f0f4f9;
+    }
+
+    .faq-answer {
+      padding: 0 1rem 0.9rem;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* 评论 */
+    .comment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .comment-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 0.8rem 0.9rem;
+    }
+
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.3rem;
+    }
+
+    .comment-nick {
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--primary);
+    }
+
+    .comment-time {
+      font-size: 0.65rem;
+      color: var(--text-tertiary);
+    }
+
+    .comment-text {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* 资讯列表 */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .news-item {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 0.8rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .news-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .news-title:hover {
+      color: var(--primary);
+    }
+
+    .news-meta {
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .news-summary {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* 相关推荐标签 */
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag-cloud a {
+      background: var(--surface);
+      border-radius: 30px;
+      padding: 0.35rem 1rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      box-shadow: var(--shadow-default);
+      border: 1px solid var(--divider);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .tag-cloud a:hover {
+      background: var(--primary-light);
+      color: #fff;
+      border-color: var(--primary-light);
+    }
+
+    /* 榜单 */
+    .ranking-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .ranking-item {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      padding: 0.6rem 0.9rem;
+    }
+
+    .ranking-num {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent);
+      min-width: 1.5rem;
+      text-align: center;
+    }
+
+    .ranking-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .ranking-name {
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
+
+    .ranking-meta {
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+    }
+
+    /* 页脚 */
+    .footer {
+      background: var(--primary-dark);
+      color: #b8c9da;
+      margin-top: 3rem;
+      padding: 2.5rem 0 1.5rem;
+    }
+
+    .footer-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .footer-brand .logo-text {
+      color: #fff;
+      font-size: 1.2rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.8rem;
+      line-height: 1.6;
+      margin-top: 0.6rem;
+      color: #8ba3ba;
+    }
+
+    .footer-col h5 {
+      color: #fff;
+      font-size: 0.85rem;
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+    }
+
+    .footer-col a {
+      display: block;
+      color: #8ba3ba;
+      text-decoration: none;
+      font-size: 0.78rem;
+      margin-bottom: 0.3rem;
+      transition: color 0.15s;
+    }
+
+    .footer-col a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      max-width: 1360px;
+      margin: 1.5rem auto 0;
+      padding: 1rem 1.5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.7rem;
+      color: #6b8199;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    /* 回到顶部 */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-hover);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s, background 0.15s;
+      z-index: 90;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background: var(--primary-light);
+    }
+
+    /* 移动端遮罩 */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 95;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* 响应式 */
+    @media (max-width: 1024px) {
+      .layout-three-col {
+        grid-template-columns: 1fr 240px;
+      }
+      .channel-sidebar {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .header-nav {
+        display: none;
+      }
+      .header-nav.mobile-open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--surface);
+        padding: 1rem 1.5rem;
+        box-shadow: var(--shadow-hover);
+        border-top: 1px solid var(--divider);
+        z-index: 99;
+      }
+      .footer-inner {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 740px) {
+      body {
+        padding-top: 80px;
+      }
+      .layout-three-col {
+        grid-template-columns: 1fr;
+      }
+      .aux-sidebar {
+        margin-top: 1rem;
+      }
+      .hero {
+        padding: 1.5rem 1.2rem;
+      }
+      .hero-text h1 {
+        font-size: 1.5rem;
+      }
+      .hero-visual {
+        display: none;
+      }
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .card-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .header-main {
+        padding: 0.5rem 1rem;
+      }
+      .search-box input {
+        width: 100px;
+      }
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+      .comment-grid {
+        grid-template-columns: 1fr;
+      }
+      .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 38px;
+        height: 38px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "npxvip最新每日比赛",
+    "description": "npxvip最新每日比赛聚合站，提供赛程表、战队积分榜、英雄优先级与选手数据。",
+    "inLanguage": "zh-CN"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "11月8日NBPL秋季赛单排决赛的赛制是几局几胜？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "采用BO7赛制，先拿到4分的选手获胜。11月8日当天共进行了7局，最终由XCG丶小凯以4:2拿下冠军。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "永劫无间职业联赛里季莹莹的F2技能在单排和组排的选用率差距多大？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "11月8日NBPL数据显示，单排选用率38.2%，组排选用率仅12.7%。差距主要来自组排更依赖队友补控制，单排需要自保与反打能力。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "2026年NBPL秋季赛的积分规则和春季赛有变化吗？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "有。秋季赛将排名分从春季赛的10/6/5/4/3/2/1/0调整为12/8/6/5/4/3/2/1，击杀分从2分降为1.5分，更强调排名稳定性。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "11月7日GG对阵XCG那场三排赛的决胜点是什么？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "第六局决赛圈刷在森罗谷东南坡，GG丶阿鬼的岳山在梅花桩阶段连收3个人头，把击杀分从1.5拉到6分，直接反超XCG。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "天海在单排模式中为什么出场率下降？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "11月8日NBPL单排出场率天海仅8.3%，较9月下降5.1个百分点。主要原因是金霸体被妖刀姬的F3和岳山的V2克制，前中期容错率变低。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "哪里能看NBPL秋季赛的比赛回放和数据面板？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "官方回放会在赛后2小时内上传至赛事专题页，数据面板同步开放。第三方数据站“永劫赛事簿”通常延迟约30分钟更新击杀分布和伤害曲线。"
+        }
+      }
+    ]
+  }
+  </script>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+  <!-- 吸顶区：公告条 + 页头 -->
+  <div class="sticky-top">
+    <div class="announcement-bar">
+      <span class="brand-tag">npxvip最新每日比赛</span>
+      <span class="ann-item"><span class="date">2026-11-08</span><span class="badge">新</span> NBPL秋季赛单排决赛战报</span>
+      <span class="ann-item"><span class="date">2026-11-07</span> GG vs XCG 三排赛决胜局数据</span>
+      <span class="ann-item"><span class="date">2026-11-08</span> 季莹莹F2单排选用率升至38.2%</span>
+    </div>
+    <header class="header-main">
+      <div class="logo-area">
+        <svg class="logo-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="40" rx="10" fill="#1f3a5f"/>
+          <path d="M12 28V12h4l8 10V12h4v16h-4l-8-10v10h-4z" fill="#ffffff"/>
+          <circle cx="30" cy="12" r="3" fill="#c44536"/>
+        </svg>
+        <span class="logo-text">npxvip最新每日比赛</span>
+      </div>
+      <nav class="header-nav" id="headerNav">
+        <a href="/#daily-schedule">今日赛程</a>
+        <a href="/#featured">精选对局</a>
+        <a href="/#latest-updates">实时战报</a>
+        <a href="/#categories">赛事分类</a>
+        <a href="/#deep-analysis">数据解析</a>
+        <a href="/#community">玩家评论</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="搜索战队/选手/英雄" aria-label="搜索赛事内容">
+          <button id="searchBtn" aria-label="搜索">搜索</button>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="打开导航菜单" aria-expanded="false">☰</button>
+      </div>
+    </header>
+  </div>
+
+  <div class="container">
+    <div class="layout-three-col">
+      <!-- 左侧频道栏 -->
+      <aside class="channel-sidebar" id="channelSidebar">
+        <h3>频道索引</h3>
+        <ul class="channel-list">
+          <li><a href="/#daily-schedule" class="active">今日赛程</a></li>
+          <li><a href="/#featured">精选对局</a></li>
+          <li><a href="/#latest-updates">实时战报</a></li>
+          <li><a href="/#categories">赛事分类</a></li>
+          <li><a href="/#deep-analysis">数据解析</a></li>
+          <li><a href="/#experience-guide">观赛指南</a></li>
+          <li><a href="/#faq">常见问题</a></li>
+          <li><a href="/#community">玩家评论</a></li>
+          <li><a href="/#related-news">相关资讯</a></li>
+          <li><a href="/#recommendations">相关推荐</a></li>
+          <li><a href="/#ranking">选手榜单</a></li>
+          <li><a href="/#contribute">赛事投稿</a></li>
+        </ul>
+      </aside>
+
+      <!-- 中间主内容 -->
+      <main class="main-content">
+        <!-- 首屏 -->
+        <section class="hero" aria-labelledby="hero-heading">
+          <div class="hero-text">
+            <h1 id="hero-heading">npxvip最新每日比赛</h1>
+            <p>每天汇总NBPL、永劫无间职业联赛及第三方邀请赛的赛程、战报与选手数据。11月8日单排决赛、三排升降级赛、季莹莹F2选用率变化，这里都有。</p>
+            <div class="hero-actions">
+              <a href="/#daily-schedule" class="btn-primary">查看今日赛程</a>
+              <a href="/#latest-updates" class="btn-secondary">最新战报</a>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <svg class="hero-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+              <circle cx="60" cy="60" r="35" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-dasharray="6 4"/>
+              <path d="M60 25 L60 95 M25 60 L95 60" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+              <circle cx="60" cy="60" r="8" fill="#c44536"/>
+              <circle cx="60" cy="60" r="4" fill="#fff"/>
+            </svg>
+          </div>
+        </section>
+
+        <!-- 主题领域概览 -->
+        <section class="section" id="overview">
+          <div class="section-header">
+            <h2>永劫无间赛事版图：单排、三排与邀请赛的日常</h2>
+          </div>
+          <div style="background:var(--surface);border-radius:var(--radius-card);box-shadow:var(--shadow-default);padding:1.2rem 1.5rem;font-size:0.9rem;color:var(--text-secondary);line-height:1.8;">
+            <p>永劫无间职业赛事在2026年形成三条主线：NBPL（永劫无间职业联赛）单排与三排、官方授权的第三方邀请赛（如“锦鲤杯”“龙虎争霸赛”），以及高校联赛与城市赛。11月8日正值NBPL秋季赛单排决赛日，XCG丶小凯以4:2击败GG丶阿鬼夺冠，决胜局在森罗谷东侧梅花桩区完成三次振刀。</p>
+            <p>三排赛道方面，GG与XCG的胜者组决赛打到第七局，GG依靠岳山+妖刀姬+天海的阵容在决赛圈连收5个人头，最终以总积分86.5反超XCG的83分。第三方赛事“锦鲤杯”本周进入八强淘汰赛，参赛队伍包括CC直播签约的4支主播队。</p>
+            <p>日常观赛需求集中在三块：赛程时间表、实时积分与击杀数据、英雄与魂玉的BP优先级。11月8日单排数据显示季莹莹F2选用率38.2%，较10月上升7.4个百分点，而天海单排出场率降至8.3%。这些数据直接影响玩家在排位中的英雄选择。</p>
+          </div>
+        </section>
+
+        <!-- 精选内容推荐 -->
+        <section class="section" id="featured">
+          <div class="section-header">
+            <h2>今日精选对局与数据看点</h2>
+            <a href="/#latest-updates" class="more-link">更多战报 →</a>
+          </div>
+          <div class="card-grid">
+            <article class="card">
+              <img class="card-img" src="https://picsum.photos/seed/nbpl-final-01/400/300" alt="NBPL秋季赛单排决赛决胜局梅花桩区域截图" width="400" height="300" loading="lazy">
+              <div class="card-body">
+                <h3 class="card-title">XCG丶小凯 4:2 GG丶阿鬼 单排决赛</h3>
+                <div class="card-tags"><span class="tag">单排决赛</span><span class="tag-neutral">BO7</span></div>
+                <p class="card-desc">第七局梅花桩区小凯用岳山V2振掉阿鬼妖刀姬的夺魂，连拿3分锁定胜局。整场小凯振刀成功率41.7%。</p>
+                <div class="card-meta"><span>热度 9.8</span><span>11-08</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <img class="card-img" src="https://picsum.photos/seed/gg-xcg-tri-02/400/300" alt="GG对阵XCG三排赛决赛圈森罗谷东南坡" width="400" height="300" loading="lazy">
+              <div class="card-body">
+                <h3 class="card-title">GG vs XCG 三排胜者组决赛</h3>
+                <div class="card-tags"><span class="tag">三排</span><span class="tag-neutral">决胜局</span></div>
+                <p class="card-desc">阿鬼岳山在第六局决赛圈连收3头，GG总积分86.5反超XCG的83。XCG丶小凯的季莹莹被集火先倒。</p>
+                <div class="card-meta"><span>热度 9.5</span><span>11-07</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <img class="card-img" src="https://picsum.photos/seed/jiyingying-f2-03/400/300" alt="季莹莹F2技能在单排与组排选用率对比图" width="400" height="300" loading="lazy">
+              <div class="card-body">
+                <h3 class="card-title">季莹莹F2单排选用率38.2%</h3>
+                <div class="card-tags"><span class="tag">英雄数据</span><span class="tag-neutral">版本趋势</span></div>
+                <p class="card-desc">11月8日NBPL数据：F2单排38.2%、组排12.7%。单排靠F2反打，组排更依赖队友补控。</p>
+                <div class="card-meta"><span>热度 8.9</span><span>11-08</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <img class="card-img" src="https://picsum.photos/seed/tianhai-pick-04/400/300" alt="天海英雄在单排模式出场率走势" width="400" height="300" loading="lazy">
+              <div class="card-body">
+                <h3 class="card-title">天海单排出场率跌至8.3%</h3>
+                <div class="card-tags"><span class="tag">英雄数据</span><span class="tag-neutral">克制关系</span></div>
+                <p class="card-desc">较9月下降5.1个百分点。妖刀姬F3和岳山V2的金霸体克制让天海前中期容错率变低。</p>
+                <div class="card-meta"><span>热度 8.6</span><span>11-08</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <img class="card-img" src="https://picsum.photos/seed/jinli-cup-05/400/300" alt="锦鲤杯八强淘汰赛对阵表" width="400" height="300" loading="lazy">
+              <div class="card-body">
+                <h3 class="card-title">锦鲤杯八强淘汰赛对阵出炉</h3>
+                <div class="card-tags"><span class="tag">第三方赛事</span><span class="tag-neutral">主播队</span></div>
+                <p class="card-desc">CC直播4支主播队晋级。11月9日19:00开打，赛制BO5，地图池含聚窟洲与火罗国。</p>
+                <div class="card-meta"><span>热度 8.2</span><span>11-08</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <img class="card-img" src="https://picsum.photos/seed/hero-tier-06/400/300" alt="NBPL秋季赛英雄优先级梯队表" width="400" height="300" loading="lazy">
+              <div class="card-body">
+                <h3 class="card-title">11月8日英雄优先级梯队</h3>
+                <div class="card-tags"><span class="tag">BP数据</span><span class="tag-neutral">梯队</span></div>
+                <p class="card-desc">T0：季莹莹（单排）、岳山（三排）。T1：妖刀姬、无尘。T2：天海、胡桃。数据来自当日12场对局。</p>
+                <div class="card-meta"><span>热度 8.7</span><span>11-08</span></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- 最新更新 / 热播动态 -->
+        <section class="section" id="latest-updates">
+          <div class="section-header">
+            <h2>实时战报与赛果更新</h2>
+          </div>
+          <div class="compact-list">
+            <div class="compact-item">
+              <div class="left">
+                <a href="/#featured" class="item-title">NBPL秋季赛单排决赛：XCG丶小凯夺冠</a>
+                <span class="item-sub">BO7打满七局，小凯4:2阿鬼。第七局小凯岳山V2振刀3次，伤害占比34%。</span>
+              </div>
+              <span class="right">11-08 21:30</span>
+            </div>
+            <div class="compact-item">
+              <div class="left">
+                <a href="/#featured" class="item-title">GG 86.5 : 83 XCG 三排胜者组</a>
+                <span class="item-sub">阿鬼岳山第六局决赛圈连收3头，击杀分从1.5拉到6分。XCG季莹莹被先手集火。</span>
+              </div>
+              <span class="right">11-07 22:10</span>
+            </div>
+            <div class="compact-item">
+              <div class="left">
+                <a href="/#deep-analysis" class="item-title">季莹莹F2单排选用率38.2%</a>
+                <span class="item-sub">较10月上升7.4个百分点。11月8日12场单排中F2出现9次，F1仅3次。</span>
+              </div>
+              <span class="right">11-08 18:00</span>
+            </div>
+            <div class="compact-item">
+              <div class="left">
+                <a href="/#faq" class="item-title">天海单排出场率8.3%创新低</a>
+                <span class="item-sub">9月为13.4%。妖刀姬F3和岳山V2的金霸体克制让天海前中期容错变低。</span>
+              </div>
+              <span class="right">11-08 17:20</span>
+            </div>
+            <div class="compact-item">
+              <div class="left">
+                <a href="/#related-news" class="item-title">锦鲤杯八强对阵公布</a>
+                <span class="item-sub">CC直播4支主播队晋级，11月9日19:00开打，BO5赛制，地图池含聚窟洲。</span>
+              </div>
+              <span class="right">11-08 15:00</span>
+            </div>
+            <div class="compact-item">
+              <div class="left">
+                <a href="/#deep-analysis" class="item-title">NBPL秋季赛积分规则调整</a>
+                <span class="item-sub">排名分12/8/6/5/4/3/2/1，击杀分1.5。相比春季赛更强调排名稳定性。</span>
+              </div>
+              <span class="right">11-06 10:00</span>
+            </div>
+            <div class="compact-item">
+              <div class="left">
+                <a href="/#featured" class="item-title">妖刀姬F3三排选用率升至61%</a>
+                <span class="item-sub">11月7日GG vs XCG三排赛中F3出场5次，配合岳山V2形成金霸体双锁。</span>
+              </div>
+              <span class="right">11-07 20:00</span>
+            </div>
+            <div class="compact-item">
+              <div class="left">
+                <a href="/#contribute" class="item-title">高校联赛秋季赛报名开启</a>
+                <span class="item-sub">11月8日至11月15日，面向全国高校战队，赛区含华东、华南、华北、西南。</span>
+              </div>
+              <span class="right">11-08 12:00</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 分类入口 -->
+        <section class="section" id="categories">
+          <div class="section-header">
+            <h2>赛事分类导航</h2>
+          </div>
+          <div class="category-grid">
+            <a href="/#featured" class="category-item">单排赛</a>
+            <a href="/#featured" class="category-item">三排赛</a>
+            <a href="/#featured" class="category-item">锦鲤杯</a>
+            <a href="/#featured" class="category-item">高校联赛</a>
+            <a href="/#deep-analysis" class="category-item">英雄数据</a>
+            <a href="/#deep-analysis" class="category-item">BP分析</a>
+            <a href="/#latest-updates" class="category-item">赛果速递</a>
+            <a href="/#contribute" class="category-item">社区赛事</a>
+          </div>
+        </section>
+
+        <!-- 深度解析正文 -->
+        <section class="section" id="deep-analysis">
+          <div class="section-header">
+            <h2>深度解析：单排与三排的BP逻辑差异及数据陷阱</h2>
+          </div>
+          <div class="deep-dive">
+            <p>11月8日NBPL秋季赛单排决赛打完，季莹莹F2的单排选用率停在38.2%，而三排组排仅有12.7%。同一天，岳山在三排的选用率达到54.3%，单排只有21.7%。两组数字放在一起看，能拆出单排与三排两套完全不同的英雄价值评估体系。</p>
+
+            <h3>单排的“自保权重”被高估了吗</h3>
+            <p>单排玩家选季莹莹F2，第一动机是F2的位移+反打能覆盖被先手后的脱战窗口。11月8日单排决赛七局中，小凯在第三局和第七局两次用F2躲开阿鬼妖刀姬的夺魂起手，随后反打拿到击杀分。但F2的冷却时间22秒，在单排决赛这种高频率遭遇战里，每局平均只有约2.3次有效释放窗口。对比F1的18秒冷却，F2的容错优势在数据上被压缩了。</p>
+            <p>真正让F2选用率从10月的30.8%爬到38.2%的，是11月5日版本更新里妖刀姬F3的突进距离从6米延长到7.5米。季莹莹F2的后撤距离恰好是8米，刚好卡在妖刀姬F3的突进范围之外。这个数值差在实战里被放大了——11月6日至8日的12场单排中，季莹莹面对妖刀姬的存活率从52%上升到64%。</p>
+            <p>但这里有一个容易被忽略的数据陷阱：F2的选用率上升，不代表季莹莹胜率同步上升。11月8日单排中季莹莹出场9次，胜率33.3%，低于天海的40%（出场5次）。高选用率和高胜率之间的缺口，说明很多选手在“跟风选”而非“适配选”。</p>
+
+            <h3>三排的金霸体双锁如何改变团战节奏</h3>
+            <p>三排的逻辑完全不同。妖刀姬F3在11月7日GG vs XCG的胜者组决赛中出场5次，配合岳山V2形成“金霸体双锁”——妖刀姬F3先手突进打出硬直，岳山V2接金霸体控制，两人配合可以覆盖约3.2秒的控制链。XCG丶小凯的季莹莹在第六局决赛圈被这套链控住后，从满血到倒地只用了2.8秒。</p>
+            <p>数据上，岳山三排选用率54.3%，但胜率只有48.1%，原因是岳山V2的启动前摇0.8秒，在高水平对局中容易被振刀。11月8日单排决赛里阿鬼的岳山V2两次被小凯振掉，直接导致GG输掉第七局。所以岳山在三排的强，强在配合，不在单体强度。</p>
+            <p>再看积分规则。秋季赛将击杀分从2分降到1.5分，排名分从10/6/5/4/3/2/1/0调整为12/8/6/5/4/3/2/1。这意味着三排队伍在决赛圈更倾向于“保排名”而非“抢击杀”。11月7日GG vs XCG第六局，GG在决赛圈手握3个人头时选择收缩阵型而非追击残血，最终排名分从8分变成12分，净收益多出2.5分。这个选择直接影响了总积分反超。</p>
+
+            <h3>可核对的信息层级：以11月7日决胜局为例</h3>
+            <p>已公开事实：GG总积分86.5，XCG 83；第六局决赛圈刷在森罗谷东南坡；阿鬼岳山连收3头。</p>
+            <p>当事人回应：赛后阿鬼在采访中说“当时小凯的季莹莹已经交了F2，我们算好CD才压上去的”。</p>
+            <p>媒体转述：多家赛事媒体把这次反超描述为“岳山V2的胜利”，但数据面板显示该局GG的伤害占比中岳山只占31%，妖刀姬占42%。</p>
+            <p>网友推测：部分观众认为XCG最后时刻的阵型分散是“沟通失误”，但XCG赛后未对此作出回应，也没有队内语音公开。</p>
+            <p>把判断拆成可核对的结构：GG的翻盘并非单一英雄强势，而是三个环节同时成立——① 妖刀姬F3先手命中率在第六局达到75%（前五局平均58%）；② 岳山V2的0.8秒前摇被妖刀姬F3的硬直覆盖，形成连续控制；③ 积分规则下击杀分权重降低，GG选择收缩阵型保排名分。三个环节缺一，86.5的积分都拿不到。</p>
+          </div>
+        </section>
+
+        <!-- 体验指南 / 消费路径 -->
+        <section class="section" id="experience-guide">
+          <div class="section-header">
+            <h2>观赛与数据查阅路径</h2>
+          </div>
+          <div style="background:var(--surface);border-radius:var(--radius-card);box-shadow:var(--shadow-default);padding:1.2rem 1.5rem;font-size:0.9rem;color:var(--text-secondary);line-height:1.8;">
+            <p><strong>先看赛程再决定投入时间。</strong>NBPL单排决赛日通常从下午持续到晚上，11月8日打了七局共4小时20分钟。如果只想看关键局，直接跳到第六、七局的决赛圈——这两局贡献了整场62%的击杀分。第三方邀请赛如锦鲤杯赛程更短，BO5通常在2.5小时内结束。</p>
+            <p><strong>判断一场对局值不值得回看，先看三个数据。</strong>一是决赛圈存活人数，低于4人的局往往靠运气圈型而非操作；二是振刀次数，11月8日单排决赛第七局振刀6次，是整场最高；三是击杀分占比，击杀分超过排名分的局才有翻盘戏码。11月7日GG vs XCG第六局击杀分6分、排名分12分，排名分权重更高，但翻盘恰恰来自击杀分累积。</p>
+            <p><strong>比较同类对局时，用同一套指标。</strong>单排看“振刀成功率+决赛圈伤害占比”，三排看“控制链覆盖时长+击杀分转化率”。11月8日小凯单排振刀成功率41.7%，阿鬼三排控制链覆盖3.2秒，这两组数字放在各自赛道里都是头部水平。跨赛道比较意义不大——单排的振刀窗口和三排的集火窗口根本不是一回事。</p>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section" id="faq">
+          <div class="section-header">
+            <h2>赛事常见问题</h2>
+          </div>
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>11月8日NBPL秋季赛单排决赛的赛制是几局几胜？</summary>
+              <div class="faq-answer">采用BO7赛制，先拿到4分的选手获胜。11月8日当天共进行了7局，最终由XCG丶小凯以4:2拿下冠军。</div>
+            </details>
+            <details class="faq-item">
+              <summary>永劫无间职业联赛里季莹莹的F2技能在单排和组排的选用率差距多大？</summary>
+              <div class="faq-answer">11月8日NBPL数据显示，单排选用率38.2%，组排选用率仅12.7%。差距主要来自组排更依赖队友补控制，单排需要自保与反打能力。</div>
+            </details>
+            <details class="faq-item">
+              <summary>2026年NBPL秋季赛的积分规则和春季赛有变化吗？</summary>
+              <div class="faq-answer">有。秋季赛将排名分从春季赛的10/6/5/4/3/2/1/0调整为12/8/6/5/4/3/2/1，击杀分从2分降为1.5分，更强调排名稳定性。</div>
+            </details>
+            <details class="faq-item">
+              <summary>11月7日GG对阵XCG那场三排赛的决胜点是什么？</summary>
+              <div class="faq-answer">第六局决赛圈刷在森罗谷东南坡，GG丶阿鬼的岳山在梅花桩阶段连收3个人头，把击杀分从1.5拉到6分，直接反超XCG。</div>
+            </details>
+            <details class="faq-item">
+              <summary>天海在单排模式中为什么出场率下降？</summary>
+              <div class="faq-answer">11月8日NBPL单排出场率天海仅8.3%，较9月下降5.1个百分点。主要原因是金霸体被妖刀姬的F3和岳山的V2克制，前中期容错率变低。</div>
+            </details>
+            <details class="faq-item">
+              <summary>哪里能看NBPL秋季赛的比赛回放和数据面板？</summary>
+              <div class="faq-answer">官方回放会在赛后2小时内上传至赛事专题页，数据面板同步开放。第三方数据站“永劫赛事簿”通常延迟约30分钟更新击杀分布和伤害曲线。</div>
+            </details>
+          </div>
+        </section>
+
+        <!-- 用户评论 -->
+        <section class="section" id="community">
+          <div class="section-header">
+            <h2>玩家评论</h2>
+          </div>
+          <div class="comment-grid">
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">振刀怪阿伟</span><span class="comment-time">11-08 22:15</span></div><p class="comment-text">小凯第七局那个岳山V2振刀看湿了，阿鬼的夺魂前摇被算得死死的。</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">季莹莹本莹</span><span class="comment-time">11-08 21:50</span></div><p class="comment-text">F2选用率38%又怎样，我排位里选季莹莹还是被妖刀姬F3戳烂。数据是职业哥的，我的操作是我的操作。</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">三排混子老张</span><span class="comment-time">11-08 20:30</span></div><p class="comment-text">GG那套金霸体双锁确实狠，3.2秒控制链，我打三排遇到这种配合直接双手离开键盘。</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">锦鲤杯观众</span><span class="comment-time">11-08 19:45</span></div><p class="comment-text">锦鲤杯八强那几支主播队水平差距有点大，CC那四个队感觉至少两个是来凑数的。</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">数据党老李</span><span class="comment-time">11-08 18:20</span></div><p class="comment-text">季莹莹高选用低胜率这事得说清楚，33.3%胜率配38.2%选用率，跟风选的太多了。</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">天海信仰玩家</span><span class="comment-time">11-08 17:05</span></div><p class="comment-text">天海8.3%出场率……我还在坚持，金霸体被克制是真的，但大佛砸地那一下的爽感别的英雄给不了。</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">阿鬼的刀</span><span class="comment-time">11-08 16:40</span></div><p class="comment-text">GG输在第七局那两次振刀，阿鬼前摇被读穿了。不过整场看下来GG的团战配合还是强一档。</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">不看比赛只看切片</span><span class="comment-time">11-08 15:30</span></div><p class="comment-text">单排决赛打七局太长了，看到第五局就困了，切片看个决赛圈就够了。</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">高校联赛选手小陈</span><span class="comment-time">11-08 14:10</span></div><p class="comment-text">高校联赛报名开了，去年我们队止步八强，今年练了三个月季莹莹F2体系，希望能走远点。</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">岳山工具人</span><span class="comment-time">11-08 13:25</span></div><p class="comment-text">三排岳山54.3%选用率，我排位里每把都有人抢，抢不到就摆烂，这风气真该管管。</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">妖刀姬爱好者</span><span class="comment-time">11-08 11:50</span></div><p class="comment-text">F3突进距离加到7.5米之后，妖刀姬三排是真的起飞，61%选用率不是没有道理的。</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">积分规则研究员</span><span class="comment-time">11-08 10:15</span></div><p class="comment-text">击杀分降到1.5之后，三排比赛明显苟了。以前决赛圈还有队伍主动开团，现在都缩着等排名分。</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">路过看看</span><span class="comment-time">11-07 23:40</span></div><p class="comment-text">不玩永劫无间，但看你们讨论得挺热闹的，这游戏比赛观赏性怎么样？</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">振刀训练营钉子户</span><span class="comment-time">11-07 22:55</span></div><p class="comment-text">小凯41.7%的振刀成功率，我训练营里连20%都稳不住，职业和路人真是两个游戏。</p></div>
+            <div class="comment-card"><div class="comment-header"><span class="comment-nick">BP分析小学徒</span><span class="comment-time">11-07 21:30</span></div><p class="comment-text">第六局GG那个收缩阵型的选择值得复盘，排名分12分到手，击杀分少拿1.5分，净赚2.5，算得明明白白。</p></div>
+          </div>
+        </section>
+
+        <!-- 相关资讯 -->
+        <section class="section" id="related-news">
+          <div class="section-header">
+            <h2>赛事动态速览</h2>
+          </div>
+          <div class="news-list">
+            <div class="news-item">
+              <a href="/#featured" class="news-title">NBPL秋季赛单排决赛：XCG丶小凯4:2夺冠</a>
+              <div class="news-meta"><span>2026-11-08</span><span>来源：赛事官方</span></div>
+              <p class="news-summary">七局比赛小凯总振刀成功12次，第七局梅花桩区连续振掉阿鬼两次夺魂起手，赛后采访称“算好了F3的CD”。</p>
+            </div>
+            <div class="news-item">
+              <a href="/#featured" class="news-title">GG三排86.5分反超XCG晋级胜者组决赛</a>
+              <div class="news-meta"><span>2026-11-07</span><span>来源：永劫赛事簿</span></div>
+              <p class="news-summary">第六局决赛圈阿鬼岳山连收3头，GG单局击杀分6分、排名分12分，总积分从78.5拉到86.5。</p>
+            </div>
+            <div class="news-item">
+              <a href="/#deep-analysis" class="news-title">妖刀姬F3突进距离调整后三排选用率升至61%</a>
+              <div class="news-meta"><span>2026-11-06</span><span>来源：版本更新公告</span></div>
+              <p class="news-summary">11月5日版本将F3突进距离从6米延长到7.5米，11月6日至8日三排选用率从47%跳升到61%。</p>
+            </div>
+            <div class="news-item">
+              <a href="/#related-news" class="news-title">锦鲤杯八强赛11月9日19:00开打</a>
+              <div class="news-meta"><span>2026-11-08</span><span>来源：锦鲤杯组委会</span></div>
+              <p class="news-summary">CC直播4支主播队全部晋级八强，赛制BO5，地图池含聚窟洲与火罗国，单局时长上限28分钟。</p>
+            </div>
+            <div class="news-item">
+              <a href="/#contribute" class="news-title">高校联赛秋季赛报名11月8日启动</a>
+              <div class="news-meta"><span>2026-11-08</span><span>来源：高校联赛官微</span></div>
+              <p class="news-summary">报名截至11月15日，分华东、华南、华北、西南四大赛区，每赛区前两名晋级全国赛。</p>
+            </div>
+            <div class="news-item">
+              <a href="/#deep-analysis" class="news-title">NBPL秋季赛积分规则调整：击杀分降至1.5</a>
+              <div class="news-meta"><span>2026-11-06</span><span>来源：NBPL官方规则页</span></div>
+              <p class="news-summary">排名分改为12/8/6/5/4/3/2/1，击杀分从2分降到1.5分，官方称“鼓励排名稳定性”。</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 相关推荐 -->
+        <section class="section" id="recommendations">
+          <div class="section-header">
+            <h2>相关推荐方向</h2>
+          </div>
+          <div class="tag-cloud">
+            <a href="/#featured">单排振刀技巧</a>
+            <a href="/#featured">岳山V2控制链</a>
+            <a href="/#deep-analysis">季莹莹F2反打</a>
+            <a href="/#deep-analysis">妖刀姬F3突进</a>
+            <a href="/#experience-guide">三排积分策略</a>
+            <a href="/#related-news">锦鲤杯赛程</a>
+            <a href="/#contribute">高校联赛报名</a>
+            <a href="/#ranking">选手击杀榜</a>
+          </div>
+        </section>
+
+        <!-- 补充板块：榜单 -->
+        <section class="section" id="ranking">
+          <div class="section-header">
+            <h2>11月8日选手数据榜</h2>
+          </div>
+          <div class="ranking-list">
+            <div class="ranking-item">
+              <span class="ranking-num">1</span>
+              <div class="ranking-info"><span class="ranking-name">XCG丶小凯</span><span class="ranking-meta">单排决赛振刀成功率41.7%，击杀分18分</span></div>
+            </div>
+            <div class="ranking-item">
+              <span class="ranking-num">2</span>
+              <div class="ranking-info"><span class="ranking-name">GG丶阿鬼</span><span class="ranking-meta">三排决赛圈击杀3人，控制链覆盖3.2秒</span></div>
+            </div>
+            <div class="ranking-item">
+              <span class="ranking-num">3</span>
+              <div class="ranking-info"><span class="ranking-name">XCG丶小凯（三排）</span><span class="ranking-meta">季莹莹伤害占比29%，存活时间18分32秒</span></div>
+            </div>
+            <div class="ranking-item">
+              <span class="ranking-num">4</span>
+              <div class="ranking-info"><span class="ranking-name">GG丶小海</span><span class="ranking-meta">妖刀姬F3命中率72%，助攻7次</span></div>
+            </div>
+            <div class="ranking-item">
+              <span class="ranking-num">5</span>
+              <div class="ranking-info"><span class="ranking-name">XCG丶小南</span><span class="ranking-meta">岳山V2释放4次，被振刀1次</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 互动栏目：投稿 -->
+        <section class="section" id="contribute">
+          <div class="section-header">
+            <h2>赛事投稿与线索提供</h2>
+          </div>
+          <div style="background:var(--surface);border-radius:var(--radius-card);box-shadow:var(--shadow-default);padding:1.2rem 1.5rem;font-size:0.9rem;color:var(--text-secondary);line-height:1.8;">
+            <p>如果你手上有11月8日至11月15日期间高校联赛或城市赛的现场照片、对阵表或选手数据，欢迎投稿。格式要求：图片不小于1200px宽，文字说明需包含比赛日期、对阵双方、赛果。投稿渠道：站内私信“赛事小助手”或发送至邮箱 npxvip-match@example.com（示例邮箱，仅作格式示意）。</p>
+            <p>社区赛事板块同步开放：锦鲤杯八强赛的民间复盘、三排路人局的高光片段、单排英雄克制关系的实测数据，都可以提交。审核周期为两个工作日，通过后会在“实时战报”流中标注来源。</p>
+          </div>
+        </section>
+      </main>
+
+      <!-- 右侧辅助栏 -->
+      <aside class="aux-sidebar">
+        <div class="aux-card">
+          <h4>热榜速览</h4>
+          <ul class="hot-list">
+            <li><a href="/#featured" class="item-name">XCG丶小凯单排夺冠</a><span class="item-meta">9.8</span></li>
+            <li><a href="/#featured" class="item-name">GG vs XCG三排决胜局</a><span class="item-meta">9.5</span></li>
+            <li><a href="/#deep-analysis" class="item-name">季莹莹F2选用率38.2%</a><span class="item-meta">8.9</span></li>
+            <li><a href="/#deep-analysis" class="item-name">天海单排跌至8.3%</a><span class="item-meta">8.6</span></li>
+            <li><a href="/#related-news" class="item-name">锦鲤杯八强对阵</a><span class="item-meta">8.2</span></li>
+          </ul>
+        </div>
+        <div class="aux-card">
+          <h4>今日更新</h4>
+          <ul class="hot-list">
+            <li><span class="item-name">单排决赛战报</span><span class="item-meta">21:30</span></li>
+            <li><span class="item-name">选手数据榜</span><span class="item-meta">21:00</span></li>
+            <li><span class="item-name">季莹莹选用率</span><span class="item-meta">18:00</span></li>
+            <li><span class="item-name">锦鲤杯对阵</span><span class="item-meta">15:00</span></li>
+            <li><span class="item-name">高校联赛报名</span><span class="item-meta">12:00</span></li>
+          </ul>
+        </div>
+        <div class="aux-card">
+          <h4>数据说明</h4>
+          <p style="font-size:0.75rem;color:var(--text-tertiary);line-height:1.6;">选用率、胜率、振刀成功率等数据为示例条目，基于2026年11月8日NBPL公开赛果模拟生成，仅供内容展示参考。</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo-text">npxvip最新每日比赛</span>
+        <p>覆盖2026年11月单排、三排与第三方邀请赛的赛果、数据与回放索引。日更战报，赛程同步官方时间表。条目类型含赛果、选手数据、英雄选用率与赛事预告。</p>
+      </div>
+      <div class="footer-col">
+        <h5>赛事通道</h5>
+        <a href="/#daily-schedule">今日赛程</a>
+        <a href="/#featured">精选对局</a>
+        <a href="/#latest-updates">实时战报</a>
+        <a href="/#categories">赛事分类</a>
+      </div>
+      <div class="footer-col">
+        <h5>数据与解析</h5>
+        <a href="/#deep-analysis">BP深度解析</a>
+        <a href="/#ranking">选手数据榜</a>
+        <a href="/#experience-guide">观赛指南</a>
+        <a href="/#faq">常见问题</a>
+      </div>
+      <div class="footer-col">
+        <h5>互动</h5>
+        <a href="/#community">玩家评论</a>
+        <a href="/#contribute">赛事投稿</a>
+        <a href="/#related-news">相关资讯</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 npxvip最新每日比赛 · 内容为聚合示例，数据基于公开赛果模拟，不构成官方发布。</span>
+      <span>更新时间：2026-11-08 22:30（对应单排决赛战报与数据榜）</span>
+    </div>
+  </footer>
+
+  <!-- 回到顶部 -->
+  <button class="back-to-top" id="backToTop" aria-label="回到顶部">↑</button>
+
+  <!-- 移动端遮罩 -->
+  <div class="overlay" id="overlay"></div>
+
+  <script>
+    (function() {
+      // 移动端菜单
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const headerNav = document.getElementById('headerNav');
+      const overlay = document.getElementById('overlay');
+
+      function toggleMenu(open) {
+        const isOpen = open !== undefined ? open : !headerNav.classList.contains('mobile-open');
+        headerNav.classList.toggle('mobile-open', isOpen);
+        overlay.classList.toggle('active', isOpen);
+        mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+        if (isOpen) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
+      }
+
+      mobileMenuBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMenu();
+      });
+
+      overlay.addEventListener('click', function() {
+        toggleMenu(false);
+      });
+
+      // 点击导航后收起
+      headerNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function() {
+          if (window.innerWidth <= 1024) {
+            toggleMenu(false);
+          }
+        });
+      });
+
+      // Esc关闭
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && headerNav.classList.contains('mobile-open')) {
+          toggleMenu(false);
+        }
+      });
+
+      // 回到顶部
+      const backToTop = document.getElementById('backToTop');
+      window.addEventListener('scroll', function() {
+        backToTop.classList.toggle('show', window.scrollY > window.innerHeight);
+      });
+      backToTop.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // 侧栏高亮
+      const sections = document.querySelectorAll('section[id]');
+      const channelLinks = document.querySelectorAll('.channel-list a');
+      window.addEventListener('scroll', function() {
+        let current = '';
+        sections.forEach(s => {
+          const top = s.offsetTop - 140;
+          if (window.scrollY >= top) {
+            current = s.getAttribute('id');
+          }
+        });
+        channelLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '/#' + current) {
+            link.classList.add('active');
+          }
+        });
+      });
+
+      // 搜索功能（本地筛选卡片和紧凑列表）
+      const searchInput = document.getElementById('searchInput');
+      const searchBtn = document.getElementById('searchBtn');
+
+      function performSearch() {
+        const q = searchInput.value.trim().toLowerCase();
+        const cards = document.querySelectorAll('.card');
+        const compactItems = document.querySelectorAll('.compact-item');
+        const newsItems = document.querySelectorAll('.news-item');
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const text = card.textContent.toLowerCase();
+          const show = q === '' || text.includes(q);
+          card.style.display = show ? '' : 'none';
+          if (show) visibleCount++;
+        });
+
+        compactItems.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          const show = q === '' || text.includes(q);
+          item.style.display = show ? '' : 'none';
+          if (show) visibleCount++;
+        });
+
+        newsItems.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          const show = q === '' || text.includes(q);
+          item.style.display = show ? '' : 'none';
+          if (show) visibleCount++;
+        });
+
+        // 简单无结果反馈
+        let feedback = document.getElementById('searchFeedback');
+        if (!feedback) {
+          feedback = document.createElement('div');
+          feedback.id = 'searchFeedback';
+          feedback.style.cssText = 'text-align:center;padding:1rem;color:var(--text-tertiary);font-size:0.85rem;';
+          document.querySelector('.main-content').prepend(feedback);
+        }
+        if (q !== '' && visibleCount === 0) {
+          feedback.textContent = '没有找到匹配“' + q + '”的赛事条目，试试“季莹莹”“单排”或“GG”。';
+          feedback.style.display = '';
+        } else {
+          feedback.style.display = 'none';
+        }
+      }
+
+      searchBtn.addEventListener('click', performSearch);
+      searchInput.addEventListener('keyup', function(e) {
+        if (e.key === 'Enter') performSearch();
+      });
+    })();
+  </script>
+</body>
+                </html>
