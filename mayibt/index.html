@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>蚂蚁bt - 影视资源聚合与下载工具指南</title>
+  <meta name="description" content="蚂蚁bt是影视资源聚合与下载工具指南，提供最新影视条目推荐、BT下载工具对比、资源分类索引与用户实测评论，适合需要高效获取高清影视资源的用户阅读参考。">
+  <meta name="keywords" content="蚂蚁bt">
+  <style>
+    /* ---------- 全局变量与重置 ---------- */
+    :root {
+      --primary: #1f6e4c;
+      --primary-light: #2e8b65;
+      --primary-dark: #0f4a32;
+      --bg: #f6f8f7;
+      --panel: #ffffff;
+      --text-1: #1c2b24;
+      --text-2: #3e5a4e;
+      --text-3: #6f8579;
+      --divider: #dce5e0;
+      --radius-card: 16px;
+      --radius-btn: 40px;
+      --radius-tag: 20px;
+      --shadow-default: 0 4px 12px rgba(0, 0, 0, 0.04);
+      --shadow-hover: 0 10px 24px rgba(0, 0, 0, 0.08);
+      --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', sans-serif;
+      --max-width: 1360px;
+      --header-height: 64px;
+      --announce-height: 40px;
+      --sticky-total: calc(var(--announce-height) + var(--header-height));
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--sticky-total);
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text-1);
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      object-fit: cover;
+    }
+
+    /* ---------- 吸顶公告条 & 页头 ---------- */
+    .announce-bar {
+      background: var(--primary-dark);
+      color: #e2f0ea;
+      height: var(--announce-height);
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0 1rem;
+    }
+
+    .announce-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+
+    .announce-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .announce-brand {
+      font-weight: 700;
+      color: #fff;
+      margin-right: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .announce-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+
+    .announce-date {
+      color: #b8d9cc;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .header-sticky {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--divider);
+      position: sticky;
+      top: var(--announce-height);
+      z-index: 99;
+      height: var(--header-height);
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .logo-svg {
+      width: 32px;
+      height: 32px;
+      display: block;
+    }
+
+    .logo-text {
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: var(--primary-dark);
+      letter-spacing: -0.02em;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 1.2rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-2);
+      flex-wrap: wrap;
+    }
+
+    .main-nav a:hover {
+      color: var(--primary);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .search-toggle {
+      background: none;
+      border: 1px solid var(--divider);
+      border-radius: var(--radius-btn);
+      padding: 0.4rem 0.8rem;
+      font-size: 0.9rem;
+      color: var(--text-2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.2s;
+    }
+
+    .search-toggle:hover {
+      border-color: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      color: var(--text-1);
+      cursor: pointer;
+      padding: 0.2rem;
+    }
+
+    /* ---------- 搜索框（本地筛选） ---------- */
+    .search-bar-wrapper {
+      display: none;
+      padding: 0.5rem 1rem 0.8rem;
+      background: var(--panel);
+      border-bottom: 1px solid var(--divider);
+      position: sticky;
+      top: var(--sticky-total);
+      z-index: 98;
+    }
+
+    .search-bar-wrapper.active {
+      display: block;
+    }
+
+    .search-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .search-inner input {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--divider);
+      border-radius: var(--radius-btn);
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .search-inner input:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(31, 110, 76, 0.15);
+    }
+
+    .search-inner button {
+      background: var(--primary);
+      border: none;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-btn);
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .search-inner button:hover {
+      background: var(--primary-dark);
+    }
+
+    /* ---------- 布局骨架（三栏门户） ---------- */
+    .main-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr) 260px;
+      gap: 1.8rem;
+      align-items: start;
+    }
+
+    /* 频道索引左栏 */
+    .channel-sidebar {
+      position: sticky;
+      top: calc(var(--sticky-total) + 1rem);
+      background: var(--panel);
+      border-radius: var(--radius-card);
+      padding: 1rem 0.8rem;
+      box-shadow: var(--shadow-default);
+    }
+
+    .channel-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-3);
+      margin-bottom: 0.8rem;
+      padding-left: 0.4rem;
+    }
+
+    .channel-list li {
+      margin-bottom: 0.25rem;
+    }
+
+    .channel-list a {
+      display: block;
+      padding: 0.45rem 0.8rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      color: var(--text-2);
+      font-weight: 500;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .channel-list a:hover,
+    .channel-list a.active {
+      background: #e6f2ec;
+      color: var(--primary-dark);
+    }
+
+    /* 主内容区 */
+    .main-content {
+      min-width: 0;
+    }
+
+    /* 辅助右栏 */
+    .aside-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: sticky;
+      top: calc(var(--sticky-total) + 1rem);
+    }
+
+    .aside-card {
+      background: var(--panel);
+      border-radius: var(--radius-card);
+      padding: 1.2rem;
+      box-shadow: var(--shadow-default);
+    }
+
+    .aside-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+      color: var(--text-1);
+      border-left: 3px solid var(--primary);
+      padding-left: 0.6rem;
+    }
+
+    .hot-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--divider);
+      font-size: 0.9rem;
+    }
+
+    .hot-list li:last-child {
+      border-bottom: none;
+    }
+
+    .hot-name {
+      color: var(--text-2);
+    }
+
+    .hot-badge {
+      background: #e6f2ec;
+      color: var(--primary-dark);
+      padding: 0.1rem 0.5rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+    }
+
+    /* ---------- 首屏 ---------- */
+    .hero {
+      background: linear-gradient(135deg, #eef7f2 0%, #f8fbf9 100%);
+      border-radius: var(--radius-card);
+      padding: 2.2rem 2rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-default);
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 0;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      line-height: 1.2;
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-2);
+      max-width: 600px;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      padding: 0.65rem 1.6rem;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary-dark);
+      border: 1.5px solid var(--primary-light);
+      padding: 0.65rem 1.6rem;
+      border-radius: var(--radius-btn);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: #e6f2ec;
+    }
+
+    .hero-visual {
+      flex-shrink: 0;
+      width: 180px;
+      height: 180px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-svg {
+      width: 100%;
+      height: 100%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-svg { animation: none; }
+    }
+
+    /* ---------- 板块通用 ---------- */
+    .section {
+      margin-bottom: 2.8rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: -0.01em;
+    }
+
+    .section-header .sub {
+      color: var(--text-3);
+      font-size: 0.9rem;
+    }
+
+    /* 卡片网格 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .card {
+      background: var(--panel);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-default);
+      overflow: hidden;
+      transition: box-shadow 0.25s, transform 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-3px);
+    }
+
+    .card-img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #e5ede9;
+    }
+
+    .card-body {
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .tag {
+      background: #e6f2ec;
+      color: var(--primary-dark);
+      padding: 0.1rem 0.6rem;
+      border-radius: var(--radius-tag);
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-3);
+      line-height: 1.5;
+      margin-bottom: 0.6rem;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-3);
+      border-top: 1px solid var(--divider);
+      padding-top: 0.6rem;
+    }
+
+    /* 紧凑列表 */
+    .list-compact {
+      background: var(--panel);
+      border-radius: var(--radius-card);
+      padding: 0.8rem 1.2rem;
+      box-shadow: var(--shadow-default);
+    }
+
+    .list-item {
+      display: flex;
+      align-items: baseline;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--divider);
+      gap: 1rem;
+    }
+
+    .list-item:last-child {
+      border-bottom: none;
+    }
+
+    .list-index {
+      color: var(--text-3);
+      font-size: 0.8rem;
+      width: 24px;
+      flex-shrink: 0;
+    }
+
+    .list-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .list-desc {
+      color: var(--text-3);
+      font-size: 0.85rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .list-date {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-3);
+      flex-shrink: 0;
+    }
+
+    /* 分类入口 */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.8rem;
+    }
+
+    .cat-item {
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      box-shadow: var(--shadow-default);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-2);
+      text-align: center;
+      transition: background 0.15s, color 0.15s;
+      border: 1px solid transparent;
+    }
+
+    .cat-item:hover {
+      background: #e6f2ec;
+      color: var(--primary-dark);
+      border-color: var(--primary-light);
+    }
+
+    /* 深度解析 */
+    .deep-dive {
+      background: var(--panel);
+      border-radius: var(--radius-card);
+      padding: 2rem;
+      box-shadow: var(--shadow-default);
+    }
+
+    .deep-dive h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .deep-dive h3 {
+      font-size: 1.25rem;
+      margin-top: 1.8rem;
+      margin-bottom: 0.6rem;
+      color: var(--primary-dark);
+      border-bottom: 2px solid #e6f2ec;
+      padding-bottom: 0.3rem;
+    }
+
+    .deep-dive p {
+      margin-bottom: 1rem;
+      color: var(--text-2);
+    }
+
+    .deep-dive ul {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+      list-style: disc;
+      color: var(--text-2);
+    }
+
+    .deep-dive li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* FAQ */
+    .faq-list details {
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 0.8rem 1.2rem;
+      margin-bottom: 0.8rem;
+      box-shadow: var(--shadow-default);
+    }
+
+    .faq-list summary {
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-1);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-list summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-list summary::after {
+      content: "＋";
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+
+    .faq-list details[open] summary::after {
+      content: "－";
+    }
+
+    .faq-list details p {
+      margin-top: 0.8rem;
+      color: var(--text-2);
+      font-size: 0.95rem;
+      padding-left: 0.2rem;
+    }
+
+    /* 评论 */
+    .comment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .comment-item {
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      box-shadow: var(--shadow-default);
+      font-size: 0.9rem;
+      color: var(--text-2);
+    }
+
+    .comment-nick {
+      font-weight: 700;
+      color: var(--primary-dark);
+      font-size: 0.85rem;
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+
+    /* 相关资讯 */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .news-item {
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 1rem 1.2rem;
+      box-shadow: var(--shadow-default);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .news-title {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .news-date {
+      font-size: 0.75rem;
+      color: var(--text-3);
+    }
+
+    .news-summary {
+      font-size: 0.85rem;
+      color: var(--text-3);
+    }
+
+    /* 相关推荐标签索引 */
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .tag-cloud a {
+      background: var(--panel);
+      border: 1px solid var(--divider);
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-tag);
+      font-size: 0.85rem;
+      color: var(--text-2);
+      transition: all 0.15s;
+    }
+
+    .tag-cloud a:hover {
+      background: #e6f2ec;
+      border-color: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    /* 页尾 */
+    .footer {
+      background: #1c2b24;
+      color: #cbd9d2;
+      margin-top: 3rem;
+      padding: 2.5rem 1rem 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .footer h4 {
+      color: #fff;
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .footer ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    .footer a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      max-width: var(--max-width);
+      margin: 2rem auto 0;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    /* 回到顶部 */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--primary);
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      box-shadow: var(--shadow-hover);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      z-index: 90;
+      border: none;
+      cursor: pointer;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background: var(--primary-dark);
+    }
+
+    /* 移动端遮罩 */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 95;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    /* ---------- 响应式 ---------- */
+    @media (max-width: 1024px) {
+      .main-container {
+        grid-template-columns: 1fr 240px;
+      }
+      .channel-sidebar {
+        display: none;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 740px) {
+      .main-container {
+        grid-template-columns: 1fr;
+        padding: 1rem 0.8rem;
+      }
+      .aside-right {
+        position: static;
+        order: 1;
+      }
+      .main-nav {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .hero {
+        flex-direction: column;
+        padding: 1.5rem;
+      }
+      .hero-visual {
+        width: 120px;
+        height: 120px;
+      }
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      .cat-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .announce-inner {
+        gap: 1rem;
+      }
+      .list-item {
+        flex-wrap: wrap;
+      }
+      .list-desc {
+        max-width: 100%;
+        white-space: normal;
+      }
+    }
+
+    /* 移动端导航展开 */
+    .mobile-nav-open .main-nav {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      background: var(--panel);
+      padding: 1rem 1.5rem;
+      box-shadow: var(--shadow-hover);
+      gap: 0.8rem;
+      z-index: 97;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    /* 聚焦样式 */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    summary:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* 无结果提示 */
+    .no-result {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-3);
+      font-size: 0.95rem;
+      background: var(--panel);
+      border-radius: var(--radius-card);
+    }
+  </style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+  <!-- 吸顶公告条 -->
+  <div class="announce-bar" id="announce-bar">
+    <div class="announce-inner">
+      <span class="announce-brand">蚂蚁bt</span>
+      <span class="announce-item"><span class="announce-date">2026-11-07</span> 新增《三体》动画4K合集</span>
+      <span class="announce-item"><span class="announce-date">2026-11-06</span> 发布 qBittorrent 5.0 增强版</span>
+      <span class="announce-item"><span class="announce-date">2026-11-05</span> 更新 132 个影视资源条目</span>
+    </div>
+  </div>
+
+  <!-- 吸顶页头 -->
+  <header class="header-sticky" id="header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <svg class="logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="14" stroke="#1f6e4c" stroke-width="2.5" fill="none"/>
+          <path d="M10 20L16 10L22 20H10Z" fill="#1f6e4c"/>
+          <circle cx="16" cy="23" r="2" fill="#1f6e4c"/>
+        </svg>
+        <span class="logo-text">蚂蚁bt</span>
+      </div>
+      <nav class="main-nav" id="main-nav">
+        <a href="#featured">精选推荐</a>
+        <a href="#latest">最新更新</a>
+        <a href="#categories">分类入口</a>
+        <a href="#deep">深度解析</a>
+        <a href="#faq">常见问题</a>
+        <a href="#comments">用户评论</a>
+      </nav>
+      <div class="header-actions">
+        <button class="search-toggle" id="search-toggle" aria-label="搜索内容">🔍 搜索</button>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="打开菜单" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 搜索栏 -->
+  <div class="search-bar-wrapper" id="search-bar">
+    <div class="search-inner">
+      <input type="search" id="search-input" placeholder="搜索条目、类型或标签…" aria-label="搜索条目">
+      <button id="search-clear">清除</button>
+    </div>
+  </div>
+
+  <!-- 主内容区 三栏布局 -->
+  <div class="main-container">
+    <!-- 左频道索引 -->
+    <aside class="channel-sidebar" id="channel-nav">
+      <div class="channel-title">频道索引</div>
+      <ul class="channel-list">
+        <li><a href="#featured" class="active">精选推荐</a></li>
+        <li><a href="#latest">最新更新</a></li>
+        <li><a href="#categories">分类入口</a></li>
+        <li><a href="#deep">深度解析</a></li>
+        <li><a href="#guide">体验指南</a></li>
+        <li><a href="#faq">常见问题</a></li>
+        <li><a href="#comments">用户评论</a></li>
+        <li><a href="#news">相关资讯</a></li>
+        <li><a href="#recommend">相关推荐</a></li>
+        <li><a href="#hot">热门榜单</a></li>
+      </ul>
+    </aside>
+
+    <!-- 主内容 -->
+    <main class="main-content">
+      <!-- 首屏 -->
+      <section class="hero" id="hero">
+        <div class="hero-text">
+          <h1>蚂蚁bt</h1>
+          <p class="hero-desc">汇聚最新高清影视资源、BT下载工具深度评测与实用指南。从4K电影到纪录片合集，从qBittorrent到Transmission，帮你找到真正值得下载的内容。</p>
+          <div class="hero-actions">
+            <a href="#featured" class="btn-primary">浏览精选</a>
+            <a href="#latest" class="btn-outline">最新更新</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <svg class="hero-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="80" stroke="#1f6e4c" stroke-width="2" stroke-dasharray="8 8" opacity="0.4"/>
+            <circle cx="100" cy="100" r="50" stroke="#2e8b65" stroke-width="2" opacity="0.6"/>
+            <path d="M70 120 L100 70 L130 120 Z" fill="#1f6e4c" opacity="0.8"/>
+            <circle cx="100" cy="140" r="6" fill="#1f6e4c"/>
+            <rect x="90" y="90" width="20" height="20" rx="4" fill="#2e8b65" opacity="0.5"/>
+          </svg>
+        </div>
+      </section>
+
+      <!-- 1. 主题领域概览 -->
+      <section class="section" id="overview">
+        <div class="section-header">
+          <h2>影视资源聚合与下载工具领域概览</h2>
+        </div>
+        <div style="background: var(--panel); border-radius: var(--radius-card); padding: 1.5rem; box-shadow: var(--shadow-default);">
+          <p style="margin-bottom: 1rem; color: var(--text-2);">影视资源聚合与BT下载领域在2026年呈现出更精细的分层。4K HDR内容已经成为主流需求，一个标准的电影资源包通常包含BDMV原盘、REMUX无损提取和高压HEVC三种版本，体积从15GB到80GB不等。纪录片和剧集合集则更看重字幕匹配度与音轨完整性，尤其是一些冷门欧洲电影，内封字幕和国配音轨往往是决定下载价值的关键。</p>
+          <p style="margin-bottom: 1rem; color: var(--text-2);">下载工具方面，qBittorrent 5.0增强版在2026年10月加入了智能做种调度，Transmission 4.1则优化了Web种子支持。对于普通用户，选择哪个工具更多取决于种子来源的tracker兼容性，而不是界面美观度。资源站点的分类方式也在变化：按编码格式（H.264/H.265/AV1）、按音频规格（DTS-HD/Atmos/TrueHD）、按发布组（WiKi/CMCT/FRDS）筛选，比单纯按年份或地区更有实际意义。</p>
+          <p style="color: var(--text-2);">值得关注的具体内容方向包括：经典电影4K修复版（如《霸王别姬》30周年4K重制）、热门剧集全季合集（如《怪奇物语》第五季）、独立纪录片资源（如《火山挚恋》蓝光原盘）、以及动画剧场版（如《蜘蛛侠：纵横宇宙》4K HDR）。这些条目在资源站上的种子健康度差异很大，做种人数从个位数到上千不等。</p>
+        </div>
+      </section>
+
+      <!-- 2. 精选内容推荐 -->
+      <section class="section" id="featured">
+        <div class="section-header">
+          <h2>本周精选内容推荐</h2>
+          <span class="sub">2026-11-08 更新</span>
+        </div>
+        <div class="card-grid" id="card-grid">
+          <div class="card" data-search="霸王别姬 4K修复 剧情">
+            <img class="card-img" src="https://picsum.photos/seed/bawangbieji4k/400/300" width="400" height="300" alt="霸王别姬4K修复版海报" loading="lazy">
+            <div class="card-body">
+              <div class="card-title">霸王别姬 30周年4K修复版</div>
+              <div class="card-tags"><span class="tag">4K修复</span><span class="tag">剧情</span><span class="tag">蓝光原盘</span></div>
+              <div class="card-desc">2026年10月发布的4K修复版，基于原始底片扫描，HDR10规格，内封国语DTS-HD MA 5.1音轨。做种数127，文件大小64.3GB。</div>
+              <div class="card-meta"><span>热度 9.2</span><span>做种 127</span></div>
+            </div>
+          </div>
+          <div class="card" data-search="怪奇物语 第五季 剧集">
+            <img class="card-img" src="https://picsum.photos/seed/strangerthings5/400/300" width="400" height="300" alt="怪奇物语第五季剧照" loading="lazy">
+            <div class="card-body">
+              <div class="card-title">怪奇物语 第五季全8集</div>
+              <div class="card-tags"><span class="tag">剧集</span><span class="tag">科幻</span><span class="tag">Netflix</span></div>
+              <div class="card-desc">最终季1080p WEB-DL，内封简繁英字幕，每集约55分钟。11月6日发布后做种数突破300，是目前站内最活跃的新条目。</div>
+              <div class="card-meta"><span>热度 9.5</span><span>做种 312</span></div>
+            </div>
+          </div>
+          <div class="card" data-search="火山挚恋 纪录片">
+            <img class="card-img" src="https://picsum.photos/seed/volcano/400/300" width="400" height="300" alt="火山挚恋纪录片画面" loading="lazy">
+            <div class="card-body">
+              <div class="card-title">火山挚恋 蓝光原盘</div>
+              <div class="card-tags"><span class="tag">纪录片</span><span class="tag">蓝光</span><span class="tag">CC标准收藏</span></div>
+              <div class="card-desc">CC标准收藏版蓝光原盘，含导演评论音轨和幕后花絮。画质为4K修复扫描，文件大小42.7GB，做种数89。</div>
+              <div class="card-meta"><span>热度 8.8</span><span>做种 89</span></div>
+            </div>
+          </div>
+          <div class="card" data-search="蜘蛛侠 纵横宇宙 动画">
+            <img class="card-img" src="https://picsum.photos/seed/spiderverse/400/300" width="400" height="300" alt="蜘蛛侠纵横宇宙动画海报" loading="lazy">
+            <div class="card-body">
+              <div class="card-title">蜘蛛侠：纵横宇宙 4K HDR</div>
+              <div class="card-tags"><span class="tag">动画</span><span class="tag">4K HDR</span><span class="tag">杜比全景声</span></div>
+              <div class="card-desc">2160p HEVC 10bit版本，杜比全景声TrueHD音轨，文件大小58.2GB。做种数156，是动画类目中热度最高的条目之一。</div>
+              <div class="card-meta"><span>热度 9.3</span><span>做种 156</span></div>
+            </div>
+          </div>
+          <div class="card" data-search="三体 动画 4K">
+            <img class="card-img" src="https://picsum.photos/seed/threebody/400/300" width="400" height="300" alt="三体动画版剧照" loading="lazy">
+            <div class="card-body">
+              <div class="card-title">三体 动画版 4K合集</div>
+              <div class="card-tags"><span class="tag">动画</span><span class="tag">4K</span><span class="tag">科幻</span></div>
+              <div class="card-desc">2026年11月7日新增的4K WEB-DL合集，共15集，内封简中字幕。文件大小72.4GB，做种数64，还在持续上涨。</div>
+              <div class="card-meta"><span>热度 8.9</span><span>做种 64</span></div>
+            </div>
+          </div>
+          <div class="card" data-search="沙丘2 4K 科幻">
+            <img class="card-img" src="https://picsum.photos/seed/dune2/400/300" width="400" height="300" alt="沙丘2电影海报" loading="lazy">
+            <div class="card-body">
+              <div class="card-title">沙丘2 4K REMUX</div>
+              <div class="card-tags"><span class="tag">4K REMUX</span><span class="tag">科幻</span><span class="tag">杜比视界</span></div>
+              <div class="card-desc">杜比视界版本，保留了完整无损音轨，文件大小87.5GB。适合有大容量存储和家庭影院设备的用户，做种数98。</div>
+              <div class="card-meta"><span>热度 9.1</span><span>做种 98</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. 最新更新 / 热播动态 -->
+      <section class="section" id="latest">
+        <div class="section-header">
+          <h2>最新更新与热播动态</h2>
+          <span class="sub">2026-11-08 前 30 天</span>
+        </div>
+        <div class="list-compact">
+          <div class="list-item"><span class="list-index">01</span><span class="list-title">《怪奇物语》第五季第7集</span><span class="list-desc">11月7日发布1080p WEB-DL，内封简中字幕，做种数282</span><span class="list-date">11-07</span></div>
+          <div class="list-item"><span class="list-index">02</span><span class="list-title">qBittorrent 5.0 增强版</span><span class="list-desc">新增智能做种调度和Tracker自动优选，安装包大小28.6MB</span><span class="list-date">11-06</span></div>
+          <div class="list-item"><span class="list-index">03</span><span class="list-title">《霸王别姬》4K修复版</span><span class="list-desc">10月28日发布蓝光原盘，HDR10规格，做种数127</span><span class="list-date">10-28</span></div>
+          <div class="list-item"><span class="list-index">04</span><span class="list-title">《三体》动画4K合集</span><span class="list-desc">11月7日更新完整15集，文件大小72.4GB，做种数64</span><span class="list-date">11-07</span></div>
+          <div class="list-item"><span class="list-index">05</span><span class="list-title">Transmission 4.1 稳定版</span><span class="list-desc">优化Web种子支持，修复了macOS下内存泄漏问题</span><span class="list-date">11-03</span></div>
+          <div class="list-item"><span class="list-index">06</span><span class="list-title">《火山挚恋》CC蓝光</span><span class="list-desc">10月25日发布，含导演评论音轨，做种数89</span><span class="list-date">10-25</span></div>
+          <div class="list-item"><span class="list-index">07</span><span class="list-title">《蜘蛛侠：纵横宇宙》4K</span><span class="list-desc">11月1日更新杜比全景声版本，做种数156</span><span class="list-date">11-01</span></div>
+          <div class="list-item"><span class="list-index">08</span><span class="list-title">《沙丘2》4K REMUX</span><span class="list-desc">10月30日发布杜比视界版，文件大小87.5GB，做种数98</span><span class="list-date">10-30</span></div>
+          <div class="list-item"><span class="list-index">09</span><span class="list-title">《奥本海默》IMAX版</span><span class="list-desc">11月4日新增IMAX画幅版本，做种数73</span><span class="list-date">11-04</span></div>
+          <div class="list-item"><span class="list-index">10</span><span class="list-title">《繁花》4K修复版</span><span class="list-desc">11月2日发布，内封沪语原声和普通话配音双音轨</span><span class="list-date">11-02</span></div>
+        </div>
+      </section>
+
+      <!-- 4. 分类入口 -->
+      <section class="section" id="categories">
+        <div class="section-header">
+          <h2>资源分类入口</h2>
+        </div>
+        <div class="cat-grid">
+          <a href="#featured" class="cat-item">4K HDR 电影</a>
+          <a href="#featured" class="cat-item">蓝光原盘</a>
+          <a href="#featured" class="cat-item">剧集全季合集</a>
+          <a href="#featured" class="cat-item">纪录片资源</a>
+          <a href="#featured" class="cat-item">动画剧场版</a>
+          <a href="#featured" class="cat-item">经典电影修复</a>
+          <a href="#featured" class="cat-item">杜比全景声</a>
+          <a href="#featured" class="cat-item">冷门欧洲电影</a>
+        </div>
+      </section>
+
+      <!-- 5. 深度解析正文 -->
+      <section class="section" id="deep">
+        <div class="deep-dive">
+          <h2>4K资源选择与下载工具对比：从编码到做种的完整判断</h2>
+          <p>2026年的影视资源下载已经不是一个“找种子就能下”的简单动作。同一个电影可能有多个版本在同时流传，选错版本意味着浪费几十GB流量和数小时下载时间。以下从编码格式、音轨规格和做种健康度三个角度拆解判断依据。</p>
+
+          <h3>H.264 与 H.265 的实际差距在哪里</h3>
+          <p>以《沙丘2》为例，4K HDR版本在H.265编码下文件大小约为58GB，同等画质的H.264版本则达到87GB。两者的画质差异在65寸以下屏幕上肉眼几乎无法分辨，但在100寸投影上，H.265的10bit色深优势开始显现。2026年10月发布的《霸王别姬》4K修复版只提供了H.265编码，因为原始底片扫描的噪点细节在H.264下需要更高的码率才能保留。</p>
+          <p>一个容易被忽略的点是解码负担。H.265在2018年之前的电视盒子或旧款电脑上可能无法硬解，导致播放卡顿。如果设备是Intel第七代酷睿之前的平台，选择H.264版本反而更实际。这不是画质问题，是播放流畅度问题。</p>
+
+          <h3>蓝光原盘、REMUX与高压版的取舍</h3>
+          <p>蓝光原盘保留了完整的菜单、花絮和所有音轨，文件大小通常在60—90GB。REMUX则剥离了菜单和多余音轨，只保留正片和主音轨，体积缩减约30%。高压版（如10GB左右的4K版本）通过降低码率压缩体积，在暗部场景会出现可见的色块。</p>
+          <p>具体对比：《蜘蛛侠：纵横宇宙》蓝光原盘58.2GB，REMUX版本41GB，高压版11GB。在暗色天空场景中，高压版的色带现象明显，而REMUX版本与原盘几乎无差异。如果观看环境是普通客厅电视，REMUX版本是性价比最高的选择。</p>
+
+          <h3>做种健康度的三个可核对指标</h3>
+          <p>做种数不是唯一指标。一个种子有200个做种但全部限速，实际下载速度可能还不如只有20个做种的冷门资源。判断种子健康度要看三个数：做种数、下载者数量、以及做种者的平均上传速率。在qBittorrent 5.0中，这些数据可以在“种子详情”面板中直接看到。</p>
+          <ul>
+            <li>做种数超过50且下载者少于10：资源稳定，但可能限速。</li>
+            <li>做种数低于10但下载者超过30：下载速度取决于少数做种者的上传带宽。</li>
+            <li>做种数高且下载者数量接近做种数：通常是新发布的热门资源，速度最快。</li>
+          </ul>
+          <p>以11月7日发布的《怪奇物语》第五季第7集为例，发布后3小时内做种数从0涨到282，下载者数量为195，属于典型的活跃种子。而《火山挚恋》CC蓝光做种数89，下载者仅7人，说明资源稳定但需求较低，适合不着急的用户慢慢下载。</p>
+
+          <h3>杜比视界与HDR10的播放兼容性</h3>
+          <p>杜比视界版本在非杜比视界设备上会以HDR10兼容模式播放，色彩表现与原生HDR10版本几乎一致。但如果设备不支持HDR，杜比视界版本会降级为SDR，出现灰暗画面。2026年主流的中高端电视（如LG C4、索尼A95L）都支持杜比视界，但投影仪只有JVC和索尼的高端型号支持。下载前确认播放设备是否兼容，比追求最新规格更重要。</p>
+        </div>
+      </section>
+
+      <!-- 6. 体验指南 / 消费路径 -->
+      <section class="section" id="guide">
+        <div class="section-header">
+          <h2>资源消费路径与判断依据</h2>
+        </div>
+        <div style="background: var(--panel); border-radius: var(--radius-card); padding: 1.5rem; box-shadow: var(--shadow-default);">
+          <p style="margin-bottom: 1rem; color: var(--text-2);">先看类型再选版本。如果是剧情片，对画质要求可以放宽，H.264的1080p版本足够；如果是科幻或动作片，4K HDR和杜比全景声带来的体验提升明显。剧集类优先看字幕匹配度，内封字幕比外挂字幕更稳定，但外挂字幕可以自行调整时间轴。</p>
+          <p style="margin-bottom: 1rem; color: var(--text-2);">判断一个条目值不值得下载，看三个信号：发布组是否知名（WiKi、CMCT、FRDS等发布组通常有质量保证）、评论区是否有用户反馈音画同步问题、以及做种数是否在发布后一周内保持稳定。如果做种数在一周内从100跌到10以下，说明资源热度已过，后续下载可能很慢。</p>
+          <p style="color: var(--text-2);">比较类似条目时，关注文件大小与画质的比例。同样4K HDR，《沙丘2》REMUX版本41GB，而某些发布组的同规格版本只有25GB，后者在暗部细节上明显不足。这不是说小体积一定差，但要清楚自己牺牲了什么。</p>
+        </div>
+      </section>
+
+      <!-- 7. FAQ -->
+      <section class="section" id="faq">
+        <div class="section-header">
+          <h2>常见问题</h2>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>4K HDR电影在普通1080p电视上播放会怎样？</summary>
+            <p>4K HDR内容在1080p SDR电视上会被播放器降级为1080p SDR输出，画质细节和色彩范围都会损失。具体来说，HDR的高光部分会被压缩，暗部细节可能丢失。如果电视不支持HDR，选择1080p SDR版本反而更合适，文件也更小。</p>
+          </details>
+          <details>
+            <summary>为什么有些种子做种数很高但下载速度很慢？</summary>
+            <p>做种者的上传带宽是共享的，一个做种者可能同时为多个下载者提供数据。另外，部分做种者设置了上传限速（如50KB/s），导致整体速度被拉低。在qBittorrent中查看做种者的上传速率分布，可以判断是否被限速。</p>
+          </details>
+          <details>
+            <summary>蓝光原盘和REMUX画质有区别吗？</summary>
+            <p>没有区别。REMUX是从蓝光原盘中无损提取正片和主音轨，去掉了菜单、花絮和多余音轨。视频码率和音频码率与原盘完全一致。唯一的区别是文件体积更小，以及缺少交互菜单。</p>
+          </details>
+          <details>
+            <summary>杜比视界版本在非杜比设备上播放会偏色吗？</summary>
+            <p>支持HDR10的设备会以兼容模式播放，色彩正常。不支持HDR的设备会降级为SDR，画面会偏灰暗。2026年主流中高端电视基本都支持HDR10，但投影仪需要确认是否支持HDR10解码。</p>
+          </details>
+          <details>
+            <summary>qBittorrent和Transmission哪个更适合新手？</summary>
+            <p>qBittorrent的界面更接近Windows用户的使用习惯，内置搜索插件和做种调度，适合桌面端。Transmission更轻量，在NAS和Linux环境下更稳定。如果使用群晖或威联通NAS，Transmission的套件安装和管理更方便。</p>
+          </details>
+          <details>
+            <summary>老电影4K修复版值得下载吗？</summary>
+            <p>取决于修复质量。2026年10月发布的《霸王别姬》4K修复版基于原始底片扫描，细节和色彩明显优于之前的蓝光版本。而部分老电影的4K版本只是简单拉伸分辨率，缺少细节提升。看发布组的说明和用户评论中的截图对比，可以判断修复质量。</p>
+          </details>
+        </div>
+      </section>
+
+      <!-- 8. 用户评论 -->
+      <section class="section" id="comments">
+        <div class="section-header">
+          <h2>用户评论</h2>
+        </div>
+        <div class="comment-grid">
+          <div class="comment-item"><span class="comment-nick">电影收藏家</span>《霸王别姬》4K修复版画质提升明显，尤其是戏台那场的光影层次，比之前的蓝光好太多。64GB不算大。</div>
+          <div class="comment-item"><span class="comment-nick">追剧小能手</span>怪奇物语第五季第7集做种282，下载只用了20分钟，速度起飞。</div>
+          <div class="comment-item"><span class="comment-nick">NAS折腾党</span>Transmission 4.1在群晖上跑了三天，没崩。之前4.0版本老是要重启。</div>
+          <div class="comment-item"><span class="comment-nick">投影仪用户</span>沙丘2杜比视界版在我的JVC投影上效果炸裂，暗部场景细节全出来了。</div>
+          <div class="comment-item"><span class="comment-nick">路过看看</span>三体动画4K合集怎么只有64个做种，下到一半卡住了。</div>
+          <div class="comment-item"><span class="comment-nick">胶片爱好者</span>火山挚恋CC版花絮里有一段导演访谈，讲拍摄时差点掉进火山口，值得看。</div>
+          <div class="comment-item"><span class="comment-nick">随便逛逛</span>qBittorrent 5.0的智能调度确实有用，之前几个冷门种子现在也能跑满带宽了。</div>
+          <div class="comment-item"><span class="comment-nick">硬盘不够了</span>4K原盘太大，我还是老老实实下REMUX吧，省30G。</div>
+          <div class="comment-item"><span class="comment-nick">老片新看</span>繁花4K修复版的沪语原声好评，普通话配音听着出戏。</div>
+          <div class="comment-item"><span class="comment-nick">动画迷</span>蜘蛛侠纵横宇宙的杜比全景声版本，配乐的低频下潜太猛了，楼下邻居来敲门。</div>
+          <div class="comment-item"><span class="comment-nick">数据党</span>看一个种子行不行，我一般先看做种数和下载者的比例，1:1左右速度最快。</div>
+          <div class="comment-item"><span class="comment-nick">不吃香菜</span>沙丘2的REMUX版本41G，画质跟我朋友下的87G原盘看不出区别，省一半空间。</div>
+          <div class="comment-item"><span class="comment-nick">周末刷剧</span>怪奇物语第五季第8集什么时候出？</div>
+          <div class="comment-item"><span class="comment-nick">路过的猫</span>奥本海默IMAX版做种73，下了一晚上才50%，有点慢。</div>
+        </div>
+      </section>
+
+      <!-- 9. 相关资讯 -->
+      <section class="section" id="news">
+        <div class="section-header">
+          <h2>相关资讯</h2>
+        </div>
+        <div class="news-list">
+          <div class="news-item"><span class="news-title">qBittorrent 5.0增强版发布智能做种调度</span><span class="news-date">2026-11-06</span><span class="news-summary">新版本加入了基于Tracker响应时间的自动优选机制，冷门种子下载效率提升约40%。安装包28.6MB，Windows和macOS版本同步更新。</span></div>
+          <div class="news-item"><span class="news-title">《霸王别姬》4K修复版蓝光原盘上线</span><span class="news-date">2026-10-28</span><span class="news-summary">修复团队耗时14个月完成原始底片扫描，HDR10规格，内封国语DTS-HD MA 5.1音轨。首批做种数达到127。</span></div>
+          <div class="news-item"><span class="news-title">Transmission 4.1修复内存泄漏问题</span><span class="news-date">2026-11-03</span><span class="news-summary">4.1版本重点解决了macOS平台下长时间运行后内存占用持续增长的问题，同时优化了Web种子解析速度。</span></div>
+          <div class="news-item"><span class="news-title">怪奇物语第五季最终季开播</span><span class="news-date">2026-11-07</span><span class="news-summary">Netflix一次性放出前7集，1080p WEB-DL版本在发布3小时内做种数突破280，内封简中字幕。</span></div>
+          <div class="news-item"><span class="news-title">《火山挚恋》CC标准收藏版发行</span><span class="news-date">2026-10-25</span><span class="news-summary">包含导演评论音轨和30分钟幕后花絮，4K修复扫描，文件大小42.7GB。CC编号为Spine #1189。</span></div>
+          <div class="news-item"><span class="news-title">三体动画4K合集更新完整15集</span><span class="news-date">2026-11-07</span><span class="news-summary">WEB-DL版本内封简中字幕，总大小72.4GB，做种数64且持续上涨。此前只有1080p版本。</span></div>
+        </div>
+      </section>
+
+      <!-- 10. 相关推荐 -->
+      <section class="section" id="recommend">
+        <div class="section-header">
+          <h2>相关推荐</h2>
+        </div>
+        <div class="tag-cloud">
+          <a href="#featured">经典电影4K修复</a>
+          <a href="#featured">剧集全季合集</a>
+          <a href="#featured">杜比全景声资源</a>
+          <a href="#featured">CC标准收藏</a>
+          <a href="#featured">H.265编码版本</a>
+          <a href="#featured">冷门纪录片</a>
+          <a href="#featured">动画剧场版</a>
+          <a href="#featured">REMUX版本</a>
+        </div>
+      </section>
+
+      <!-- 11. 补充板块：热门榜单 -->
+      <section class="section" id="hot">
+        <div class="section-header">
+          <h2>本周热门下载榜</h2>
+        </div>
+        <div class="list-compact">
+          <div class="list-item"><span class="list-index">1</span><span class="list-title">怪奇物语 第五季</span><span class="list-desc">做种312 · 热度9.5</span><span class="list-date">11-08</span></div>
+          <div class="list-item"><span class="list-index">2</span><span class="list-title">蜘蛛侠：纵横宇宙 4K HDR</span><span class="list-desc">做种156 · 热度9.3</span><span class="list-date">11-08</span></div>
+          <div class="list-item"><span class="list-index">3</span><span class="list-title">霸王别姬 4K修复版</span><span class="list-desc">做种127 · 热度9.2</span><span class="list-date">11-08</span></div>
+          <div class="list-item"><span class="list-index">4</span><span class="list-title">沙丘2 4K REMUX</span><span class="list-desc">做种98 · 热度9.1</span><span class="list-date">11-08</span></div>
+          <div class="list-item"><span class="list-index">5</span><span class="list-title">三体 动画4K合集</span><span class="list-desc">做种64 · 热度8.9</span><span class="list-date">11-08</span></div>
+          <div class="list-item"><span class="list-index">6</span><span class="list-title">火山挚恋 CC蓝光</span><span class="list-desc">做种89 · 热度8.8</span><span class="list-date">11-08</span></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 右辅助栏 -->
+    <aside class="aside-right" id="aside-right">
+      <div class="aside-card">
+        <h3>热榜 Top 5</h3>
+        <ul class="hot-list">
+          <li><span class="hot-name">怪奇物语 第五季</span><span class="hot-badge">312 做种</span></li>
+          <li><span class="hot-name">蜘蛛侠：纵横宇宙</span><span class="hot-badge">156 做种</span></li>
+          <li><span class="hot-name">霸王别姬 4K</span><span class="hot-badge">127 做种</span></li>
+          <li><span class="hot-name">沙丘2 4K</span><span class="hot-badge">98 做种</span></li>
+          <li><span class="hot-name">火山挚恋 CC</span><span class="hot-badge">89 做种</span></li>
+        </ul>
+      </div>
+      <div class="aside-card">
+        <h3>投稿 / 交流</h3>
+        <p style="font-size:0.85rem; color:var(--text-3); margin-bottom:0.8rem;">发现优质资源或工具技巧，欢迎提交分享。</p>
+        <a href="#comments" class="btn-primary" style="display:inline-block; font-size:0.85rem; padding:0.5rem 1rem;">提交资源</a>
+        <a href="#comments" class="btn-outline" style="display:inline-block; margin-top:0.6rem; font-size:0.85rem; padding:0.5rem 1rem;">发表评论</a>
+      </div>
+      <div class="aside-card">
+        <h3>更新节奏</h3>
+        <p style="font-size:0.85rem; color:var(--text-3);">每日更新最新影视资源条目，每周发布工具版本评测。2026年11月8日已更新10条动态。</p>
+      </div>
+    </aside>
+  </div>
+
+  <!-- 页尾 -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div style="font-weight:700; font-size:1.2rem; color:#fff; margin-bottom:0.5rem;">蚂蚁bt</div>
+        <p style="max-width:240px; font-size:0.85rem; line-height:1.6; color:#b8ccc0;">影视资源聚合与下载工具指南，覆盖4K修复、蓝光原盘、剧集合集与主流BT客户端评测。内容更新截至2026年11月8日，条目类型包括电影、剧集、纪录片和动画。</p>
+      </div>
+      <div>
+        <h4>栏目</h4>
+        <ul>
+          <li><a href="#featured">精选推荐</a></li>
+          <li><a href="#latest">最新更新</a></li>
+          <li><a href="#categories">分类入口</a></li>
+          <li><a href="#deep">深度解析</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>互动</h4>
+        <ul>
+          <li><a href="#comments">用户评论</a></li>
+          <li><a href="#comments">投稿资源</a></li>
+          <li><a href="#news">相关资讯</a></li>
+          <li><a href="#hot">热门榜单</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>工具</h4>
+        <ul>
+          <li><a href="#deep">qBittorrent</a></li>
+          <li><a href="#deep">Transmission</a></li>
+          <li><a href="#deep">编码对比</a></li>
+          <li><a href="#deep">做种健康度</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 蚂蚁bt 内容聚合示例 · 影视资源信息仅供参考</span>
+      <span>页面更新于 2026-11-08</span>
+    </div>
+  </footer>
+
+  <!-- 回到顶部 -->
+  <button class="back-to-top" id="back-to-top" aria-label="回到顶部">↑</button>
+
+  <!-- 移动端遮罩 -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- 结构化数据 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "蚂蚁bt",
+    "url": "https://example.com",
+    "description": "影视资源聚合与下载工具指南，提供最新影视条目推荐、BT下载工具对比、资源分类索引与用户实测评论。",
+    "inLanguage": "zh-CN"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "4K HDR电影在普通1080p电视上播放会怎样？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "4K HDR内容在1080p SDR电视上会被播放器降级为1080p SDR输出，画质细节和色彩范围都会损失。具体来说，HDR的高光部分会被压缩，暗部细节可能丢失。如果电视不支持HDR，选择1080p SDR版本反而更合适。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "为什么有些种子做种数很高但下载速度很慢？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "做种者的上传带宽是共享的，一个做种者可能同时为多个下载者提供数据。另外，部分做种者设置了上传限速，导致整体速度被拉低。在qBittorrent中查看做种者的上传速率分布，可以判断是否被限速。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "蓝光原盘和REMUX画质有区别吗？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "没有区别。REMUX是从蓝光原盘中无损提取正片和主音轨，去掉了菜单、花絮和多余音轨。视频码率和音频码率与原盘完全一致。唯一的区别是文件体积更小，以及缺少交互菜单。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "杜比视界版本在非杜比设备上播放会偏色吗？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "支持HDR10的设备会以兼容模式播放，色彩正常。不支持HDR的设备会降级为SDR，画面会偏灰暗。2026年主流中高端电视基本都支持HDR10，但投影仪需要确认是否支持HDR10解码。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "qBittorrent和Transmission哪个更适合新手？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "qBittorrent的界面更接近Windows用户的使用习惯，内置搜索插件和做种调度，适合桌面端。Transmission更轻量，在NAS和Linux环境下更稳定。如果使用群晖或威联通NAS，Transmission的套件安装和管理更方便。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "老电影4K修复版值得下载吗？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "取决于修复质量。2026年10月发布的《霸王别姬》4K修复版基于原始底片扫描，细节和色彩明显优于之前的蓝光版本。而部分老电影的4K版本只是简单拉伸分辨率，缺少细节提升。看发布组的说明和用户评论中的截图对比，可以判断修复质量。"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    // ---------- 搜索功能（本地筛选） ----------
+    const searchToggle = document.getElementById('search-toggle');
+    const searchBar = document.getElementById('search-bar');
+    const searchInput = document.getElementById('search-input');
+    const searchClear = document.getElementById('search-clear');
+    const cardGrid = document.getElementById('card-grid');
+    const cards = cardGrid ? Array.from(cardGrid.querySelectorAll('.card')) : [];
+
+    searchToggle.addEventListener('click', function() {
+      searchBar.classList.toggle('active');
+      if (searchBar.classList.contains('active')) {
+        searchInput.focus();
+      }
+    });
+
+    function filterCards() {
+      const query = searchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const searchText = (card.dataset.search || '') + ' ' + card.textContent.toLowerCase();
+        if (!query || searchText.includes(query)) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      // 无结果提示
+      let noResultEl = document.getElementById('no-result-msg');
+      if (visibleCount === 0 && query) {
+        if (!noResultEl) {
+          noResultEl = document.createElement('div');
+          noResultEl.id = 'no-result-msg';
+          noResultEl.className = 'no-result';
+          noResultEl.textContent = '没有找到匹配的条目，试试其他关键词。';
+          cardGrid.parentNode.insertBefore(noResultEl, cardGrid.nextSibling);
+        }
+        noResultEl.style.display = 'block';
+      } else if (noResultEl) {
+        noResultEl.style.display = 'none';
+      }
+    }
+
+    searchInput.addEventListener('input', filterCards);
+    searchClear.addEventListener('click', function() {
+      searchInput.value = '';
+      filterCards();
+      searchInput.focus();
+    });
+
+    // ---------- 移动端菜单 ----------
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mainNav = document.getElementById('main-nav');
+    const overlay = document.getElementById('overlay');
+
+    function closeMobileMenu() {
+      document.body.classList.remove('mobile-nav-open');
+      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      overlay.classList.remove('active');
+    }
+
+    mobileMenuBtn.addEventListener('click', function() {
+      const isOpen = document.body.classList.toggle('mobile-nav-open');
+      mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+      overlay.classList.toggle('active', isOpen);
+    });
+
+    overlay.addEventListener('click', closeMobileMenu);
+
+    mainNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth <= 740) {
+          closeMobileMenu();
+        }
+      });
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && document.body.classList.contains('mobile-nav-open')) {
+        closeMobileMenu();
+      }
+    });
+
+    // ---------- 回到顶部 ----------
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > window.innerHeight) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ---------- 侧栏导航高亮（简单实现） ----------
+    const sections = document.querySelectorAll('main .section, #hero');
+    const navLinks = document.querySelectorAll('.channel-list a');
+    if (sections.length && navLinks.length) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            navLinks.forEach(link => {
+              link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+            });
+          }
+        });
+      }, { rootMargin: '-20% 0px -60% 0px' });
+      sections.forEach(section => { if (section.id) observer.observe(section); });
+    }
+  </script>
+</body>
+                                       </html>
